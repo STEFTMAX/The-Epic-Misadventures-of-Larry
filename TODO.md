@@ -1,6 +1,8 @@
 TODO list
 ==========================
 technical todos:
+Move frames to data in gameengine,
+Enable spritesheets to not be animations
 
 feauture todos:
 It must contain at least 5 explosions in every level, 

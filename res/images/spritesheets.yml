@@ -3,11 +3,11 @@ larry_breathing.png:
   y: 1
   skiplast: 0
   fps: 2
-  repeatsequence: swing
+  sequence: swing
   repeatouter: true
 larry_walking.png:
   x: 13
   y: 2
   skiplast: 0
   fps: 40
-  repeatsequence: repeat
+  sequence: repeat
