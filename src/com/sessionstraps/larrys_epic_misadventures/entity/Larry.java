@@ -3,13 +3,13 @@ package com.sessionstraps.larrys_epic_misadventures.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.Pieter3457.engine.entity.ControlableEntity;
-import com.Pieter3457.engine.entity.LookDirection;
-import com.Pieter3457.engine.input.EntityController;
-import com.Pieter3457.engine.physics.Velocity;
-import com.Pieter3457.engine.render.Renderable;
-import com.Pieter3457.engine.resources.SpriteManager;
-import com.Pieter3457.engine.sprite.animation.AnimationState;
+import com.sessionstraps.game_engine.entity.ControlableEntity;
+import com.sessionstraps.game_engine.entity.LookDirection;
+import com.sessionstraps.game_engine.input.EntityController;
+import com.sessionstraps.game_engine.physics.Velocity;
+import com.sessionstraps.game_engine.render.Renderable;
+import com.sessionstraps.game_engine.resources.SpriteManager;
+import com.sessionstraps.game_engine.sprite.animation.AnimationState;
 import com.sessionstraps.larrys_epic_misadventures.Drawable;
 
 public class Larry extends ControlableEntity implements Renderable, Drawable {

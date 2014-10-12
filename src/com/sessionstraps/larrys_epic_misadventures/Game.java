@@ -1,7 +1,7 @@
 package com.sessionstraps.larrys_epic_misadventures;
 
-import com.Pieter3457.engine.input.EntityController;
-import com.Pieter3457.engine.resources.SpriteManager;
+import com.sessionstraps.game_engine.input.EntityController;
+import com.sessionstraps.game_engine.resources.SpriteManager;
 import com.sessionstraps.larrys_epic_misadventures.entity.Larry;
 import com.sessionstraps.larrys_epic_misadventures.manager.EntityManager;
 

@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 import javax.swing.JFrame;
 
-import com.Pieter3457.engine.entity.Entity;
+import com.sessionstraps.game_engine.entity.Entity;
 
 public class GameDrawer extends Canvas {
 

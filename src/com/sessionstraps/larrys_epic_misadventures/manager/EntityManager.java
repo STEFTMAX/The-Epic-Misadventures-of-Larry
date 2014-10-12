@@ -2,7 +2,7 @@ package com.sessionstraps.larrys_epic_misadventures.manager;
 
 import java.util.HashSet;
 
-import com.Pieter3457.engine.entity.Entity;
+import com.sessionstraps.game_engine.entity.Entity;
 
 public class EntityManager {
 

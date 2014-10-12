@@ -3,8 +3,8 @@ package com.sessionstraps.larrys_epic_misadventures;
 
 import java.util.HashSet;
 
-import com.Pieter3457.engine.entity.Entity;
-import com.Pieter3457.engine.render.Renderable;
+import com.sessionstraps.game_engine.entity.Entity;
+import com.sessionstraps.game_engine.render.Renderable;
 
 
 public class GameRenderer {
