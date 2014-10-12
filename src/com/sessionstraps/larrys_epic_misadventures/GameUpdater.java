@@ -1,6 +1,6 @@
-package com.Pieter3457.MiniJavaGame;
+package com.sessionstraps.larrys_epic_misadventures;
 
-import com.Pieter3457.MiniJavaGame.manager.EntityManager;
+import com.sessionstraps.larrys_epic_misadventures.manager.EntityManager;
 
 public class GameUpdater implements Runnable {
 

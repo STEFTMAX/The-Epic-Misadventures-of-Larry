@@ -1,4 +1,4 @@
-package com.Pieter3457.MiniJavaGame;
+package com.sessionstraps.larrys_epic_misadventures;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;

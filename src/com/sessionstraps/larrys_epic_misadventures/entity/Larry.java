@@ -1,9 +1,8 @@
-package com.Pieter3457.MiniJavaGame.entity;
+package com.sessionstraps.larrys_epic_misadventures.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.Pieter3457.MiniJavaGame.Drawable;
 import com.Pieter3457.engine.entity.ControlableEntity;
 import com.Pieter3457.engine.entity.LookDirection;
 import com.Pieter3457.engine.input.EntityController;
@@ -11,6 +10,7 @@ import com.Pieter3457.engine.physics.Velocity;
 import com.Pieter3457.engine.render.Renderable;
 import com.Pieter3457.engine.resources.SpriteManager;
 import com.Pieter3457.engine.sprite.animation.AnimationState;
+import com.sessionstraps.larrys_epic_misadventures.Drawable;
 
 public class Larry extends ControlableEntity implements Renderable, Drawable {
 

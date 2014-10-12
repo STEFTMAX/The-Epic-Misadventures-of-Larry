@@ -1,9 +1,9 @@
-package com.Pieter3457.MiniJavaGame;
+package com.sessionstraps.larrys_epic_misadventures;
 
-import com.Pieter3457.MiniJavaGame.entity.Larry;
-import com.Pieter3457.MiniJavaGame.manager.EntityManager;
 import com.Pieter3457.engine.input.EntityController;
 import com.Pieter3457.engine.resources.SpriteManager;
+import com.sessionstraps.larrys_epic_misadventures.entity.Larry;
+import com.sessionstraps.larrys_epic_misadventures.manager.EntityManager;
 
 public class Game implements Runnable {
 

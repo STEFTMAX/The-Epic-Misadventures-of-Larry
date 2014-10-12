@@ -1,4 +1,4 @@
-package com.Pieter3457.MiniJavaGame.manager;
+package com.sessionstraps.larrys_epic_misadventures.manager;
 
 import java.util.HashSet;
 
