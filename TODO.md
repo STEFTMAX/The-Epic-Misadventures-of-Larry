@@ -5,6 +5,13 @@ Enable spritesheets to not be animations
 remove white from Larry walking.png
 fix jumping animation
 more efficient method for swingplaysequence framegetting
+basic game framework has to be made;
+ -level class
+ -drawing classes for zoom
+ -leveldatareader class
+ -menu class
+ -music loading classes and playing classes;
+ -jukebox class, inteligent playing on certain moments.
 
 feauture todos:
 It must contain at least 5 explosions in every level, 
