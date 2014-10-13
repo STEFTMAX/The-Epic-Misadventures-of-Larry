@@ -2,21 +2,21 @@ package com.sessionstraps.larrys_epic_misadventures.manager;
 
 import java.util.HashSet;
 
-import com.sessionstraps.game_engine.entity.Entity;
+import com.sessionstraps.game_engine.entity.MovingEntity;
 
 public class EntityManager {
 
-	private HashSet<Entity> entities = new HashSet<Entity>();
+	private HashSet<MovingEntity> entities = new HashSet<MovingEntity>();
 	
-	public HashSet<Entity> getEntities() {
+	public HashSet<MovingEntity> getEntities() {
 		return entities;
 	}
 	
-	public void addEntity(Entity entity) {
+	public void addEntity(MovingEntity entity) {
 		entities.add(entity);
 	}
 	
-	public void removeEntity(Entity entity) {
+	public void removeEntity(MovingEntity entity) {
 		entities.remove(entity);
 	}
 

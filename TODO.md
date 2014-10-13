@@ -1,8 +1,10 @@
 TODO list
 ==========================
 technical todos:
-Move frames to data in gameengine,
 Enable spritesheets to not be animations
+remove white from Larry walking.png
+fix jumping animation
+more efficient method for swingplaysequence framegetting
 
 feauture todos:
 It must contain at least 5 explosions in every level, 

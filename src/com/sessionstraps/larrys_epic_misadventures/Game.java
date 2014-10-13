@@ -26,7 +26,7 @@ public class Game implements Runnable {
 		sm.loadSprites();
 		GameDrawer gd = new GameDrawer();
 		EntityManager entManager = new EntityManager();
-		entManager.addEntity(new Larry(WIDTH / 2, HEIGHT, -90, 10, sm,
+		entManager.addEntity(new Larry(WIDTH / 2, HEIGHT, 60, sm,
 				new EntityController(gd)));
 
 		new Thread(new GameUpdater(new GameRenderer(), gd, entManager)).start();

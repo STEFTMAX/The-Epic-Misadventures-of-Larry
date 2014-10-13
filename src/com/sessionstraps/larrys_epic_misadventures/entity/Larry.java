@@ -14,9 +14,9 @@ import com.sessionstraps.larrys_epic_misadventures.Drawable;
 
 public class Larry extends ControlableEntity implements Renderable, Drawable {
 
-	public Larry(float x, float y, float dx, float dy, SpriteManager sm,
+	public Larry(float x, float y, double mass, SpriteManager sm,
 			EntityController ec) {
-		super(x, y, dx, dy, sm, ec);
+		super(x, y, sm, ec);
 
 		walkingAnimationState = getAnim("larry_walking.png");
 		standingAnimationState = getAnim("larry_breathing.png");
@@ -83,6 +83,11 @@ public class Larry extends ControlableEntity implements Renderable, Drawable {
 			standingAnimationState.stop();
 			standing = false;
 		}
+	}
+
+	@Override
+	public double getMass() {
+		return 60d;
 	}
 
 }

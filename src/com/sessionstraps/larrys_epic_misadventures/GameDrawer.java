@@ -11,14 +11,14 @@ import java.util.HashSet;
 
 import javax.swing.JFrame;
 
-import com.sessionstraps.game_engine.entity.Entity;
+import com.sessionstraps.game_engine.entity.MovingEntity;
 
 public class GameDrawer extends Canvas {
 
 	private static final long serialVersionUID = 1L;
 
 	private JFrame frame;
-	private HashSet<Entity> tempEnts;
+	private HashSet<MovingEntity> tempEnts;
 
 	private Graphics offgc;
 	private Image offscreen = null;
@@ -45,7 +45,7 @@ public class GameDrawer extends Canvas {
 		offscreen = createImage(getSize().width, getSize().height);
 	}
 
-	public void draw(HashSet<Entity> entities) {
+	public void draw(HashSet<MovingEntity> entities) {
 		tempEnts = entities;
 		repaint();
 
@@ -69,7 +69,7 @@ public class GameDrawer extends Canvas {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.translate(0, 0);
 		if (tempEnts != null) {
-			for (Entity ent : tempEnts) {
+			for (MovingEntity ent : tempEnts) {
 				if (ent instanceof Drawable) {
 					((Drawable) ent).draw(g2);
 				}
