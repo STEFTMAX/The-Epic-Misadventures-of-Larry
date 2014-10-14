@@ -8,6 +8,7 @@ public class GameUpdater implements Runnable {
 	private GameDrawer drawer;
 	private EntityManager entityManager;
 	private boolean stop = false;
+	private double timeScale = 1;
 
 	public GameUpdater(GameRenderer gameRenderer, GameDrawer gameDrawer,
 			EntityManager entityManager) {
@@ -30,7 +31,7 @@ public class GameUpdater implements Runnable {
 
 			thisTime = System.nanoTime();
 
-			delta = thisTime - lastNanoTime;
+			delta = (long) ((thisTime - lastNanoTime) * timeScale);
 			lastNanoTime = thisTime;
 			sleepTime = (long) ((1000f / Game.MAXFPS) - ((float) delta / 1000000f));
 			if (sleepTime > 0) {

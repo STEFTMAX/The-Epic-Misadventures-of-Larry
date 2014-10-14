@@ -7,11 +7,11 @@ import java.util.HashSet;
 
 import com.sessionstraps.game_engine.entity.Entity;
 import com.sessionstraps.game_engine.render.Drawable;
-import com.sessionstraps.game_engine.render.GameScreen;
+import com.sessionstraps.game_engine.render.GameWindow;
 
 public class GameDrawer {
 	
-	private GameScreen gs;
+	private GameWindow gs;
 	
 	private HashSet<Entity> tempEnts;
 /*
@@ -24,7 +24,7 @@ public class GameDrawer {
 	public GameDrawer() {
 		
 		
-		gs = new GameScreen(Game.WIDTH, Game.HEIGHT, Game.NAME);
+		gs = new GameWindow(Game.WIDTH, Game.HEIGHT, Game.NAME);
 		/*
 		canvas = new Canvas() {
 			@Override
