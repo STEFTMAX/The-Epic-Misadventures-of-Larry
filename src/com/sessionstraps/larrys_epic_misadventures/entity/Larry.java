@@ -7,10 +7,10 @@ import com.sessionstraps.game_engine.entity.ControlableEntity;
 import com.sessionstraps.game_engine.entity.LookDirection;
 import com.sessionstraps.game_engine.input.EntityController;
 import com.sessionstraps.game_engine.physics.Velocity;
+import com.sessionstraps.game_engine.render.Drawable;
 import com.sessionstraps.game_engine.render.Renderable;
 import com.sessionstraps.game_engine.resources.SpriteManager;
 import com.sessionstraps.game_engine.sprite.animation.AnimationState;
-import com.sessionstraps.larrys_epic_misadventures.Drawable;
 
 public class Larry extends ControlableEntity implements Renderable, Drawable {
 
