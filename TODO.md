@@ -13,7 +13,8 @@ basic game framework has to be made;
  -music loading classes and playing classes;
  -jukebox class, inteligent playing on certain moments.
  -normalize numbers
- -create camera class
+ -create camera class zoom option
+ -create a way to store entitydata
 
 feauture todos:
 It must contain at least 5 explosions in every level, 

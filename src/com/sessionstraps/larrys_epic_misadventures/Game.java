@@ -15,7 +15,7 @@ public class Game implements Runnable {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 400;
-	public static final String NAME = "Larry's epic misadventures.";
+	public static final String NAME = "Larry's Epic Misadventures";
 	public static final int MAXFPS = 60;
 
 	public static void main(String[] args) {
@@ -30,21 +30,21 @@ public class Game implements Runnable {
 
 		SpriteManager sm = new SpriteManager("/images//spritesheets.yml");
 		sm.loadSprites();
-		
-		
+
 		Camera cam = new Camera(null, WIDTH, HEIGHT);
 		GameDrawer gd = new GameDrawer(new GameWindow(WIDTH, HEIGHT, NAME), cam);
-		
+
 		UpdateObjectContainer entManager = new UpdateObjectContainer();
-		
-		Larry larry = new Larry(0, HEIGHT, sm,
-				new EntityController(gd.getCanvas()));
+
+		Larry larry = new Larry(0, HEIGHT, sm, new EntityController(
+				gd.getCanvas()));
 		entManager.addObject(larry);
 		cam.lock(larry);
-		
-		Asguard asguard = new Asguard(0, HEIGHT, sm);
+
+		Asguard asguard = new Asguard(2 * WIDTH, HEIGHT, sm);
 		entManager.addObject(asguard);
 
-		new Thread(new GameUpdater(new GameRenderer(), gd, entManager, MAXFPS)).start();
+		new Thread(new GameUpdater(new GameRenderer(), gd, entManager, MAXFPS))
+				.start();
 	}
 }

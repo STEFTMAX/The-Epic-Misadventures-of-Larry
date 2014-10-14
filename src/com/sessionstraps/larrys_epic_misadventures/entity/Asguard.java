@@ -19,7 +19,7 @@ public class Asguard extends MovingEntity implements Renderable, Drawable {
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
-		g.drawRect(pos.getRoundedX()- 40, pos.getRoundedY() -40, 40, 40);
+		g.drawRect(pos.getRoundedX() - 20, pos.getRoundedY() - 41, 40, 40);
 
 	}
 
