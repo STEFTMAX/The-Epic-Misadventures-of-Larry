@@ -4,17 +4,20 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.sessionstraps.game_engine.entity.ControlableEntity;
+import com.sessionstraps.game_engine.entity.LockableEntity;
 import com.sessionstraps.game_engine.entity.LookDirection;
 import com.sessionstraps.game_engine.input.EntityController;
+import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
+import com.sessionstraps.game_engine.render.DrawPriority;
 import com.sessionstraps.game_engine.render.Drawable;
 import com.sessionstraps.game_engine.render.Renderable;
 import com.sessionstraps.game_engine.resources.SpriteManager;
 import com.sessionstraps.game_engine.sprite.animation.AnimationState;
 
-public class Larry extends ControlableEntity implements Renderable, Drawable {
+public class Larry extends ControlableEntity implements Renderable, Drawable, LockableEntity {
 
-	public Larry(float x, float y, double mass, SpriteManager sm,
+	public Larry(float x, float y, SpriteManager sm,
 			EntityController ec) {
 		super(x, y, sm, ec);
 
@@ -22,8 +25,8 @@ public class Larry extends ControlableEntity implements Renderable, Drawable {
 		standingAnimationState = getAnim("larry_breathing.png");
 	}
 
-	private static Velocity walkLeft = new Velocity(-50, 0),
-			walkRight = new Velocity(50, 0);
+	private static Velocity walkLeft = new Velocity(-100, 0),
+			walkRight = new Velocity(100, 0);
 
 	private AnimationState walkingAnimationState;
 	private AnimationState standingAnimationState;
@@ -88,6 +91,16 @@ public class Larry extends ControlableEntity implements Renderable, Drawable {
 	@Override
 	public double getMass() {
 		return 60d;
+	}
+
+	@Override
+	public Position getLockingPosition() {
+		return pos;
+	}
+
+	@Override
+	public DrawPriority getPriority() {
+		return DrawPriority.PLAYER;
 	}
 
 }
