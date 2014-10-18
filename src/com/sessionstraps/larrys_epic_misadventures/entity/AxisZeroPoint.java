@@ -8,9 +8,8 @@ import com.sessionstraps.game_engine.entity.enemy.Enemy;
 import com.sessionstraps.game_engine.resources.SpriteManager;
 
 public class AxisZeroPoint extends Entity implements Enemy{
-
-	public AxisZeroPoint(SpriteManager sm) {
-		super(sm);
+	public AxisZeroPoint(float x, float y, SpriteManager sm) {
+		super(x, y, sm);
 	}
 
 	@Override
@@ -18,6 +17,12 @@ public class AxisZeroPoint extends Entity implements Enemy{
 
 		g.setColor(Color.BLACK);
 		g.drawLine(0, 0, 0, 0);
+	}
+
+	@Override
+	public void render(long delta) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

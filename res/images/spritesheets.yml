@@ -1,13 +1,19 @@
-larry_breathing.png:
-  x: 3
-  y: 1
-  skiplast: 0
-  fps: 2
-  sequence: swing
-  repeatouter: true
-larry_walking.png:
-  x: 13
-  y: 2
-  skiplast: 0
-  fps: 40
-  sequence: repeat
+images:
+  tiles.png:
+    x: 3
+    y: 4
+    skiplast: 2
+animations: 
+  larry_breathing.png:
+    x: 3
+    y: 1
+    skiplast: 0
+    fps: 2
+    sequence: swing
+    repeatouter: true
+  larry_walking.png:
+    x: 13
+    y: 2
+    skiplast: 0
+    fps: 40
+    sequence: repeat

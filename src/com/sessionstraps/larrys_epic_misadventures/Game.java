@@ -37,17 +37,16 @@ public class Game implements Runnable {
 
 		UpdateObjectContainer entManager = new UpdateObjectContainer();
 
-		Larry larry = new Larry(0, 0, sm, new EntityController(
-				gd.getCanvas()));
+		Larry larry = new Larry(0, 0, sm, new EntityController(gd.getCanvas()));
 		entManager.addObject(larry);
 		cam.lock(larry);
 
 		Asguard asguard = new Asguard(0, 0, sm);
 		entManager.addObject(asguard);
-		
-		entManager.addObject(new AxisZeroPoint(sm));
 
-		new Thread(new GameUpdater(new GameRenderer(), gd, entManager, MAXFPS, 1d))
-				.start();
+		entManager.addObject(new AxisZeroPoint(0, 0, sm));
+
+		new Thread(new GameUpdater(new GameRenderer(), gd, entManager, MAXFPS,
+				1d)).start();
 	}
 }
