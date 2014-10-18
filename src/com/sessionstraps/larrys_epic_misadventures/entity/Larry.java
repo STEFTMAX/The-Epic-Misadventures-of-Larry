@@ -3,13 +3,13 @@ package com.sessionstraps.larrys_epic_misadventures.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.sessionstraps.game_engine.entity.ControlableEntity;
 import com.sessionstraps.game_engine.entity.LockableEntity;
 import com.sessionstraps.game_engine.entity.LookDirection;
+import com.sessionstraps.game_engine.entity.player.ControlableEntity;
 import com.sessionstraps.game_engine.input.EntityController;
 import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
-import com.sessionstraps.game_engine.render.DrawPriority;
+
 import com.sessionstraps.game_engine.render.Drawable;
 import com.sessionstraps.game_engine.render.Renderable;
 import com.sessionstraps.game_engine.resources.SpriteManager;
@@ -57,6 +57,7 @@ public class Larry extends ControlableEntity implements Renderable, Drawable, Lo
 		}
 
 	}
+	
 
 	@Override
 	public void render(long delta) {
@@ -97,10 +98,4 @@ public class Larry extends ControlableEntity implements Renderable, Drawable, Lo
 	public Position getLockingPosition() {
 		return pos;
 	}
-
-	@Override
-	public DrawPriority getPriority() {
-		return DrawPriority.PLAYER;
-	}
-
 }

@@ -1,15 +1,12 @@
 package com.sessionstraps.larrys_epic_misadventures.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.sessionstraps.game_engine.entity.MovingEntity;
-import com.sessionstraps.game_engine.render.DrawPriority;
-import com.sessionstraps.game_engine.render.Drawable;
-import com.sessionstraps.game_engine.render.Renderable;
+import com.sessionstraps.game_engine.entity.enemy.Enemy;
 import com.sessionstraps.game_engine.resources.SpriteManager;
 
-public class Asguard extends MovingEntity implements Renderable, Drawable {
+public class Asguard extends MovingEntity implements Enemy{
 
 	public Asguard(float x, float y, SpriteManager sm) {
 		super(x, y, sm);
@@ -18,9 +15,7 @@ public class Asguard extends MovingEntity implements Renderable, Drawable {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(Color.RED);
-		g.drawRect(pos.getRoundedX() - 20, pos.getRoundedY() - 41, 40, 40);
-
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -33,11 +28,6 @@ public class Asguard extends MovingEntity implements Renderable, Drawable {
 	public double getMass() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public DrawPriority getPriority() {
-		return DrawPriority.ENEMY;
 	}
 
 }
