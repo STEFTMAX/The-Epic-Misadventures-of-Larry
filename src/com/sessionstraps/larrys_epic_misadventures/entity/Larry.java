@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import com.sessionstraps.game_engine.entity.LockableEntity;
 import com.sessionstraps.game_engine.entity.LookDirection;
 import com.sessionstraps.game_engine.entity.player.ControlableEntity;
-import com.sessionstraps.game_engine.input.EntityController;
+import com.sessionstraps.game_engine.input.KeyboardInput;
 import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
 import com.sessionstraps.game_engine.render.Drawable;
@@ -18,7 +18,15 @@ import com.sessionstraps.game_engine.sprite.animation.AnimationState;
 public class Larry extends ControlableEntity implements Renderable, Drawable,
 		LockableEntity {
 
-	public Larry(float x, float y, SpriteManager sm, EntityController ec) {
+	private static Velocity walkLeft = new Velocity(-100, 0),
+			walkRight = new Velocity(100, 0);
+
+	private AnimationState walkingAnimationState;
+	private AnimationState standingAnimationState;
+
+	private LookDirection direction = LookDirection.LEFT;
+
+	public Larry(float x, float y, SpriteManager sm, KeyboardInput ec) {
 		super(x, y, sm, ec);
 
 		walkingAnimationState = getAnim("larry_walking.png");
@@ -27,67 +35,45 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 		initEntity(10, 60);
 	}
 
-	private static Velocity walkLeft = new Velocity(-100, 0),
-			walkRight = new Velocity(100, 0);
-
-	private AnimationState walkingAnimationState;
-	private AnimationState standingAnimationState;
-
-	private boolean standing;
-	private LookDirection direction = LookDirection.LEFT;
-
 	@Override
 	public void draw(Graphics2D g) {
-		BufferedImage img;
-		if (standing) {
-			img = (BufferedImage) standingAnimationState.getCurrentImage();
-		} else {
-			img = (BufferedImage) walkingAnimationState.getCurrentImage();
 
-		}
-		if (direction == LookDirection.LEFT) {
-
-			// inverted Drawing
-			g.drawImage(img, pos.getRoundedX() + img.getWidth() / 2,
-					pos.getRoundedY() - img.getHeight(), pos.getRoundedX()
-							- img.getWidth() / 2, pos.getRoundedY(), 0, 0,
-					img.getWidth(), img.getHeight(), null);
-
-		} else {
-			g.drawImage(img, pos.getRoundedX() - img.getWidth(null) / 2,
-					pos.getRoundedY() - img.getHeight(null), null);
-		}
-
+		drawImage(g, direction == LookDirection.LEFT);
 	}
 
 	@Override
 	public void render(long delta) {
-		if (ec.isKeyDown(KeyEvent.VK_LEFT)) {
-			walkLeft.applyOnPosition(pos, delta);
-			if (direction != LookDirection.LEFT) {
+		
+		if ((ec.isKeyDown(KeyEvent.VK_RIGHT) && ec.isKeyDown(KeyEvent.VK_LEFT) || (!ec
+				.isKeyDown(KeyEvent.VK_RIGHT) && !ec
+				.isKeyDown(KeyEvent.VK_LEFT)))) {
 
-				direction = LookDirection.LEFT;
-			}
-			walkingAnimationState.update(delta);
-
-		} else if (ec.isKeyDown(KeyEvent.VK_RIGHT)) {
-			walkRight.applyOnPosition(pos, delta);
-
-			if (direction != LookDirection.RIGHT) {
-
-				direction = LookDirection.RIGHT;
-			}
-			walkingAnimationState.update(delta);
-		} else {
 			standingAnimationState.update(delta);
-
+			this.drawingImage = standingAnimationState.getCurrentImage();
 			walkingAnimationState.stop();
-			standing = true;
+		} else {
+			if (ec.isKeyDown(KeyEvent.VK_LEFT)) {
+
+				walkLeft.applyOnPosition(pos, delta);
+				direction = LookDirection.LEFT;
+				walkingAnimationState.update(delta);
+				drawingImage = (BufferedImage) walkingAnimationState
+						.getCurrentImage();
+
+			}
+
+			if (ec.isKeyDown(KeyEvent.VK_RIGHT)) {
+
+				walkRight.applyOnPosition(pos, delta);
+				direction = LookDirection.RIGHT;
+				walkingAnimationState.update(delta);
+				drawingImage = (BufferedImage) walkingAnimationState
+						.getCurrentImage();
+			}
 		}
-		standingAnimationState.stop();
-		standing = false;
 
 		// TODO change to state thingy and current Image and shit
+		
 	}
 
 	@Override
