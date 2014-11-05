@@ -9,7 +9,7 @@ import com.sessionstraps.game_engine.sprite.animation.Animation;
 
 /**
  * ResourceManager for the game Larry's Epic Misadventures. Stores all images in
- * a bufferedimage set.
+ * a bufferedimage[] set.
  * 
  * @author pieter3457
  */
@@ -20,7 +20,7 @@ public class LResourceManager implements ResourceManager {
 	public HashMap<String, Animation> animations = new HashMap<String, Animation>();
 
 	// same as above, only this stores the images, aka sprites
-	public HashMap<String, BufferedImage> sprites = new HashMap<String, BufferedImage>();
+	public HashMap<String, BufferedImage[]> sprites = new HashMap<String, BufferedImage[]>();
 
 	/*
 	 * (non-Javadoc)
