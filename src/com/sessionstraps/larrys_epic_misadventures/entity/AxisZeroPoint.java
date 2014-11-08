@@ -6,11 +6,12 @@ import java.util.Set;
 
 import com.sessionstraps.game_engine.entity.Entity;
 import com.sessionstraps.game_engine.entity.enemy.Enemy;
+import com.sessionstraps.game_engine.resources.Loadable;
 import com.sessionstraps.game_engine.resources.ResourceManager;
 
 public class AxisZeroPoint extends Entity implements Enemy{
-	public AxisZeroPoint(float x, float y, ResourceManager rm) {
-		super(x, y, rm);
+	public AxisZeroPoint(float x, float y) {
+		super(x, y);
 	}
 
 	@Override
@@ -21,18 +22,18 @@ public class AxisZeroPoint extends Entity implements Enemy{
 	}
 
 	@Override
-	public void render(long delta) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void render(long delta) {}
 
 	/* (non-Javadoc)
-	 * @see com.sessionstraps.game_engine.level.LevelObject#getNeededResourses(java.util.Set)
+	 * @see com.sessionstraps.game_engine.level.LevelObject#getNeededResources(java.util.Set)
 	 */
 	@Override
-	public void getNeededResourses(Set<String> toPutTo) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void getNeededResources(Set<Loadable> toAddTo) {}
+
+	/* (non-Javadoc)
+	 * @see com.sessionstraps.game_engine.level.LevelObject#grabResources(com.sessionstraps.game_engine.resources.ResourceManager)
+	 */
+	@Override
+	public void grabResources(ResourceManager rm) {}
 
 }

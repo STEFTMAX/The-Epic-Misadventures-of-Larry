@@ -13,8 +13,12 @@ import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
 import com.sessionstraps.game_engine.render.Drawable;
 import com.sessionstraps.game_engine.render.Renderable;
+import com.sessionstraps.game_engine.resources.Loadable;
 import com.sessionstraps.game_engine.resources.ResourceManager;
+import com.sessionstraps.game_engine.sprite.SpriteSheet;
 import com.sessionstraps.game_engine.sprite.animation.AnimationState;
+import com.sessionstraps.game_engine.sprite.animation.PlaySequence;
+import com.sessionstraps.game_engine.sprite.animation.SwingPlaySequence;
 
 public class Larry extends ControlableEntity implements Renderable, Drawable,
 		LockableEntity {
@@ -27,13 +31,8 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 
 	private LookDirection direction = LookDirection.LEFT;
 
-	public Larry(float x, float y, ResourceManager rm, KeyboardInput ec) {
-		super(x, y, rm, ec);
-
-		walkingAnimationState = getAnim("larry_walking.png");
-		standingAnimationState = getAnim("larry_breathing.png");
-
-		initEntity(10, 60);
+	public Larry(float x, float y, KeyboardInput ki) {
+		super(x, y, ki);
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 
 	@Override
 	public void render(long delta) {
-		
+
 		if ((ec.isKeyDown(KeyEvent.VK_RIGHT) && ec.isKeyDown(KeyEvent.VK_LEFT) || (!ec
 				.isKeyDown(KeyEvent.VK_RIGHT) && !ec
 				.isKeyDown(KeyEvent.VK_LEFT)))) {
@@ -72,9 +71,8 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 						.getCurrentImage();
 			}
 		}
-
 		// TODO change to state thingy and current Image and shit
-		
+
 	}
 
 	@Override
@@ -82,14 +80,31 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 		return pos;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.sessionstraps.game_engine.level.LevelObject#getNeededResourses()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.sessionstraps.game_engine.level.LevelObject#getNeededResources(java
+	 * .util.Set)
 	 */
 	@Override
-	public void getNeededResourses(Set<String> toPutTo) {
-		
-		toPutTo.add("larry_walking.png");
-		toPutTo.add("larry_breathing.png");
-		
+	public void getNeededResources(Set<Loadable> toAddTo) {
+
+		toAddTo.add(new SpriteSheet("larry_breathing.png", 3, 1,
+				new SwingPlaySequence(true), 2, 0));
+		toAddTo.add(new SpriteSheet("larry_walking.png", 13, 2,
+				PlaySequence.REPEAT, 50, 0));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sessionstraps.game_engine.level.LevelObject#grabResources(com.
+	 * sessionstraps.game_engine.resources.ResourceManager)
+	 */
+	@Override
+	public void grabResources(ResourceManager rm) {
+		standingAnimationState = getAnim("larry_breathing.png", rm);
+		walkingAnimationState = getAnim("larry_walking.png", rm);
 	}
 }
