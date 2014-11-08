@@ -3,8 +3,7 @@ TODO list
 technical todos:
 more efficient method for swingplaysequence framegetting
 basic game framework has to be made;
- -level class (contains all entities, map, everything particular for that level in the game)
- -leveldatareader class
+ -level class (contains all entities, map, everything particular for that level in the game) (first hardcoded)
  -menu class
  -music loading classes and playing classes;
  -jukebox class, inteligent playing on certain moments.
@@ -12,6 +11,8 @@ basic game framework has to be made;
  -gun classes
  -level editor
  -simple AI for enemies
+ -logger class
+ -move engine to lwjgl
 
 feauture todos:
 It must contain at least 5 explosions in every level, 
