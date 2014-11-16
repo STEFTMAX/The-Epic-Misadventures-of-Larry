@@ -12,7 +12,9 @@ basic game framework has to be made;
  -level editor
  -simple AI for enemies
  -logger class
- -move engine to lwjgl
+ -create GLGraphics class or SpriteBatch something like that
+ -move from acceleration and shit like that to forces and vectors
+ -Tiles need to be seperate images
 
 feauture todos:
 It must contain at least 5 explosions in every level, 

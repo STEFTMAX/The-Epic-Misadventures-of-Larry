@@ -1,18 +1,11 @@
 package com.sessionstraps.larrys_epic_misadventures.entity;
 
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.Set;
 
-import com.sessionstraps.game_engine.entity.LockableEntity;
-import com.sessionstraps.game_engine.entity.LookDirection;
-import com.sessionstraps.game_engine.entity.player.ControlableEntity;
 import com.sessionstraps.game_engine.input.KeyboardInput;
+import com.sessionstraps.game_engine.input.MouseInput;
 import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
-import com.sessionstraps.game_engine.render.Drawable;
-import com.sessionstraps.game_engine.render.Renderable;
 import com.sessionstraps.game_engine.resources.Loadable;
 import com.sessionstraps.game_engine.resources.ResourceManager;
 import com.sessionstraps.game_engine.sprite.SpriteSheet;
@@ -20,8 +13,7 @@ import com.sessionstraps.game_engine.sprite.animation.AnimationState;
 import com.sessionstraps.game_engine.sprite.animation.PlaySequence;
 import com.sessionstraps.game_engine.sprite.animation.SwingPlaySequence;
 
-public class Larry extends ControlableEntity implements Renderable, Drawable,
-		LockableEntity {
+public class Larry extends ControllableEntity implements LockableEntity {
 
 	private static Velocity walkLeft = new Velocity(-100, 0),
 			walkRight = new Velocity(100, 0);
@@ -31,47 +23,47 @@ public class Larry extends ControlableEntity implements Renderable, Drawable,
 
 	private LookDirection direction = LookDirection.LEFT;
 
-	public Larry(float x, float y, KeyboardInput ki) {
-		super(x, y, ki);
+	public Larry(float x, float y, KeyboardInput ki, MouseInput mi) {
+		super(x, y, ki, mi);
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw() {
 
-		drawImage(g, direction == LookDirection.LEFT);
+		drawImage(direction == LookDirection.LEFT);
 	}
 
 	@Override
-	public void render(long delta) {
+	public void update(long delta) {
 
-		if ((ec.isKeyDown(KeyEvent.VK_RIGHT) && ec.isKeyDown(KeyEvent.VK_LEFT) || (!ec
-				.isKeyDown(KeyEvent.VK_RIGHT) && !ec
-				.isKeyDown(KeyEvent.VK_LEFT)))) {
+		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
+				.isLeftDown()))) {
 
 			standingAnimationState.update(delta);
-			this.drawingImage = standingAnimationState.getCurrentImage();
+			drawingTexture = standingAnimationState.getCurrentTexture();
 			walkingAnimationState.stop();
 		} else {
-			if (ec.isKeyDown(KeyEvent.VK_LEFT)) {
+			if (ki.isLeftDown()) {
 
 				walkLeft.applyOnPosition(pos, delta);
 				direction = LookDirection.LEFT;
 				walkingAnimationState.update(delta);
-				drawingImage = (BufferedImage) walkingAnimationState
-						.getCurrentImage();
+				drawingTexture = walkingAnimationState.getCurrentTexture();
 
 			}
 
-			if (ec.isKeyDown(KeyEvent.VK_RIGHT)) {
+			if (ki.isRightDown()) {
 
 				walkRight.applyOnPosition(pos, delta);
 				direction = LookDirection.RIGHT;
 				walkingAnimationState.update(delta);
-				drawingImage = (BufferedImage) walkingAnimationState
-						.getCurrentImage();
+				drawingTexture = walkingAnimationState.getCurrentTexture();
 			}
 		}
-		// TODO change to state thingy and current Image and shit
+		//curvel.translate(0, TimeScaler.getTimeScaledFloat(150, delta));
+		//curvel.applyOnPosition(pos, delta);
+		
+		// TODO Weapon.setPosition(drawingTexture.getMountingpoint());
 
 	}
 
