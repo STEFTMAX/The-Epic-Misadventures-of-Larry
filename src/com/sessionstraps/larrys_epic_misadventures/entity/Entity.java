@@ -15,7 +15,6 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 	protected Texture drawingTexture;
 
 	public Entity(float x, float y) {
-		super();
 		pos = new Position(x, y);
 	}
 

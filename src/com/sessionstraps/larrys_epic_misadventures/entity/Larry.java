@@ -1,17 +1,13 @@
 package com.sessionstraps.larrys_epic_misadventures.entity;
 
-import java.util.Set;
-
 import com.sessionstraps.game_engine.input.KeyboardInput;
 import com.sessionstraps.game_engine.input.MouseInput;
 import com.sessionstraps.game_engine.physics.Position;
 import com.sessionstraps.game_engine.physics.Velocity;
-import com.sessionstraps.game_engine.resources.Loadable;
-import com.sessionstraps.game_engine.resources.ResourceManager;
-import com.sessionstraps.game_engine.sprite.SpriteSheet;
+import com.sessionstraps.game_engine.sprite.animation.Animation;
 import com.sessionstraps.game_engine.sprite.animation.AnimationState;
-import com.sessionstraps.game_engine.sprite.animation.PlaySequence;
-import com.sessionstraps.game_engine.sprite.animation.SwingPlaySequence;
+import com.sessionstraps.larrys_epic_misadventures.LevelResources;
+import com.sessionstraps.larrys_epic_misadventures.LevelResources.Animations;
 
 public class Larry extends ControllableEntity implements LockableEntity {
 
@@ -23,8 +19,10 @@ public class Larry extends ControllableEntity implements LockableEntity {
 
 	private LookDirection direction = LookDirection.LEFT;
 
-	public Larry(float x, float y, KeyboardInput ki, MouseInput mi) {
+	public Larry(float x, float y, KeyboardInput ki, MouseInput mi, LevelResources lvlResources) {
 		super(x, y, ki, mi);
+		walkingAnimationState = new AnimationState((Animation) lvlResources.getResource(Animations.LARRY_WALKING));
+		standingAnimationState = new AnimationState((Animation) lvlResources.getResource(Animations.LARRY_BREATHING));
 	}
 
 	@Override
@@ -43,6 +41,7 @@ public class Larry extends ControllableEntity implements LockableEntity {
 			drawingTexture = standingAnimationState.getCurrentTexture();
 			walkingAnimationState.stop();
 		} else {
+			standingAnimationState.stop();
 			if (ki.isLeftDown()) {
 
 				walkLeft.applyOnPosition(pos, delta);
@@ -70,33 +69,5 @@ public class Larry extends ControllableEntity implements LockableEntity {
 	@Override
 	public Position getLockingPosition() {
 		return pos;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.sessionstraps.game_engine.level.LevelObject#getNeededResources(java
-	 * .util.Set)
-	 */
-	@Override
-	public void getNeededResources(Set<Loadable> toAddTo) {
-
-		toAddTo.add(new SpriteSheet("larry_breathing.png", 3, 1,
-				new SwingPlaySequence(true), 2, 0));
-		toAddTo.add(new SpriteSheet("larry_walking.png", 13, 2,
-				PlaySequence.REPEAT, 50, 0));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.level.LevelObject#grabResources(com.
-	 * sessionstraps.game_engine.resources.ResourceManager)
-	 */
-	@Override
-	public void grabResources(ResourceManager rm) {
-		standingAnimationState = getAnim("larry_breathing.png", rm);
-		walkingAnimationState = getAnim("larry_walking.png", rm);
 	}
 }
