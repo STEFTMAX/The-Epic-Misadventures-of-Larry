@@ -1,22 +1,7 @@
 TODO list
 ==========================
-technical todos:
-more efficient method for swingplaysequence framegetting
-basic game framework has to be made;
- -level class (contains all entities, map, everything particular for that level in the game) (first hardcoded)
- -menu class
- -music loading classes and playing classes;
- -jukebox class, inteligent playing on certain moments.
- -normalize numbers
- -gun classes
- -level editor
- -simple AI for enemies
- -logger class
- -create GLGraphics class or SpriteBatch something like that
- -move from acceleration and shit like that to forces and vectors
- -Tiles need to be seperate images
+These todo's are more gameplay-related than game-code related.
 
-feauture todos:
 It must contain at least 5 explosions in every level, 
 He must kill at least 10 lifeforms in each lvl,
 He endboss cannot be succeeded without the secret supercoolrainbowlauncher,
