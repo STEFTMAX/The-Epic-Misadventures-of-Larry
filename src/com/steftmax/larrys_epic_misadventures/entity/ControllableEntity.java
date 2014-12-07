@@ -2,10 +2,10 @@
  * @author pieter3457
  *
  */
-package com.sessionstraps.larrys_epic_misadventures.entity;
+package com.steftmax.larrys_epic_misadventures.entity;
 
-import com.sessionstraps.game_engine.input.KeyboardInput;
-import com.sessionstraps.game_engine.input.MouseInput;
+import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
+import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 
 public abstract class ControllableEntity extends Entity {
 
