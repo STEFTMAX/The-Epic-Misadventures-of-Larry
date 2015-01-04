@@ -20,7 +20,7 @@ public class SleepMachine {
 		long endTime = System.nanoTime();
 		try {
 			Thread.sleep(Math.max(0, (long) TimeScaler
-					.nanosToMilis(sleepTime - (endTime - beginTime))));
+					.nanosToMilisD((long) (sleepTime - (endTime - beginTime)))));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

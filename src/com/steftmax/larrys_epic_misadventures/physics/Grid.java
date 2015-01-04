@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 // TODO create a map or something that stores positions in the map that are
 // used.
+@Deprecated
 public class Grid {
 
 	public final int cellHeight;
@@ -58,6 +59,8 @@ public class Grid {
 
 		int cellx = getCellX(rect.x);
 		int celly = getCellY(rect.y);
+		System.out.println(cellx);
+		System.out.println(celly);
 		int dx = getCellX(rect.x + rect.width) - cellx;
 		int dy = getCellY(rect.y + rect.height) - celly;
 		for (int x = 0; x < dx + 1; x++) {
@@ -83,8 +86,8 @@ public class Grid {
 							Collidable c2 =  collidables.get(j);
 							Rectangle box1 = c1.getHitbox();
 							Rectangle box2 = c2.getHitbox();
-							// System.out.println(box1);
-							// System.out.println(box2);
+//							System.out.println(box1);
+//							System.out.println(box2);
 							if (CollisionChecker.boxCollides(box1.x, box1.y,
 									box1.width, box1.height, box2.x, box2.y,
 									box2.width, box2.height)) {

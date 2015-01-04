@@ -3,7 +3,7 @@ package com.steftmax.larrys_epic_misadventures.resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.steftmax.larrys_epic_misadventures.map.Tile;
+import com.steftmax.larrys_epic_misadventures.map.TileType;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.Animation;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.PlaySequence;
@@ -54,13 +54,13 @@ public class LevelResources implements Loadable {
 		STONE(10, true, "gfx/tile_stone.png"),
 		STONE_PLATFORM(11, true, "gfx/tile_stone_platform.png");
 
-		private final Tile loadable;
+		private final TileType loadable;
 		private Tiles(int id, boolean isSolid, String path) {
-			this.loadable = new Tile(id, isSolid, new Sprite(path));
+			this.loadable = new TileType(id, isSolid, new Sprite(path));
 		}
 		
 		private Tiles(int id, boolean isSolid, int width, int height ) {
-			this.loadable = new Tile(id, width, height);
+			this.loadable = new TileType(id, width, height);
 		}
 		@Override
 		public Loadable getLoadable() {

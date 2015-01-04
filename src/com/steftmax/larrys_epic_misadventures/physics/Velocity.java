@@ -2,10 +2,10 @@ package com.steftmax.larrys_epic_misadventures.physics;
 
 import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 
+@Deprecated
 public class Velocity {
 
-	private float dx;
-	private float dy;
+	public float dx, dy;
 
 	public Velocity(float dx, float dy) {
 		this.dx = dx;

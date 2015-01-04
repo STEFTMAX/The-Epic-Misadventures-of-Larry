@@ -9,11 +9,19 @@ public class TimeScaler {
 		return deltaNanos / 1000000000f * input;
 	}
 	
-	public static float nanosToMilis(float input) {
+	public static float nanosToMilisF(long input) {
 		return input / 1000000f;
 	}
 	
-	public static double nanosToMilis(double input) {
+	public static double nanosToMilisD(long input) {
 		return input / 1000000d;
+	}
+	
+	public static double nanosToSecondsD(long input) {
+		return input / 1000000000d;
+	}
+	
+	public static float nanosToSecondsF(long input) {
+		return input / 1000000000f;
 	}
 }

@@ -4,7 +4,6 @@ import com.steftmax.larrys_epic_misadventures.draw.Camera;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer;
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
-import com.steftmax.larrys_epic_misadventures.entity.MockEntity;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
@@ -25,6 +24,7 @@ public class LarrysEpicMisadventures extends Game {
 	private LevelResources currentlyLoaded;
 	private Drawer drawer;
 	private Updater updater;
+	private int loop = 0;
 
 	//Private constructor to disable construction elsewhere than in main method.
 	private LarrysEpicMisadventures() {}
@@ -35,19 +35,20 @@ public class LarrysEpicMisadventures extends Game {
 
 	@Override
 	public void init() {
-
+		
+		long time1 = System.nanoTime();
+		
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
 		this.mi = new MouseInput(false);
 		this.camera = new Camera(width, height, mi);
 		
-		long time1 = System.nanoTime();
 		level = createLevel();
-		System.out.println((System.nanoTime() - time1) / 1000000000f);
 		
 		drawer = new Drawer(level, window, camera);
 		updater = new Updater(ki, mi, level);
 		
+		System.out.println("Loading took " +(System.nanoTime() - time1) / 1000000000f + " seconds.");
 		setup(1d, true);
 	}
 	
@@ -60,10 +61,15 @@ public class LarrysEpicMisadventures extends Game {
 		currentlyLoaded = new LevelResources();
 		currentlyLoaded.load();
 		int[][] mapStructure = {
-				{1,2,2,3},
-				{4,5,5,6},
-				{4,5,5,6},
-				{4,5,5,6}
+
+
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,1,2,2,3,0},
+				{0,4,5,5,6,0},
+				{0,4,5,5,6,0},
+				{0,4,5,5,6,0}
 		};
 		
 		MapData data = new MapData(mapStructure, 32, 32);
@@ -72,10 +78,13 @@ public class LarrysEpicMisadventures extends Game {
 		
 		
 		
-		Larry larry = new Larry(0, 0, ki, mi, currentlyLoaded);
+		Larry larry = new Larry(map, 32, 34, ki, mi, currentlyLoaded);
 		lvl.addLevelObject(larry);
 		lvl.addLevelObject(map);
-		lvl.addLevelObject(new MockEntity(40, 0));
+//		for (int i = 0; i < 32; i ++) {
+//			lvl.addLevelObject(new MockEntity());
+//		}
+		
 		camera.lock(larry.newPos);
 		return lvl;
 	}
@@ -89,9 +98,9 @@ public class LarrysEpicMisadventures extends Game {
 	public void update(long delta) {
 
 		updater.update(delta);
-		
 
 		drawer.draw();
+		System.out.println("Looped! Loop: " + loop ++);
 	}
 
 }

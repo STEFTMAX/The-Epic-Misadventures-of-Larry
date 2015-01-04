@@ -1,8 +1,12 @@
 package com.steftmax.larrys_epic_misadventures.draw;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import com.steftmax.larrys_epic_misadventures.physics.Point;
+import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
 /**
@@ -11,20 +15,20 @@ import com.steftmax.larrys_epic_misadventures.sprite.Texture;
  */
 public class GLGraphics {
 
-	public static void drawTextureFromLeftBottomFlipped(Texture tex, Point p) {
-		drawTextureFlipped(tex, p.x, p.y - tex.height);
+	public static void drawTextureFromLeftBottomFlipped(Texture tex, Vector2F newPos) {
+		drawTextureFlipped(tex, newPos.x, newPos.y - tex.height);
 	}
 	
-	public static void drawTextureFromLeftBottom(Texture tex, Point p) {
+	public static void drawTextureFromLeftBottom(Texture tex, Vector2F p) {
 		
 		drawTexture(tex, p.x, p.y - tex.height);
 	}
 	
-	public static void drawTexture(Texture tex, Point pos) {
+	public static void drawTexture(Texture tex, Vector2F pos) {
 		drawTexture(tex, pos.x, pos.y);
 	}
 	
-	public static void drawTextureFlipped(Texture tex, Point pos) {
+	public static void drawTextureFlipped(Texture tex, Vector2F pos) {
 		drawTextureFlipped(tex, pos.x, pos.y);
 	}
 	

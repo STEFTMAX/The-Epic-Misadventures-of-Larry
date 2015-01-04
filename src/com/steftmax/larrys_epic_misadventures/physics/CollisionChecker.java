@@ -10,10 +10,10 @@ public class CollisionChecker {
 			int x2, int y2, int width2, int height2) {
 		
 		
-		if (x1 <= x2 + width2) {
-			if (x2 <= x1 + width1) {
-				if (y1 <= y2 + height2) {
-					if (y2 <= y1 + height1) {
+		if (x1 < x2 + width2) {
+			if (x2 < x1 + width1) {
+				if (y1 < y2 + height2) {
+					if (y2 < y1 + height1) {
 						return true;
 					}
 				}

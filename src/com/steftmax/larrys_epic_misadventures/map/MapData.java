@@ -12,46 +12,65 @@ import com.steftmax.larrys_epic_misadventures.resource.loader.ResourceLoader;
  * @author pieter3457
  *
  */
-public class MapData implements Serializable{
-	
+public class MapData implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2868286445513228431L;
-	public final int[][] tiles;
-	private final int tileWidth, tileHeight;
-	
-	public MapData(int[][] tiles, int tileWidth, int tileHeight) {
+	public final Tile[][] tiles;
+	public final int gridWidth, gridHeight;
+
+	// TODO not working when using differently sized tiles :) :P xD
+	public MapData(int[][] tileTypeNumbers, int gridWidth, int gridHeight) {
+
+		this.gridWidth = gridWidth;
+		this.gridHeight = gridHeight;
+
+		tiles = new Tile[tileTypeNumbers.length][];
+		for (int y = 0; y < tileTypeNumbers.length; y++) {
+			tiles[y] = new Tile[tileTypeNumbers[y].length];
+			for (int x = 0; x < tileTypeNumbers[x].length; x++) {
+				tiles[y][x] = new Tile(TileType.get(tileTypeNumbers[y][x]), x
+						* gridWidth, y * gridHeight);
+			}
+		}
+
+	}
+
+	public MapData(Tile[][] tiles, int gridWidth, int gridHeight) {
 		this.tiles = tiles;
-		this.tileWidth = tileWidth;
-		this.tileHeight = tileHeight;
-		
+		this.gridWidth = gridWidth;
+		this.gridHeight = gridHeight;
+
 	}
 
 	/**
 	 * @return the tiles
 	 */
-	public int[][] getTiles() {
+	public Tile[][] getTiles() {
 		return tiles;
 	}
 
 	/**
-	 * @return the tileWidth
+	 * @return the gridWidth
 	 */
-	public int getTileWidth() {
-		return tileWidth;
+	public int getgridWidth() {
+		return gridWidth;
 	}
 
 	/**
-	 * @return the tileHeight
+	 * @return the gridHeight
 	 */
-	public int getTileHeight() {
-		return tileHeight;
+	public int getgridHeight() {
+		return gridHeight;
 	}
-	
+
 	/**
 	 * Writes the MapData to the specified path.
-	 * @param path The path to write to.
+	 * 
+	 * @param path
+	 *            The path to write to.
 	 */
 	public void write(final String path) {
 		ObjectOutputStream stream = null;
@@ -68,10 +87,12 @@ public class MapData implements Serializable{
 			}
 		}
 	}
-	
+
 	/**
 	 * Loads a MapData from the specified path.
-	 * @param path The path to load from.
+	 * 
+	 * @param path
+	 *            The path to load from.
 	 * @return The loaded MapData
 	 */
 	public static MapData load(final String path) {
@@ -93,4 +114,3 @@ public class MapData implements Serializable{
 	}
 
 }
-

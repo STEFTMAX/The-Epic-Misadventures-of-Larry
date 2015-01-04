@@ -11,6 +11,7 @@ import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.physics.Point;
 import com.steftmax.larrys_epic_misadventures.physics.Scale;
+import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
 
 public class Drawer {
 	
@@ -18,6 +19,7 @@ public class Drawer {
 	@SuppressWarnings("unused")
 	private Window window;
 	private Level level;
+	//TODO replace with spritebatch
 	private Set<Drawable> drawableBuffer = new HashSet<Drawable>();
 	
 	public enum DrawPriority{
@@ -65,11 +67,9 @@ public class Drawer {
 		drawPrioritized(DrawPriority.BACK, drawableBuffer);
 		drawPrioritized(DrawPriority.MIDDLE, drawableBuffer);
 		drawPrioritized(DrawPriority.FRONT, drawableBuffer);
-		
 		if (camera != null) {
 			camera.endFocus();
 		}
-		
 //		window.update();
 		Display.update();
 		drawableBuffer.clear();
@@ -88,7 +88,7 @@ public class Drawer {
 	}
 
 	public void resetCamera() {
-		camera.setPosition(new Point(0, 0));
+		camera.setPosition(new Vector2F(0, 0));
 		camera.setScale(new Scale(1));
 	}
 
