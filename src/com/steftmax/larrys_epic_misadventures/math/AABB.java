@@ -31,21 +31,16 @@ public class AABB {
 	
 	//TODO performance decision
 	public boolean collides(AABB otherBox) {
-		
-		float x1 = position.x;
-		float y1 = position.y;
-		float x2 = otherBox.position.x;
-		float y2 = otherBox.position.y;
-		
-		if (x1 < x2 + otherBox.width) {
-			if (x2 < x1 + width) {
-				if (y1 < y2 + otherBox.height) {
-					if (y2 < y1 + height) {
+		if (position.x < otherBox.position.x + otherBox.width) {
+			if (otherBox.position.x < position.x + width) {
+				if (position.y < otherBox.position.y + otherBox.height) {
+					if (otherBox.position.y < position.y + height) {
 						return true;
 					}
 				}
 			}
 		}
+		
 		return false;
 	}
 }
