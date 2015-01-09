@@ -25,7 +25,9 @@ public class LevelResources implements Loadable {
 	public enum Animations implements Resource{
 		
 		LARRY_WALKING("gfx/larry_walking.png", 13, 2, PlaySequence.REPEAT, 50, 0),
-		LARRY_BREATHING("gfx/larry_breathing.png", 3, 1, new SwingPlaySequence(true), 2, 0);
+		LARRY_BREATHING("gfx/larry_breathing.png", 3, 1, new SwingPlaySequence(true), 2, 0),
+		BLAZE_WALKING("gfx/blaze_walking.png", 13, 2, PlaySequence.REPEAT, 50, 0),
+		BLAZE_BREATHING("gfx/blaze_breathing.png", 3, 1, PlaySequence.REPEAT, 2, 0);
 		
 		public final Animation loadable;
 

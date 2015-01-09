@@ -1,14 +1,12 @@
 package com.steftmax.larrys_epic_misadventures.physics;
 
-import java.awt.Rectangle;
+import com.steftmax.larrys_epic_misadventures.math.AABB;
 
 /**
  * @author pieter3457
  *
  */
-@Deprecated
 public interface Collidable {
 	
-	public Rectangle getHitbox();
-	public void setPreviousPosition();
+	public AABB getHitbox();
 }

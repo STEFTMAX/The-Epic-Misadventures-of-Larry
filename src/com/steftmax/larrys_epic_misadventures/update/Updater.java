@@ -11,8 +11,8 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
+import com.steftmax.larrys_epic_misadventures.math.QuadTree;
 import com.steftmax.larrys_epic_misadventures.physics.CollisionChecker;
-import com.steftmax.larrys_epic_misadventures.physics.QuadTree;
 
 /**
  * @author pieter3457

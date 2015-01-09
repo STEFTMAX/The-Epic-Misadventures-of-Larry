@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import org.lwjgl.opengl.GL11;
 
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.physics.Scale;
-import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class Camera implements Updatable {

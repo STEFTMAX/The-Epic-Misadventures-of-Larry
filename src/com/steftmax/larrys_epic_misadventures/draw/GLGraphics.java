@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
 /**

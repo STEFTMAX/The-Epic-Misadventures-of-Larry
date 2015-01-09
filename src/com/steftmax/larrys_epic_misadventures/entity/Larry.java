@@ -5,7 +5,7 @@ import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
-import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources.Animations;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.Animation;
@@ -24,10 +24,10 @@ public class Larry extends ControllableEntity {
 			LevelResources lvlResources) {
 		super(map, x, y, 50, 10, ki, mi);
 		walkingAnimationState = new AnimationState(
-				(Animation) lvlResources.getResource(Animations.BLAZE_WALKING));
+				(Animation) lvlResources.getResource(Animations.LARRY_WALKING));
 		standingAnimationState = new AnimationState(
 				(Animation) lvlResources
-						.getResource(Animations.BLAZE_BREATHING));
+						.getResource(Animations.LARRY_BREATHING));
 	}
 
 	@Override
@@ -72,9 +72,9 @@ public class Larry extends ControllableEntity {
 			}
 		}
 		
-		
+		isOnGround = map.isOnGround(getHitbox());
 		//move this to entity part
-		if (!map.isOnGround(getHitbox())) {
+		if (!isOnGround) {
 			velocity.add(0f, 100f, TimeScaler.nanosToSecondsF(delta));
 		} else {
 			velocity.set(0,0);

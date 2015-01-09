@@ -9,9 +9,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.physics.Point;
 import com.steftmax.larrys_epic_misadventures.physics.Scale;
-import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
 
 public class Drawer {
 	

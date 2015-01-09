@@ -6,7 +6,7 @@ import java.util.HashSet;
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
-import com.steftmax.larrys_epic_misadventures.physics.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class TiledMap extends LevelObject implements Drawable, Updatable {
