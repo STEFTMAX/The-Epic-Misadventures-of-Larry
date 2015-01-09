@@ -1,4 +1,4 @@
-package com.steftmax.larrys_epic_misadventures.physics;
+package com.steftmax.larrys_epic_misadventures.math;
 
 import java.awt.Rectangle;
 import java.util.HashSet;
