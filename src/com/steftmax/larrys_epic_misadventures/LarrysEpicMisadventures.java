@@ -49,7 +49,7 @@ public class LarrysEpicMisadventures extends Game {
 		updater = new Updater(ki, mi, level);
 		
 		System.out.println("Loading took " +(System.nanoTime() - time1) / 1000000000f + " seconds.");
-		setup(1d, true);
+		setup(1d, true, 1000000000 / 20);
 	}
 	
 	@Override

@@ -19,6 +19,8 @@ public abstract class Game implements Runnable {
 
 	private boolean setup = false;
 
+	private long maxBetweenFrameNanos;
+
 //	private int maxfps;
 
 
@@ -30,7 +32,7 @@ public abstract class Game implements Runnable {
 	 * @param ki
 	 * @param mi
 	 */
-	public void setup(double timeScale, boolean vSync) {
+	public void setup(double timeScale, boolean vSync, long maxBetweenFrameNanos) {
 		
 		if (this.setup){
 			System.err.println("Game already setup!!!");
@@ -39,6 +41,8 @@ public abstract class Game implements Runnable {
 		this.timeScale = timeScale;
 		
 		this.timer = new DeltaTimer(timeScale);
+		
+		this.maxBetweenFrameNanos = maxBetweenFrameNanos;
 		
 		Display.setVSyncEnabled(vSync);
 
@@ -61,6 +65,9 @@ public abstract class Game implements Runnable {
 			//sleeper.begin();
 			
 			long delta = timer.getDelta();
+			
+			if (delta > maxBetweenFrameNanos)
+				delta = maxBetweenFrameNanos;
 			
 			update((long) (delta*timeScale));
 			
