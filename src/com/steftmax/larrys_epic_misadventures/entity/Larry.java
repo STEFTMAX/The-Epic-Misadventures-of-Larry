@@ -24,10 +24,10 @@ public class Larry extends ControllableEntity {
 			LevelResources lvlResources) {
 		super(map, x, y, 50, 10, ki, mi);
 		walkingAnimationState = new AnimationState(
-				(Animation) lvlResources.getResource(Animations.LARRY_WALKING));
+				(Animation) lvlResources.getResource(Animations.BLAZE_WALKING));
 		standingAnimationState = new AnimationState(
 				(Animation) lvlResources
-						.getResource(Animations.LARRY_BREATHING));
+						.getResource(Animations.BLAZE_BREATHING));
 	}
 
 	@Override
@@ -81,10 +81,6 @@ public class Larry extends ControllableEntity {
 		}
 		
 		newPos.add(velocity, TimeScaler.nanosToSecondsF(delta));
-		
-		while (map.collidesMap(getHitbox())) {
-			newPos.add(0,-1f);
-		}
 
 	}
 }
