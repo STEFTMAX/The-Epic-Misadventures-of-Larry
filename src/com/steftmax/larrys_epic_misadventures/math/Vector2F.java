@@ -2,7 +2,8 @@ package com.steftmax.larrys_epic_misadventures.math;
 
 /**
  * @author pieter3457
- *
+ * This class represents a vector, that can be used as position,
+ * dimension, or for any other purpose.
  */
 public class Vector2F {
 	public float x, y;
@@ -54,7 +55,7 @@ public class Vector2F {
 		set(v.x, v.y);
 	}
 	
-	public float length() {
+	public float toLength() {
 		return (float) Math.sqrt((x*x) + (y*y));
 	}
 
