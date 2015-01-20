@@ -27,10 +27,10 @@ public class AABB {
 	}
 
 	public boolean containsPoint(int x, int y) {
-		if (x <= x) {
-			if (x + width >= x) {
-				if (y <= y) {
-					if (y + height >= y) {
+		if (this.x <= x) {
+			if (this.x + width >= x) {
+				if (this.y <= y) {
+					if (this.y + height >= y) {
 						return true;
 					}
 				}
