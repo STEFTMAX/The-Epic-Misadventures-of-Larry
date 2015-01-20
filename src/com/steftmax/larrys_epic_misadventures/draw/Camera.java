@@ -5,32 +5,35 @@ import java.awt.Graphics2D;
 import org.lwjgl.opengl.GL11;
 
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
+import com.steftmax.larrys_epic_misadventures.input.MouseScrollListener;
 import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.physics.Scale;
-import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
-public class Camera implements Updatable {
+public class Camera implements MouseScrollListener{
 
 	private Vector2F pos = new Vector2F(0, 0);
 	private Scale scale = new Scale(3);
 	private int width, height;
-	private MouseInput mi;
 
 	public Camera(int width, int height, MouseInput mi) {
 		System.out.println(width);
 		System.out.println(height);
 		this.width = width;
 		this.height = height;
-		this.mi = mi;
+		mi.addListener(this);
 	}
 
 	public void lock(Vector2F newPos) {
 		this.pos = newPos;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.larrys_epic_misadventures.input.MouseScrollListener#onScroll(int)
+	 */
 	@Override
-	public void update(long delta) {
-		scale.zoom(1 - mi.getMouseWheelChange() * 0.01);
+	public synchronized void onScroll(int scrollChange) {
+		scale.zoom(1 - scrollChange * 0.001);
 	}
 
 	@Deprecated
@@ -58,10 +61,6 @@ public class Camera implements Updatable {
 
 	public void zoom(double d) {
 		scale.zoom(d);
-	}
-
-	public void setMouseInput(MouseInput mi) {
-		this.mi = mi;
 	}
 
 	public void setPosition(Vector2F position) {

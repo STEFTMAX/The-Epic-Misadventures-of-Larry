@@ -11,7 +11,8 @@ import com.steftmax.larrys_epic_misadventures.update.Updatable;
 public class MouseInput implements Updatable{
 	
 	
-	private HashSet<MouseClickListener> listeners = new HashSet<MouseClickListener>();
+	private HashSet<MouseClickListener> clickListeners = new HashSet<MouseClickListener>();
+	private HashSet<MouseScrollListener> scrollListeners = new HashSet<MouseScrollListener>();
 	
 	public MouseInput(boolean grabbed) {
 
@@ -28,22 +29,33 @@ public class MouseInput implements Updatable{
 		
 	}
 	
-	
+	@Deprecated
 	public int getMouseWheelChange() {
 		return Mouse.getDWheel();
 	}
 	
 	//Listener changing methods
 	public void clearListeners() {
-		listeners.clear();
+		clickListeners.clear();
+		scrollListeners.clear();
 	}
 	
-	public void addListener(MouseClickListener listener) {
-		listeners.add(listener);
+	public void addListener(MouseListener listener) {
+		if (listener instanceof MouseClickListener) {
+			clickListeners.add((MouseClickListener)listener);
+		}
+		if (listener instanceof MouseScrollListener) {
+			scrollListeners.add((MouseScrollListener)listener);
+		}
 	}
 	
-	public void removeListener(MouseClickListener listener) {
-		listeners.remove(listener);
+	public void removeListener(MouseListener listener) {
+		if (listener instanceof MouseClickListener) {
+			clickListeners.remove((MouseClickListener)listener);
+		}
+		if (listener instanceof MouseScrollListener) {
+			scrollListeners.remove((MouseScrollListener)listener);
+		}
 	}
 
 
@@ -53,17 +65,32 @@ public class MouseInput implements Updatable{
 	@Override
 	public void update(long delta) {
 		while (Mouse.next()) {
-			if (Mouse.getEventButton() >= 0) {
+			int button = Mouse.getEventButton();
+			if (button >= 0) {
 				//System.out.println("Mouse clicked at x: " + Mouse.getEventX() + " and y: " + Mouse.getEventY());
 				//TODO seperate click and declick
-				for(MouseClickListener listener :  listeners) {
-					listener.onClick(
-							Mouse.getEventButton()
-							, Mouse.getEventX()
-							, Game.WINDOW.height
-							- Mouse.getEventY());
+				if (Mouse.isButtonDown(button)) {
+					for (MouseClickListener listener : clickListeners) {
+
+						listener.onClick(button, Mouse.getEventX(),
+								Game.WINDOW.height - Mouse.getEventY());
+					}
+				} else {
+					for (MouseClickListener listener : clickListeners) {
+
+						listener.onDeClick(button, Mouse.getEventX(),
+								Game.WINDOW.height - Mouse.getEventY());
+					}
+				}
+
+			}
+			int scroll = Mouse.getEventDWheel();
+			if (scroll != 0) {
+				for (MouseScrollListener listener : scrollListeners) {
+					listener.onScroll(scroll);
 				}
 			}
+			
 		}
 	}
 	
