@@ -20,6 +20,8 @@ public abstract class Game implements Runnable {
 	private boolean setup = false;
 
 	private long maxBetweenFrameNanos;
+	
+	public static int WIDTH, HEIGHT;
 
 //	private int maxfps;
 
@@ -100,6 +102,4 @@ public abstract class Game implements Runnable {
 	public synchronized void start() {
 		new Thread(this).start();
 	}
-
-
 }

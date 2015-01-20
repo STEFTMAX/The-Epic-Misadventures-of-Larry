@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
 import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
-import com.steftmax.larrys_epic_misadventures.physics.Point;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
 /**
