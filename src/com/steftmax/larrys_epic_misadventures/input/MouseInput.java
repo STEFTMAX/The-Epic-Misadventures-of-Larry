@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 
+import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class MouseInput implements Updatable{
@@ -56,7 +57,11 @@ public class MouseInput implements Updatable{
 				//System.out.println("Mouse clicked at x: " + Mouse.getEventX() + " and y: " + Mouse.getEventY());
 				//TODO seperate click and declick
 				for(MouseClickListener listener :  listeners) {
-					listener.onClick(Mouse.getEventButton(), Mouse.getEventX(), Mouse.getEventY());
+					listener.onClick(
+							Mouse.getEventButton()
+							, Mouse.getEventX()
+							, Game.WINDOW.height
+							- Mouse.getEventY());
 				}
 			}
 		}

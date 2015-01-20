@@ -2,6 +2,7 @@ package com.steftmax.larrys_epic_misadventures;
 
 import org.lwjgl.opengl.Display;
 
+import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.update.DeltaTimer;
 
 /**
@@ -21,7 +22,7 @@ public abstract class Game implements Runnable {
 
 	private long maxBetweenFrameNanos;
 	
-	public static int WIDTH, HEIGHT;
+	public static Window WINDOW;
 
 //	private int maxfps;
 
@@ -34,12 +35,14 @@ public abstract class Game implements Runnable {
 	 * @param ki
 	 * @param mi
 	 */
-	public void setup(double timeScale, boolean vSync, long maxBetweenFrameNanos) {
+	public void setup(Window w, double timeScale, boolean vSync, long maxBetweenFrameNanos) {
 		
 		if (this.setup){
 			System.err.println("Game already setup!!!");
 			return;
 		}
+		
+		Game.WINDOW = w;
 		this.timeScale = timeScale;
 		
 		this.timer = new DeltaTimer(timeScale);

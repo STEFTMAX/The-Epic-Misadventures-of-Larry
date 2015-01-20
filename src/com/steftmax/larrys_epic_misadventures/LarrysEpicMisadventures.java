@@ -26,7 +26,6 @@ public class LarrysEpicMisadventures extends Game {
 	private LevelResources currentlyLoaded;
 	private Drawer drawer;
 	private Updater updater;
-	private int loop = 0;
 
 	//Private constructor to disable construction elsewhere than in main method.
 	private LarrysEpicMisadventures() {}
@@ -51,7 +50,7 @@ public class LarrysEpicMisadventures extends Game {
 		updater = new Updater(ki, mi, level);
 		
 		System.out.println("Loading took " +(System.nanoTime() - time1) / 1000000000f + " seconds.");
-		setup(1d, true, 1000000000 / 20);
+		setup(window, 1d, true, 1000000000 / 20);
 	}
 	
 	@Override
@@ -102,7 +101,6 @@ public class LarrysEpicMisadventures extends Game {
 		updater.update(delta);
 
 		drawer.draw();
-		//System.out.println("Looped! Loop: " + loop ++);
 	}
 
 }
