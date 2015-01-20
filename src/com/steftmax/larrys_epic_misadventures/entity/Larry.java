@@ -20,14 +20,18 @@ public class Larry extends ControllableEntity {
 
 	private boolean looksLeft = false;
 
-	public Larry(TiledMap map, float x, float y, KeyboardInput ki, MouseInput mi,
-			LevelResources lvlResources) {
+	
+	// Entities should only keep one animation state object for all animations they hold.
+	public Larry(TiledMap map, float x, float y, KeyboardInput ki,
+			MouseInput mi, LevelResources lvlResources) {
 		super(map, x, y, 50, 10, ki, mi);
 		walkingAnimationState = new AnimationState(
 				(Animation) lvlResources.getResource(Animations.LARRY_WALKING));
 		standingAnimationState = new AnimationState(
 				(Animation) lvlResources
 						.getResource(Animations.LARRY_BREATHING));
+		//Just so there always is a texture in the drawingTexture pointer
+		drawingTexture = standingAnimationState.getCurrentTexture();
 	}
 
 	@Override
@@ -43,44 +47,45 @@ public class Larry extends ControllableEntity {
 
 	@Override
 	public void update(long delta) {
-		
+
 		lastPos.set(newPos);
 
-		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
-				.isLeftDown()))) {
-
-			standingAnimationState.update(delta);
-			drawingTexture = standingAnimationState.getCurrentTexture();
-			walkingAnimationState.stop();
-		} else {
-			standingAnimationState.stop();
-			if (ki.isLeftDown()) {
-
-				newPos.substract(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
-				looksLeft = true;
-				walkingAnimationState.update(delta);
-				drawingTexture = walkingAnimationState.getCurrentTexture();
-
-			}
-
-			if (ki.isRightDown()) {
-
-				newPos.add(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
-				looksLeft = false;
-				walkingAnimationState.update(delta);
-				drawingTexture = walkingAnimationState.getCurrentTexture();
-			}
-		}
-		
 		isOnGround = map.isOnGround(getHitbox());
-		//move this to entity part
+		// move this to entity part
 		if (!isOnGround) {
+
 			velocity.add(0f, 100f, TimeScaler.nanosToSecondsF(delta));
+			newPos.add(velocity, TimeScaler.nanosToSecondsF(delta));
+			
 		} else {
-			velocity.set(0,0);
+			velocity.set(0, 0);
+			if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
+					.isLeftDown()))) {
+				
+
+				standingAnimationState.update(delta);
+				drawingTexture = standingAnimationState.getCurrentTexture();
+				walkingAnimationState.stop();
+			} else {
+				standingAnimationState.stop();
+				if (ki.isLeftDown()) {
+
+					newPos.substract(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
+					looksLeft = true;
+					walkingAnimationState.update(delta);
+					drawingTexture = walkingAnimationState.getCurrentTexture();
+
+				}
+
+				if (ki.isRightDown()) {
+
+					newPos.add(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
+					looksLeft = false;
+					walkingAnimationState.update(delta);
+					drawingTexture = walkingAnimationState.getCurrentTexture();
+				}
+			}
 		}
-		
-		newPos.add(velocity, TimeScaler.nanosToSecondsF(delta));
 
 	}
 }

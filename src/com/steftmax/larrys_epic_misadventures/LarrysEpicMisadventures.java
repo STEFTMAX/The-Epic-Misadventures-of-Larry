@@ -9,6 +9,8 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.map.MapData;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
+import com.steftmax.larrys_epic_misadventures.math.AABB;
+import com.steftmax.larrys_epic_misadventures.menu.Button;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
 import com.steftmax.larrys_epic_misadventures.update.Updater;
 
@@ -76,7 +78,7 @@ public class LarrysEpicMisadventures extends Game {
 		TiledMap map = new TiledMap(data);
 		Level lvl = new Level();
 		
-		
+		new Button(mi, new AABB(0, 0, 100, 100), null);
 		
 		Larry larry = new Larry(map, 32, 34, ki, mi, currentlyLoaded);
 		lvl.addLevelObject(larry);
@@ -100,7 +102,7 @@ public class LarrysEpicMisadventures extends Game {
 		updater.update(delta);
 
 		drawer.draw();
-		System.out.println("Looped! Loop: " + loop ++);
+		//System.out.println("Looped! Loop: " + loop ++);
 	}
 
 }
