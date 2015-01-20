@@ -1,46 +1,55 @@
 package com.steftmax.larrys_epic_misadventures.math;
 
-
 /**
+ * Represents an integer AABB (axis aligned boundary box).
+ * 
  * @author pieter3457
  *
  */
 public class AABB {
-	public Vector2F position;
-	public int width, height;
-	
-	public AABB(float x, float y, int width, int height) {
-		this(new Vector2F(x, y), width, height);
-	}
-	
-	public AABB(Vector2F position, int width, int height) {
-		this.position=  position;
+	public int x, y, width, height;
+
+	public AABB(int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	public void setDimensions(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}
-	
-	public void setPostion(float x, float y) {
-		position.set(x, y);
+
+	public void setPostion(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
-	
-	
-	//TODO performance decision
-	public boolean collides(AABB otherBox) {
-		if (position.x < otherBox.position.x + otherBox.width) {
-			if (otherBox.position.x < position.x + width) {
-				if (position.y < otherBox.position.y + otherBox.height) {
-					if (otherBox.position.y < position.y + height) {
+
+	public boolean containsPoint(int x, int y) {
+		if (x <= x) {
+			if (x + width >= x) {
+				if (y <= y) {
+					if (y + height >= y) {
 						return true;
 					}
 				}
 			}
 		}
-		
+		return false;
+	}
+	
+	public boolean collides(AABB otherBox) {
+		if (x < otherBox.x + otherBox.width) {
+			if (otherBox.x < x + width) {
+				if (y < otherBox.y + otherBox.height) {
+					if (otherBox.y < y + height) {
+						return true;
+					}
+				}
+			}
+		}
+
 		return false;
 	}
 }
