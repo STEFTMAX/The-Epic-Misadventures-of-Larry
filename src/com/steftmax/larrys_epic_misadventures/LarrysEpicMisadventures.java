@@ -1,6 +1,6 @@
 package com.steftmax.larrys_epic_misadventures;
 
-import com.steftmax.larrys_epic_misadventures.draw.Camera;
+import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer;
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
@@ -21,7 +21,7 @@ public class LarrysEpicMisadventures extends Game {
 	public int height = 400;
 	private KeyboardInput ki;
 	private MouseInput mi;
-	private Camera camera;
+	private ChaseCamera camera;
 	private Level level;
 	private LevelResources currentlyLoaded;
 	private Drawer drawer;
@@ -42,7 +42,7 @@ public class LarrysEpicMisadventures extends Game {
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
 		this.mi = new MouseInput(false);
-		this.camera = new Camera(width, height, mi);
+		this.camera = new ChaseCamera(width, height, mi);
 		
 		level = createLevel();
 		
@@ -86,7 +86,7 @@ public class LarrysEpicMisadventures extends Game {
 //			lvl.addLevelObject(new MockEntity());
 //		}
 		
-		camera.lock(larry.newPos);
+		camera.lock(larry.getLockingPosition());
 		return lvl;
 	}
 

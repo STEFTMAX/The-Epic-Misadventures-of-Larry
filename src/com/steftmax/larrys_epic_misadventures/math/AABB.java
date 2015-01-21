@@ -52,4 +52,9 @@ public class AABB {
 
 		return false;
 	}
+	
+	public void setBounds(int x, int y, int width, int height) {
+		setPostion(x, y);
+		setDimensions(width, height);
+	}
 }

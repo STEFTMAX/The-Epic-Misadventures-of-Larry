@@ -6,6 +6,7 @@ import java.util.HashSet;
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
+import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
@@ -83,11 +84,11 @@ public class TiledMap extends LevelObject implements Drawable, Updatable {
 	}
 
 	/**
-	 * @param hitbox
+	 * @param aabb
 	 * @return
 	 */
-	public boolean isOnGround(Rectangle hitbox) {
-		return collidesMap(hitbox.x, hitbox.y - 1, hitbox.width, hitbox.height);
+	public boolean isOnGround(AABB aabb) {
+		return collidesMap(aabb.x, aabb.y - 1, aabb.width, aabb.height);
 	}
 
 	public void correctPosition(Vector2F oldPos, Vector2F newPos, int width, int height) {

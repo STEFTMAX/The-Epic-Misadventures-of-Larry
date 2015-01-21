@@ -1,6 +1,5 @@
 package com.steftmax.larrys_epic_misadventures.math;
 
-import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -95,7 +94,7 @@ public class QuadTree {
 	}
 
 	private int getChildID(Entity ent, int halfwidth, int halfheight) {
-		Rectangle r = ent.getHitbox();
+		AABB r = ent.getHitbox();
 
 		int index = -1;
 		int verticalMidpoint = x + halfwidth;

@@ -6,11 +6,17 @@ package com.steftmax.larrys_epic_misadventures.math;
  * dimension, or for any other purpose.
  */
 public class Vector2F {
-	public float x, y;
+	public float x = 0, y = 0;
 
 	public Vector2F(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * 
+	 */
+	public Vector2F() {
 	}
 
 	public void set(float x, float y) {

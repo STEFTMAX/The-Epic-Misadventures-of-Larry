@@ -25,11 +25,10 @@ import org.lwjgl.opengl.Display;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.math.Vector2F;
-import com.steftmax.larrys_epic_misadventures.physics.Scale;
 
 public class Drawer {
 	
-	private Camera camera;
+	private ChaseCamera camera;
 	@SuppressWarnings("unused")
 	private Window window;
 	private Level level;
@@ -40,7 +39,7 @@ public class Drawer {
 		FRONT, MIDDLE, BACK
 	}
 
-	public Drawer(Level level, Window window, Camera camera){
+	public Drawer(Level level, Window window, ChaseCamera camera){
 		
 		glMatrixMode(GL_PROJECTION);
 		glOrtho(0, window.width, window.height, 0, 1, -1);
@@ -89,7 +88,7 @@ public class Drawer {
 		drawableBuffer.clear();
 	}
 
-	public Camera getCamera() {
+	public ChaseCamera getCamera() {
 		return camera;
 	}
 	
@@ -102,8 +101,8 @@ public class Drawer {
 	}
 
 	public void resetCamera() {
-		camera.setPosition(new Vector2F(0, 0));
-		camera.setScale(new Scale(1));
+		//TODO different camera for in menus and stoff
+		camera.lock(new Vector2F(0, 0));
 	}
 
 }

@@ -15,6 +15,7 @@ import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 public class Larry extends ControllableEntity {
 
 	private static Vector2F walkingSpeed = new Vector2F(100, 0);
+	private Vector2F lockingVector = new Vector2F();
 
 	private AnimationState walkingAnimationState, standingAnimationState;
 
@@ -86,6 +87,16 @@ public class Larry extends ControllableEntity {
 				}
 			}
 		}
+		
+		//this should lock him at the head
+		lockingVector.set(newPos.x + getHitbox().width / 2f, newPos.y - 20);
 
+	}
+
+	/**
+	 * @return
+	 */
+	public Vector2F getLockingPosition() {
+		return lockingVector;
 	}
 }

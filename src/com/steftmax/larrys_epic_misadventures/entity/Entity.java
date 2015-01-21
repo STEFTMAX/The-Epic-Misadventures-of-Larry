@@ -1,10 +1,9 @@
 package com.steftmax.larrys_epic_misadventures.entity;
 
-import java.awt.Rectangle;
-
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
+import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
@@ -15,7 +14,7 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 	protected float HP;
 	protected final int mass, maxHP;
 	protected Texture drawingTexture;
-	protected Rectangle hitbox;
+	protected AABB hitbox;
 	protected TiledMap map;
 	protected boolean isOnGround = false;
 	
@@ -28,11 +27,11 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 		newPos = new Vector2F(x, y);
 		lastPos = new Vector2F(x, y);
 		velocity = new Vector2F(0,0);
-		hitbox = new Rectangle(0, 0, 0, 0);
+		hitbox = new AABB(0, 0, 0, 0);
 		
 	}
 
-	public Rectangle getHitbox() {
+	public AABB getHitbox() {
 		int width = drawingTexture.width;
 		int height = drawingTexture.height;
 
