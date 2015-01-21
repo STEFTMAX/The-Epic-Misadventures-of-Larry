@@ -42,7 +42,7 @@ public class LarrysEpicMisadventures extends Game {
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
 		this.mi = new MouseInput(false);
-		this.camera = new ChaseCamera(width, height, mi);
+		this.camera = new ChaseCamera(mi);
 		
 		level = createLevel();
 		
