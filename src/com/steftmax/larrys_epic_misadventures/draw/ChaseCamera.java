@@ -10,8 +10,8 @@ import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 public class ChaseCamera implements Camera, MouseScrollListener {
 
 	private Vector2F pos = new Vector2F(0, 0);
-	private float zoom = 2.5f;
-	private static final float MAXZOOM = 5f, MINZOOM = 1f;
+	private float zoom = 3f;
+	private static final int MAXZOOM = 5, MINZOOM = 1;
 	private float sensitivity = 0.001f;
 //	private AABB lockingBox;
 
