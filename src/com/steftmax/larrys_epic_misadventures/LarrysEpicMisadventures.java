@@ -17,8 +17,8 @@ import com.steftmax.larrys_epic_misadventures.update.Updater;
 public class LarrysEpicMisadventures extends Game {
 
 	private static final String NAME = "Larry's epic misadventures";
-	public int width = 800;
-	public int height = 400;
+	public int width = 1280;
+	public int height = 720;
 	private KeyboardInput ki;
 	private MouseInput mi;
 	private ChaseCamera camera;
