@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.lwjgl.opengl.Display;
+
 import com.steftmax.larrys_epic_misadventures.entity.Entity;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
@@ -39,7 +41,7 @@ public class Updater implements Updatable {
 	 */
 	@Override
 	public void update(final long delta) {
-
+		Display.setTitle("FPS: " + (int) (1 / TimeScaler.nanosToSecondsF(delta)));
 		g.clear();
 		ki.update(delta);
 		mi.update(delta);
