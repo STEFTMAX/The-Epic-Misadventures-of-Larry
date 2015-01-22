@@ -1,0 +1,12 @@
+Character:
+	Apperance:
+		Height:	32
+		Width:	24
+	Framecount:
+		Idle:	3
+		Walk: 	26 (13 x 2)
+		Jump:	25 (5 x 5)
+
+Map:
+	Apperance:
+		Dimensions: 32 x 32
