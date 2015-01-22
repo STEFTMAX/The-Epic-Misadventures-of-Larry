@@ -80,7 +80,7 @@ public class MouseInput implements Updatable{
 					for (MouseClickListener listener : clickListeners) {
 
 						listener.onDeClick(button, Mouse.getEventX(),
-								Game.WINDOW.height - Mouse.getEventY());
+								getMouseY());
 					}
 				}
 
@@ -91,8 +91,13 @@ public class MouseInput implements Updatable{
 					listener.onScroll(scroll);
 				}
 			}
-			position.set(Mouse.getX(), Mouse.getY());
+			position.set(Mouse.getX(), getMouseY());
 		}
+	}
+	
+	
+	private int getMouseY() {
+		return Game.WINDOW.height - Mouse.getEventY();
 	}
 	
 	public Vector2F getMousePosition() {
