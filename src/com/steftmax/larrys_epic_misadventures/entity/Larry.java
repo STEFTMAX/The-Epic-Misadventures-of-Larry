@@ -34,6 +34,7 @@ public class Larry extends ControllableEntity {
 						.getResource(Animations.LARRY_BREATHING));
 		//Just so there always is a texture in the drawingTexture pointer
 		drawingTexture = standingAnimationState.getCurrentTexture();
+		updateHitbox();
 	}
 
 	@Override
