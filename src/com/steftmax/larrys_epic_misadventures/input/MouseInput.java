@@ -6,6 +6,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 
 import com.steftmax.larrys_epic_misadventures.Game;
+import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class MouseInput implements Updatable{
@@ -13,7 +14,7 @@ public class MouseInput implements Updatable{
 	
 	private HashSet<MouseClickListener> clickListeners = new HashSet<MouseClickListener>();
 	private HashSet<MouseScrollListener> scrollListeners = new HashSet<MouseScrollListener>();
-	
+	public final Vector2F position = new Vector2F();
 	public MouseInput(boolean grabbed) {
 
 		if (!Mouse.isCreated()){
@@ -90,8 +91,16 @@ public class MouseInput implements Updatable{
 					listener.onScroll(scroll);
 				}
 			}
-			
+			position.set(Mouse.getX(), Mouse.getY());
 		}
+	}
+	
+	public Vector2F getMousePosition() {
+		return position;
+	}
+	
+	public void unGrab(){
+		Mouse.setGrabbed(false);
 	}
 	
 }
