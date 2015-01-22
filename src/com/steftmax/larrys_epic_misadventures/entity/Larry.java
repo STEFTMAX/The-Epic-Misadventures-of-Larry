@@ -97,7 +97,7 @@ public class Larry extends ControllableEntity {
 		
 		//this should lock him at the head
 		lockingVector.set(newPos.x + getHitbox().width / 2f, newPos.y - 20);
-
+		updateHitbox();
 	}
 
 	/**

@@ -14,7 +14,7 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 	protected float HP;
 	protected final int mass, maxHP;
 	protected Texture drawingTexture;
-	protected AABB hitbox;
+	public final AABB hitbox;
 	protected TiledMap map;
 	protected boolean isOnGround = false;
 	
@@ -31,12 +31,15 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 		
 	}
 
-	public AABB getHitbox() {
-		int width = drawingTexture.width;
-		int height = drawingTexture.height;
+	protected void updateHitbox() {
+		final int width = drawingTexture.width;
+		final int height = drawingTexture.height;
 
 		hitbox.setBounds((int) newPos.x, (int) newPos.y - height, width, height);
-
+	}
+	
+	@Deprecated
+	public AABB getHitbox() {
 		return hitbox;
 	}
 
