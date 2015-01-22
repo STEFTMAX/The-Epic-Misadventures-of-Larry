@@ -9,14 +9,49 @@ import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 
 public class ChaseCamera implements Camera, MouseScrollListener {
 
+	// TODO maybe create ingame update events for resolution changes
+
 	private Vector2F pos = new Vector2F(0, 0);
 	private float zoom = 3f;
-	private static final int MAXZOOM = 5, MINZOOM = 1;
-	private float sensitivity = 0.001f;
-//	private AABB lockingBox;
+	private final float maxZoom, minZoom;
 
-	public ChaseCamera(MouseInput mi) {
+	// these are perfect like this. for all games.
+	private static final float yLookSensitivity = .56f,
+			xLookSensitivity = .76f;
+
+	private final float sensitivity;
+	private MouseInput mi;
+	private final int standardResolutionHeight, standardResolutionWidth;
+
+	public ChaseCamera(MouseInput mi, int standardResolutionWidth,
+			int standardResolutionHeight, float maxZoom, float minZoom,
+			float scrollSensitivity) {
+
 		mi.addListener(this);
+
+		this.maxZoom = maxZoom;
+		this.minZoom = minZoom;
+		this.standardResolutionWidth = standardResolutionWidth;
+		this.standardResolutionHeight = standardResolutionHeight;
+		this.sensitivity = scrollSensitivity;
+
+		this.mi = mi;
+	}
+
+	private float getScaledZoom(final float zoom) {
+		final float realXZoom = zoom * Game.getWidth()
+				/ standardResolutionWidth;
+		final float realYZoom = zoom * Game.getHeight()
+				/ standardResolutionHeight;
+		return (realXZoom + realYZoom) / 2f;
+	}
+
+	private float getScaledMaxZoom() {
+		return getScaledZoom(maxZoom);
+	}
+
+	private float getScaledMinZoom() {
+		return getScaledZoom(minZoom);
 	}
 
 	/*
@@ -30,21 +65,37 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 	public synchronized void onScroll(int scrollChange) {
 
 		zoom *= 1f + scrollChange * sensitivity;
-		if (zoom > MAXZOOM) {
-			zoom = MAXZOOM;
+
+		final float maxZoom = getScaledMaxZoom();
+		System.out.println(maxZoom);
+		if (zoom > maxZoom) {
+			zoom = maxZoom;
 		}
-		if (zoom < MINZOOM) {
-			zoom = MINZOOM;
+
+		final float minZoom = getScaledMinZoom();
+		System.out.println(minZoom);
+		if (zoom < minZoom) {
+			zoom = minZoom;
 		}
 	}
 
 	@Override
 	public void beginFocus() {
 		GL11.glPushMatrix();
-//		float x = (lockingBox.x + lockingBox.width / 2f);
-//		float y = (lockingBox.y + lockingBox.height / 2f);
-		GL11.glTranslatef(((-zoom * pos.x + (Game.WINDOW.width / 2f))),
-				((-zoom * pos.y + (Game.WINDOW.height / 2f))), 0);
+
+		final int halfWindowWidth = Game.WINDOW.width / 2, halfWindowHeight = Game.WINDOW.height / 2;
+		
+		// TODO clear up this magic code
+		
+		GL11.glTranslatef(
+				(((halfWindowWidth) - zoom
+						* (pos.x + (mi.getMousePosition().x - halfWindowWidth)
+								* xLookSensitivity / zoom))),
+				(((halfWindowHeight)))
+						- zoom
+						* (pos.y + (mi.getMousePosition().y - halfWindowHeight)
+								* yLookSensitivity / zoom), 0);
+
 		GL11.glScalef(zoom, zoom, 0);
 	}
 
@@ -54,10 +105,6 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		GL11.glPopMatrix();
 	}
 
-//	public void lock(AABB boundaryBox) {
-//		this.lockingBox = boundaryBox;
-//	}
-	
 	public void lock(Vector2F position) {
 		pos = position;
 	}

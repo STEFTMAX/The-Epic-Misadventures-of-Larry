@@ -21,34 +21,35 @@ public abstract class Game implements Runnable {
 	private boolean setup = false;
 
 	private long maxBetweenFrameNanos;
-	
+
 	public static Window WINDOW;
 
-//	private int maxfps;
-
+	// private int maxfps;
 
 	/**
 	 * Sets up the Game with the parameters specified
-	 * @param window 
+	 * 
+	 * @param window
 	 * @param camera
 	 * @param timeScale
 	 * @param ki
 	 * @param mi
 	 */
-	public void setup(Window w, double timeScale, boolean vSync, long maxBetweenFrameNanos) {
-		
-		if (this.setup){
+	public void setup(Window w, double timeScale, boolean vSync,
+			long maxBetweenFrameNanos) {
+
+		if (this.setup) {
 			System.err.println("Game already setup!!!");
 			return;
 		}
-		
+
 		Game.WINDOW = w;
 		this.timeScale = timeScale;
-		
+
 		this.timer = new DeltaTimer(timeScale);
-		
+
 		this.maxBetweenFrameNanos = maxBetweenFrameNanos;
-		
+
 		Display.setVSyncEnabled(vSync);
 
 		// Set setup to true
@@ -63,21 +64,20 @@ public abstract class Game implements Runnable {
 					.println("Game not setup, setup the game with method setup(args...) please.");
 			System.exit(-1);
 		}
-		//SleepMachine sleeper = new SleepMachine(maxfps);
+		// SleepMachine sleeper = new SleepMachine(maxfps);
 
 		while (!stop && !Display.isCloseRequested()) {
-			
-			//sleeper.begin();
-			
+
+			// sleeper.begin();
+
 			long delta = timer.getDelta();
-			
+
 			if (delta > maxBetweenFrameNanos)
 				delta = maxBetweenFrameNanos;
-			
-			update((long) (delta*timeScale));
-			
-			//sleeper.end();
-			
+
+			update((long) (delta * timeScale));
+
+			// sleeper.end();
 
 		}
 		destroy();
@@ -97,12 +97,20 @@ public abstract class Game implements Runnable {
 	 * Destroys the game
 	 */
 	public abstract void destroy();
-	
+
 	public synchronized void stop() {
 		stop = true;
 	}
 
 	public synchronized void start() {
 		new Thread(this).start();
+	}
+
+	public static int getWidth() {
+		return WINDOW.width;
+	}
+
+	public static int getHeight() {
+		return WINDOW.height;
 	}
 }
