@@ -7,7 +7,7 @@ import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class KeyboardInput implements Updatable{
 	
-	public int left = Keyboard.KEY_LEFT, right = Keyboard.KEY_RIGHT, up = Keyboard.KEY_UP, down = Keyboard.KEY_DOWN;
+	public int left = Keyboard.KEY_LEFT, right = Keyboard.KEY_RIGHT, up = Keyboard.KEY_UP, down = Keyboard.KEY_DOWN, shift = Keyboard.KEY_LSHIFT;
 
 	private boolean[] keys = new boolean[256];
 
@@ -52,5 +52,9 @@ public class KeyboardInput implements Updatable{
 	
 	public boolean isDownDown() {
 		return keys[down];
+	}
+	
+	public boolean isShiftDown() {
+		return keys[shift];
 	}
 }

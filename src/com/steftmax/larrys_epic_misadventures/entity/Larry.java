@@ -14,7 +14,8 @@ import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 
 public class Larry extends ControllableEntity {
 
-	private static Vector2F walkingSpeed = new Vector2F(100, 0);
+	private static final float sprintMultiplier = 1.45f;
+	private static Vector2F walkingSpeed = new Vector2F(80, 0);
 	private Vector2F lockingVector = new Vector2F();
 
 	private AnimationState walkingAnimationState, standingAnimationState;
@@ -70,19 +71,25 @@ public class Larry extends ControllableEntity {
 			} else {
 				standingAnimationState.stop();
 				if (ki.isLeftDown()) {
-
-					newPos.substract(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
+					long usingDelta = delta; 
+					if (ki.isShiftDown()) {
+						usingDelta *= sprintMultiplier;
+					}
+					newPos.substract(walkingSpeed, TimeScaler.nanosToSecondsF(usingDelta));
 					looksLeft = true;
-					walkingAnimationState.update(delta);
+					walkingAnimationState.update(usingDelta);
 					drawingTexture = walkingAnimationState.getCurrentTexture();
 
 				}
 
 				if (ki.isRightDown()) {
-
-					newPos.add(walkingSpeed, TimeScaler.nanosToSecondsF(delta));
+					long usingDelta = delta; 
+					if (ki.isShiftDown()) {
+						usingDelta *= sprintMultiplier;
+					}
+					newPos.add(walkingSpeed, TimeScaler.nanosToSecondsF(usingDelta));
 					looksLeft = false;
-					walkingAnimationState.update(delta);
+					walkingAnimationState.update(usingDelta);
 					drawingTexture = walkingAnimationState.getCurrentTexture();
 				}
 			}
