@@ -3,7 +3,6 @@ package com.steftmax.larrys_epic_misadventures.map;
 import java.awt.Rectangle;
 
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
-import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
 import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
@@ -29,7 +28,7 @@ public class Tile implements Drawable{
 	 * @see com.steftmax.larrys_epic_misadventures.draw.Drawable#draw(com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority)
 	 */
 	@Override
-	public void draw(DrawPriority dp) {
+	public void draw() {
 		Texture t = type.texture;
 		
 		if (t!= null) {

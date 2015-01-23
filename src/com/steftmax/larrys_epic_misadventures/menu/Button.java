@@ -1,7 +1,7 @@
 package com.steftmax.larrys_epic_misadventures.menu;
 
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
-import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
+
 import com.steftmax.larrys_epic_misadventures.input.MouseClickListener;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
@@ -64,7 +64,7 @@ public class Button implements MouseClickListener, Drawable {
 	 * .larrys_epic_misadventures.draw.Drawer.DrawPriority)
 	 */
 	@Override
-	public void draw(DrawPriority dp) {
+	public void draw() {
 		// TODO Auto-generated method stub
 
 	}

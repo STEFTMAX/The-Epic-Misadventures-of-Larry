@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.util.HashSet;
 
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
-import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
+
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2F;
@@ -33,15 +33,13 @@ public class TiledMap extends LevelObject implements Drawable, Updatable {
 	}
 
 	@Override
-	public void draw(DrawPriority dp) {
-		if (dp != DrawPriority.BACK)
-			return;
+	public void draw() {
 
 		// int width = tileWidth;
 		// int height = tileHeight;
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[y].length; x++) {
-				tiles[y][x].draw(dp);
+				tiles[y][x].draw();
 			}
 		}
 	}

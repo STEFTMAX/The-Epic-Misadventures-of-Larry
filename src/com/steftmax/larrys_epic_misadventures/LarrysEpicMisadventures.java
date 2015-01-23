@@ -12,6 +12,7 @@ import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.menu.Button;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
+import com.steftmax.larrys_epic_misadventures.update.GameState;
 import com.steftmax.larrys_epic_misadventures.update.Updater;
 
 public class LarrysEpicMisadventures extends Game {
@@ -21,7 +22,6 @@ public class LarrysEpicMisadventures extends Game {
 	public int height = 720;
 	private KeyboardInput ki;
 	private MouseInput mi;
-	private ChaseCamera camera;
 	private Level level;
 	private LevelResources currentlyLoaded;
 	private Drawer drawer;
@@ -44,16 +44,12 @@ public class LarrysEpicMisadventures extends Game {
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
 		this.mi = new MouseInput(false);
-		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 1f, 0.001f);
-
 		level = createLevel();
-
-		drawer = new Drawer(level, window, camera);
-		updater = new Updater(ki, mi, level);
+		GameState gs = new GameState(this, level, mi, ki);
 
 		System.out.println("Loading took " + (System.nanoTime() - time1)
 				/ 1000000000f + " seconds.");
-		setup(window, 1d, true, 1000000000 / 20);
+		setup(window, 1d, true, 1000000000L / 20L, gs);
 	}
 
 	@Override
@@ -77,13 +73,11 @@ public class LarrysEpicMisadventures extends Game {
 		new Button(mi, new AABB(0, 0, 100, 100), null);
 
 		Larry larry = new Larry(map, 32, 34, ki, mi, currentlyLoaded);
-		lvl.addLevelObject(larry);
-		lvl.addLevelObject(map);
+		lvl.setPlayer(larry);
+		lvl.setMap(map);
 		// for (int i = 0; i < 32; i ++) {
 		// lvl.addLevelObject(new MockEntity());
 		// }
-
-		camera.lock(larry.getLockingPosition());
 		return lvl;
 	}
 

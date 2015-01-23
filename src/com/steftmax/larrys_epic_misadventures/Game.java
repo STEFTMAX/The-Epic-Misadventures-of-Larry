@@ -4,6 +4,7 @@ import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.update.DeltaTimer;
+import com.steftmax.larrys_epic_misadventures.update.State;
 
 /**
  * The class that should be overridden by any game using this engine.
@@ -23,26 +24,21 @@ public abstract class Game implements Runnable {
 	private long maxBetweenFrameNanos;
 
 	public static Window WINDOW;
+	
+	private State currentState;
 
 	// private int maxfps;
-
-	/**
-	 * Sets up the Game with the parameters specified
-	 * 
-	 * @param window
-	 * @param camera
-	 * @param timeScale
-	 * @param ki
-	 * @param mi
-	 */
+	
 	public void setup(Window w, double timeScale, boolean vSync,
-			long maxBetweenFrameNanos) {
+			long maxBetweenFrameNanos, State beginningState) {
 
 		if (this.setup) {
 			System.err.println("Game already setup!!!");
 			return;
 		}
 
+		this.currentState = beginningState;
+		
 		Game.WINDOW = w;
 		this.timeScale = timeScale;
 
@@ -75,10 +71,9 @@ public abstract class Game implements Runnable {
 			if (delta > maxBetweenFrameNanos)
 				delta = maxBetweenFrameNanos;
 
-			update((long) (delta * timeScale));
-
-			// sleeper.end();
-
+//			update((long) (delta * timeScale));
+			currentState.update((long) (delta * timeScale));
+			currentState.draw();
 		}
 		destroy();
 	}

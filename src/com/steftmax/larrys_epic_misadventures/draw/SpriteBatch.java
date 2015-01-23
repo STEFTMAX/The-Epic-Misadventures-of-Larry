@@ -1,0 +1,56 @@
+package com.steftmax.larrys_epic_misadventures.draw;
+
+/**
+ * @author pieter3457
+ *
+ */
+public class SpriteBatch {
+	
+	
+	
+	public SpriteBatch() {
+		float[] positions = new float[] {1, 1, 1};
+		float[] colors = new float[] {1, 1, 1, 1};
+		 
+		// Interleave the data in the proper format: byte buffer
+		FloatBuffer interleavedBuffer = BufferUtils.createFloatBuffer(positions.length + 
+		        colors.length);
+		interleavedBuffer.put(positions);   // Buffer contents: X, Y, Z
+		interleavedBuffer.put(colors);      // Buffer contents: X, Y, Z, R, G, B, A
+		interleavedBuffer.flip();
+		 
+		// Create a new VAO
+		int vaoID = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(vaoID);
+		 
+		// Create a new VBO for our interleaved data
+		int interVboID = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, interVboID);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, interleavedBuffer, GL15.GL_STATIC_DRAW);
+		 
+		// -- We'll need to know some numbers beforehand, I'm using variables for these
+		// -- so it's easier to see where they come from
+		// There are 4 bytes in a float
+		int floatByteSize = 4;
+		// We use 3 floats for our position
+		int positionFloatCount = 3;
+		// We use 4 floats for our color
+		int colorFloatCount = 4;
+		// So the total amount of floats used is ...
+		int floatsPerVertex = positionFloatCount + colorFloatCount;
+		// So the total amount of bytes per vertex used is (this is the 'stride') ...
+		int vertexFloatSizeInBytes = floatByteSize * floatsPerVertex;
+		 
+		// -- Now we can split our interleaved data over 2 attribute lists
+		// First up is our positional information in list 0
+		GL20.glVertexAttribPointer(0, positionFloatCount, GL11.GL_FLOAT, false, 
+		        vertexFloatSizeInBytes, 0);
+		// Second is our color information in list 1, for this we also need the offset
+		int byteOffset = floatByteSize * positionFloatCount;
+		GL20.glVertexAttribPointer(1, colorFloatCount, GL11.GL_FLOAT, false, 
+		        vertexFloatSizeInBytes, byteOffset);
+		 
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		GL30.glBindVertexArray(0);
+	}
+}

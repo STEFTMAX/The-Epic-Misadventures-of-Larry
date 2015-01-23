@@ -29,17 +29,11 @@ import com.steftmax.larrys_epic_misadventures.math.Vector2F;
 public class Drawer {
 	
 	private ChaseCamera camera;
-	@SuppressWarnings("unused")
-	private Window window;
 	private Level level;
 	//TODO replace with spritebatch
 	private Set<Drawable> drawableBuffer = new HashSet<Drawable>();
-	
-	public enum DrawPriority{
-		FRONT, MIDDLE, BACK
-	}
 
-	public Drawer(Level level, Window window, ChaseCamera camera){
+	public Drawer(Level level, ChaseCamera camera){
 		
 		glMatrixMode(GL_PROJECTION);
 		glOrtho(0, window.width, window.height, 0, 1, -1);
@@ -55,8 +49,6 @@ public class Drawer {
 		glDisable(GL_DEPTH_TEST);
 		
 		glLoadIdentity();
-		
-		this.window = window;
 		this.camera = camera;
 		this.level = level;
 	}

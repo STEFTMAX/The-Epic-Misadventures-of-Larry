@@ -1,6 +1,6 @@
 package com.steftmax.larrys_epic_misadventures.entity;
 
-import com.steftmax.larrys_epic_misadventures.draw.Drawer.DrawPriority;
+
 import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
@@ -38,9 +38,8 @@ public class Larry extends ControllableEntity {
 	}
 
 	@Override
-	public void draw(final DrawPriority dp) {
-		if (dp != DrawPriority.FRONT)
-			return;
+	public void draw() {
+		
 		if (looksLeft) {
 			GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);
 		} else {

@@ -3,34 +3,38 @@ package com.steftmax.larrys_epic_misadventures.level;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.steftmax.larrys_epic_misadventures.entity.ControllableEntity;
+import com.steftmax.larrys_epic_misadventures.entity.Entity;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 
 public class Level {
 
-	private Set<LevelObject> objects = new HashSet<LevelObject>();
+	private Set<Entity> entities = new HashSet<Entity>();
 	public TiledMap map;
+	public ControllableEntity player;
 
 
-	public Set<LevelObject> getLevelObjects() {
-		return objects;
+	public Set<Entity> getLevelObjects() {
+		return entities;
 	}
 
-	public void addLevelObject(LevelObject obj) {
-		obj.setLevel(this);
-
-		
-		if (obj instanceof TiledMap) {
-			map = (TiledMap) obj;
-		}
-		
-		objects.add(obj);
+	public void addLevelEntity(Entity ent) {
+		entities.add(ent);
+	}
+	
+	public void setMap(TiledMap map) {
+		this.map = map;
 	}
 
-	public void removeLevelObject(LevelObject obj) {
-		obj.setLevel(null);
-		if (obj instanceof TiledMap) {
-			map = null;
-		}
-		objects.remove(obj);
+	public void removeEntity(Entity ent) {
+		entities.remove(ent);
+	}
+
+	/**
+	 * @param larry
+	 */
+	public void setPlayer(ControllableEntity player) {
+		this.player = player;
+		addLevelEntity(player);
 	}
 }
