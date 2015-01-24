@@ -1,21 +1,6 @@
-package com.steftmax.larrys_epic_misadventures.update;
+package com.steftmax.larrys_epic_misadventures.state;
 
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +10,16 @@ import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
+import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.entity.Entity;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.math.QuadTree;
+import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
+import com.steftmax.larrys_epic_misadventures.sprite.Texture;
+import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 
 /**
  * @author pieter3457
@@ -41,25 +30,21 @@ public class GameState extends State {
 	public final ChaseCamera camera;
 	public final Level lvl;
 	private final Game g;
-	private KeyboardInput ki;
-	private MouseInput mi;
-
 	public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
+	private Texture aim;
 
 	private final List<Entity> returnObjects = new ArrayList<Entity>();
 
 	public GameState(Game g, Level lvl, MouseInput mi, KeyboardInput ki) {
-
-		this.mi = mi;
-		this.ki = ki;
+		super(mi, ki);
+		
 		this.g = g;
 		this.lvl = lvl;
 		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 		
-		
-		
-		
+		aim = new Texture(new Sprite("/gfx/weapons/crossair_1.png"));
+		aim.load();
 		
 		glMatrixMode(GL_PROJECTION);
 		glOrtho(0, 1280, 720, 0, 1, -1);
@@ -70,7 +55,7 @@ public class GameState extends State {
 		glEnable(GL_BLEND);
 		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		glClearColor(.5f, .5f, .5f, 1);
+		glClearColor(.5f, .5f, .5f, 1f);
 		
 		glDisable(GL_DEPTH_TEST);
 		
@@ -141,9 +126,12 @@ public class GameState extends State {
 		for (Entity ent : lvl.getLevelObjects()) {
 			ent.draw();
 		}
+		
 		camera.endFocus();
 		
-		// Draw hud here I guess
+		GLGraphics.drawTexture(aim, (int) (mi.position.x - Math.floor(aim.height / 2d)),(int) (mi.position.y - Math.floor(aim.height / 2d)));
+		//hud.draw();
+		
 		Display.update();
 	}
 }

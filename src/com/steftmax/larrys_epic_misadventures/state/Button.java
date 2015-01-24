@@ -1,4 +1,4 @@
-package com.steftmax.larrys_epic_misadventures.menu;
+package com.steftmax.larrys_epic_misadventures.state;
 
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 
@@ -50,7 +50,7 @@ public class Button implements MouseClickListener, Drawable {
 	 */
 	@Override
 	public void onDeClick(int button, int x, int y) {
-		if (isClicked && button == 0) {
+		if (isClicked && button == 0) {ddddddddddddddda
 			isClicked = false;
 			System.out.println("released!");
 		}

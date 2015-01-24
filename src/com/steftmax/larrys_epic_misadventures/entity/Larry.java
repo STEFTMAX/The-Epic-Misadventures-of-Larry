@@ -5,7 +5,7 @@ import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources.Animations;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.Animation;
@@ -15,8 +15,8 @@ import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 public class Larry extends ControllableEntity {
 
 	private static final float sprintMultiplier = 1.45f;
-	private static Vector2F walkingSpeed = new Vector2F(80, 0);
-	private Vector2F lockingVector = new Vector2F();
+	private static Vector2 walkingSpeed = new Vector2(80, 0);
+	private Vector2 lockingVector = new Vector2();
 
 	private AnimationState walkingAnimationState, standingAnimationState;
 
@@ -52,7 +52,7 @@ public class Larry extends ControllableEntity {
 
 		lastPos.set(newPos);
 
-		isOnGround = map.isOnGround(getHitbox());
+		isOnGround = map.isOnGround(hitbox);
 		// move this to entity part
 		if (!isOnGround) {
 
@@ -75,7 +75,7 @@ public class Larry extends ControllableEntity {
 					if (ki.isShiftDown()) {
 						usingDelta *= sprintMultiplier;
 					}
-					newPos.substract(walkingSpeed, TimeScaler.nanosToSecondsF(usingDelta));
+					newPos.subtract(walkingSpeed, TimeScaler.nanosToSecondsF(usingDelta));
 					looksLeft = true;
 					walkingAnimationState.update(usingDelta);
 					drawingTexture = walkingAnimationState.getCurrentTexture();
@@ -96,14 +96,14 @@ public class Larry extends ControllableEntity {
 		}
 		
 		//this should lock him at the head
-		lockingVector.set(newPos.x + getHitbox().width / 2f, newPos.y - 20);
 		updateHitbox();
+		lockingVector.set(newPos.x + hitbox.width / 2f, newPos.y - 20);
 	}
 
 	/**
 	 * @return
 	 */
-	public Vector2F getLockingPosition() {
+	public Vector2 getLockingPosition() {
 		return lockingVector;
 	}
 }

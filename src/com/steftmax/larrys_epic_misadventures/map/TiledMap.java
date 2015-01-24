@@ -7,7 +7,7 @@ import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public class TiledMap extends LevelObject implements Drawable, Updatable {
@@ -89,7 +89,7 @@ public class TiledMap extends LevelObject implements Drawable, Updatable {
 		return collidesMap(aabb.x, aabb.y - 1, aabb.width, aabb.height);
 	}
 
-	public void correctPosition(Vector2F oldPos, Vector2F newPos, int width, int height) {
+	public void correctPosition(Vector2 oldPos, Vector2 newPos, int width, int height) {
 		Tile[] possibleCollide = collidingTiles(rect)
 		
 	}

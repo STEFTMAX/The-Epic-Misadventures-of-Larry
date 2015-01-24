@@ -24,7 +24,7 @@ import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 
 public class Drawer {
 	
@@ -94,7 +94,7 @@ public class Drawer {
 
 	public void resetCamera() {
 		//TODO different camera for in menus and stoff
-		camera.lock(new Vector2F(0, 0));
+		camera.lock(new Vector2(0, 0));
 	}
 
 }

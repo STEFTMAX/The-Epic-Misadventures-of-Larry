@@ -3,8 +3,8 @@ package com.steftmax.larrys_epic_misadventures;
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.draw.Window;
+import com.steftmax.larrys_epic_misadventures.state.State;
 import com.steftmax.larrys_epic_misadventures.update.DeltaTimer;
-import com.steftmax.larrys_epic_misadventures.update.State;
 
 /**
  * The class that should be overridden by any game using this engine.

@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
 /**
@@ -15,20 +15,20 @@ import com.steftmax.larrys_epic_misadventures.sprite.Texture;
  */
 public class GLGraphics {
 
-	public static void drawTextureFromLeftBottomFlipped(Texture tex, Vector2F newPos) {
+	public static void drawTextureFromLeftBottomFlipped(Texture tex, Vector2 newPos) {
 		drawTextureFlipped(tex, newPos.x, newPos.y - tex.height);
 	}
 	
-	public static void drawTextureFromLeftBottom(Texture tex, Vector2F p) {
+	public static void drawTextureFromLeftBottom(Texture tex, Vector2 p) {
 		
 		drawTexture(tex, p.x, p.y - tex.height);
 	}
 	
-	public static void drawTexture(Texture tex, Vector2F pos) {
+	public static void drawTexture(Texture tex, Vector2 pos) {
 		drawTexture(tex, pos.x, pos.y);
 	}
 	
-	public static void drawTextureFlipped(Texture tex, Vector2F pos) {
+	public static void drawTextureFlipped(Texture tex, Vector2 pos) {
 		drawTextureFlipped(tex, pos.x, pos.y);
 	}
 	

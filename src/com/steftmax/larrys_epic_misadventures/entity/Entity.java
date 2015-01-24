@@ -4,13 +4,13 @@ import com.steftmax.larrys_epic_misadventures.draw.Drawable;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public abstract class Entity extends LevelObject implements Drawable, Updatable {
 
-	public final Vector2F lastPos, newPos, velocity;
+	public final Vector2 lastPos, newPos, velocity;
 	protected float HP;
 	protected final int mass, maxHP;
 	protected Texture drawingTexture;
@@ -24,9 +24,9 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 		this.HP = maxHP;
 		this.maxHP = maxHP;
 		this.mass = mass;
-		newPos = new Vector2F(x, y);
-		lastPos = new Vector2F(x, y);
-		velocity = new Vector2F(0,0);
+		newPos = new Vector2(x, y);
+		lastPos = new Vector2(x, y);
+		velocity = new Vector2(0,0);
 		hitbox = new AABB(0, 0, 0, 0);
 		
 	}

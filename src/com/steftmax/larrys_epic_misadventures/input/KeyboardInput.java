@@ -5,6 +5,9 @@ import org.lwjgl.input.Keyboard;
 
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
+
+//TODO multiple keys with same function
+//TODO timed precision
 public class KeyboardInput implements Updatable{
 	
 	public int left = Keyboard.KEY_A, right = Keyboard.KEY_D, up = Keyboard.KEY_W, down = Keyboard.KEY_S, shift = Keyboard.KEY_LSHIFT;

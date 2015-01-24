@@ -5,13 +5,13 @@ import org.lwjgl.opengl.GL11;
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseScrollListener;
-import com.steftmax.larrys_epic_misadventures.math.Vector2F;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 
 public class ChaseCamera implements Camera, MouseScrollListener {
 
 	// TODO maybe create ingame update events for resolution changes
 
-	private Vector2F pos = new Vector2F(0, 0);
+	private Vector2 pos = new Vector2(0, 0);
 	private float zoom = 3f;
 	private final float maxZoom, minZoom;
 
@@ -67,13 +67,11 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		zoom *= 1f + scrollChange * sensitivity;
 
 		final float maxZoom = getScaledMaxZoom();
-		System.out.println(maxZoom);
 		if (zoom > maxZoom) {
 			zoom = maxZoom;
 		}
 
 		final float minZoom = getScaledMinZoom();
-		System.out.println(minZoom);
 		if (zoom < minZoom) {
 			zoom = minZoom;
 		}
@@ -105,7 +103,7 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		GL11.glPopMatrix();
 	}
 
-	public void lock(Vector2F position) {
+	public void lock(Vector2 position) {
 		pos = position;
 	}
 

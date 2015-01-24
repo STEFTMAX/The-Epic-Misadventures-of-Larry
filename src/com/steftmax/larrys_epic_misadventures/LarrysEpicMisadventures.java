@@ -1,6 +1,5 @@
 package com.steftmax.larrys_epic_misadventures;
 
-import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
 import com.steftmax.larrys_epic_misadventures.draw.Drawer;
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
@@ -9,10 +8,8 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.map.MapData;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
-import com.steftmax.larrys_epic_misadventures.math.AABB;
-import com.steftmax.larrys_epic_misadventures.menu.Button;
 import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
-import com.steftmax.larrys_epic_misadventures.update.GameState;
+import com.steftmax.larrys_epic_misadventures.state.GameState;
 import com.steftmax.larrys_epic_misadventures.update.Updater;
 
 public class LarrysEpicMisadventures extends Game {
@@ -43,7 +40,8 @@ public class LarrysEpicMisadventures extends Game {
 
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
-		this.mi = new MouseInput(false);
+		this.mi = new MouseInput(false , .8f);
+		mi.grab();
 		level = createLevel();
 		GameState gs = new GameState(this, level, mi, ki);
 
@@ -69,8 +67,6 @@ public class LarrysEpicMisadventures extends Game {
 		MapData data = new MapData(mapStructure, 32, 32);
 		TiledMap map = new TiledMap(data);
 		Level lvl = new Level();
-
-		new Button(mi, new AABB(0, 0, 100, 100), null);
 
 		Larry larry = new Larry(map, 32, 34, ki, mi, currentlyLoaded);
 		lvl.setPlayer(larry);
