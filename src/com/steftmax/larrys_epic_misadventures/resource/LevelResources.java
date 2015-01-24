@@ -104,6 +104,8 @@ public class LevelResources implements Loadable {
 			l.unload();
 		}
 		
+		loadedResources.clear();
+		
 		isLoaded = false;
 	}
 	public Object getResource(Resource r) {
