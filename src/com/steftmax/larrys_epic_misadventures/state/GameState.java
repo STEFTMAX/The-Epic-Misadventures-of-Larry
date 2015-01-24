@@ -43,7 +43,7 @@ public class GameState extends State {
 		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 		
-		aim = new Texture(new Sprite("/gfx/weapons/crossair_1.png"));
+		aim = new Texture(new Sprite("/gfx/weapons/crosshair_1.png"));
 		aim.load();
 		
 		glMatrixMode(GL_PROJECTION);
