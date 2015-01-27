@@ -14,7 +14,7 @@ import com.steftmax.larrys_epic_misadventures.resource.Loadable;
  */
 public class TextureRegion implements Loadable {
 
-	private final Texture tex;
+	public final Texture tex;
 	private final int x, y;
 	public final int width, height;
 
@@ -32,7 +32,7 @@ public class TextureRegion implements Loadable {
 	}
 
 	@Deprecated // TODO the spritebatch should draw it all nubz
-	public void draw(float drawX, float drawY) {
+	public void draw(float drawX, float drawY, int width2, int height2) {
 		tex.bind();
 
 		final float leftX =  (x / (float) tex.width);

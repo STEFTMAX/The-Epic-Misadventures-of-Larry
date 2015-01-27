@@ -15,6 +15,9 @@ public class AABB {
 		this.width = width;
 		this.height = height;
 	}
+	public AABB() {
+		this(0,0,0,0);
+	}
 
 	public void setDimensions(int width, int height) {
 		this.width = width;
@@ -39,18 +42,23 @@ public class AABB {
 		return false;
 	}
 	
-	public boolean collides(AABB otherBox) {
-		if (x < otherBox.x + otherBox.width) {
-			if (otherBox.x < x + width) {
-				if (y < otherBox.y + otherBox.height) {
-					if (otherBox.y < y + height) {
+	public boolean collides(int x, int y, int width, int height) {
+		if (this.x < x + width) {
+			if (x < this.x + this.width) {
+				if (this.y < y + height) {
+					if (y < this.y + this.height) {
 						return true;
 					}
 				}
 			}
 		}
-
 		return false;
+	}
+	
+	public boolean collides(AABB otherBox) {
+		
+		return collides(otherBox.x, otherBox.y, otherBox.width, otherBox.height);
+
 	}
 	
 	public void setBounds(int x, int y, int width, int height) {

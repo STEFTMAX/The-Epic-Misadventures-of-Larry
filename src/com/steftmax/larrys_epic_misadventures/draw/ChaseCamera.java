@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseScrollListener;
+import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2;
 
 public class ChaseCamera implements Camera, MouseScrollListener {
@@ -22,6 +23,7 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 	private final float sensitivity;
 	private MouseInput mi;
 	private final int standardResolutionHeight, standardResolutionWidth;
+	private AABB viewingArea = new AABB();
 
 	public ChaseCamera(MouseInput mi, int standardResolutionWidth,
 			int standardResolutionHeight, float maxZoom, float minZoom,
@@ -82,17 +84,23 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		GL11.glPushMatrix();
 
 		final int halfWindowWidth = Game.WINDOW.width / 2, halfWindowHeight = Game.WINDOW.height / 2;
+
+		final float xMovement = zoom * pos.x
+				+ (mi.getMousePosition().x - halfWindowWidth)
+				* xLookSensitivity;
+		final float yMovement = zoom * pos.y
+				+ (mi.getMousePosition().y - halfWindowHeight)
+				* yLookSensitivity;
+
+		final float xDrift = halfWindowWidth - xMovement;
+		final float yDrift = halfWindowHeight - yMovement;
+
+		viewingArea.setBounds((int) Math.floor(xDrift / zoom),
+				(int) Math.floor(yDrift / zoom),
+				(int) Math.ceil(Game.WINDOW.width),
+				(int) Math.ceil(Game.WINDOW.height));
 		
-		// TODO clear up this magic code
-		
-		GL11.glTranslatef(
-				(((halfWindowWidth) - zoom
-						* (pos.x + (mi.getMousePosition().x - halfWindowWidth)
-								* xLookSensitivity / zoom))),
-				(((halfWindowHeight)))
-						- zoom
-						* (pos.y + (mi.getMousePosition().y - halfWindowHeight)
-								* yLookSensitivity / zoom), 0);
+		GL11.glTranslatef(xDrift, yDrift, 0);
 
 		GL11.glScalef(zoom, zoom, 0);
 	}
@@ -107,7 +115,7 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		pos = position;
 	}
 
-	// public Rectangle getViewArea() {
-	// return new Rectangle(pos.getRoundedX(), pos.getRoundedY(), , arg3)
-	// } TODO
+	public AABB getViewingArea() {
+		return viewingArea;
+	}
 }

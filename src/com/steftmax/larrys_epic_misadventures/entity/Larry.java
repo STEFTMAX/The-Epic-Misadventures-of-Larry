@@ -92,9 +92,9 @@ public class Larry extends ControllableEntity {
 			}
 		}
 
-		// this should lock him at the head
+		//TODO this should lock him at the head and be universal, to be tested 
 		updateHitbox();
-		lockingVector.set(newPos.x + hitbox.width / 2f, newPos.y - 20);
+		lockingVector.set(newPos.x + hitbox.width / 2f, newPos.y + 4);
 	}
 
 	/**
