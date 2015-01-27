@@ -18,5 +18,13 @@ public interface Loadable {
 	 * Unloads the object.
 	 */
 	public void unload();
+	
+	
+	
+	/**
+	 * Determines whether or not the object is loaded.
+	 * @return True if the object is loaded.
+	 */
+	public boolean isLoaded();
 
 }

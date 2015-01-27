@@ -20,23 +20,24 @@ import com.steftmax.larrys_epic_misadventures.resource.loader.ResourceLoader;
 /**
  * 
  * Under layer of all images drawn on the screen.
+ * 
  * @author pieter3457
  *
  */
-public class Texture implements Loadable{
+public class Texture implements Loadable {
 
 	private boolean isLoaded = false;
 	private int id;
 	private String path = null;
-	private int width, height;
-	
+	public int width, height;
+
 	/**
 	 * @return the width of this texture
 	 */
 	public int getWidth() {
 		return width;
 	}
-	
+
 	/**
 	 * @return the height of this texture
 	 */
@@ -55,23 +56,29 @@ public class Texture implements Loadable{
 	public void unbind() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	
+
 	@Override
 	public void unload() {
 		unbind();
 		glDeleteTextures(id);
+		isLoaded = false;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sessionstraps.game_engine.resources.Loadable#load()
 	 */
 	@Override
 	public void load() {
-		
+
+		if (isLoaded) {
+			return;
+		}
+
 		final InputStream is = ResourceLoader.load(path);
 		BufferedImage img;
-		
+
 		try {
 			img = ImageIO.read(is);
 		} catch (Exception e) {
@@ -92,18 +99,33 @@ public class Texture implements Loadable{
 				return;
 			}
 		}
-		
-		
-		
+
 		id = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, id);
 		// Set the parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);// This is for pixelated look :D. Might be using mipmaps in the future of the spirtebach
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);// This
+																			// is
+																			// for
+																			// pixelated
+																			// look
+																			// :D.
+																			// Might
+																			// be
+																			// using
+																			// mipmaps
+																			// in
+																			// the
+																			// future
+																			// of
+																			// the
+																			// spirtebach
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);//ANTI BORDERING :D
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
-		
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);// ANTI
+																					// BORDERING
+																					// :D
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
+
 		this.height = img.getHeight();
 		this.width = img.getWidth();
 
@@ -111,19 +133,22 @@ public class Texture implements Loadable{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.getWidth(),
 				img.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE,
 				decodePNG(img, true));
-		
+
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+		isLoaded = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#isLoaded()
 	 */
 	@Override
 	public boolean isLoaded() {
 		return isLoaded;
 	}
-	
-	
+
 	/**
 	 * This method decodes a bufferedImage
 	 * 
@@ -140,8 +165,8 @@ public class Texture implements Loadable{
 
 		int[] pixels = new int[texture.getWidth() * texture.getHeight()];
 
-		texture.getRGB(0, 0, texture.getWidth(), texture.getHeight(),
-				pixels, 0, texture.getWidth());
+		texture.getRGB(0, 0, texture.getWidth(), texture.getHeight(), pixels,
+				0, texture.getWidth());
 
 		for (int y = 0; y < texture.getHeight(); y++) {
 			for (int x = 0; x < texture.getWidth(); x++) {

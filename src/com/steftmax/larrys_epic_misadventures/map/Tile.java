@@ -29,11 +29,7 @@ public class Tile implements Drawable{
 	 */
 	@Override
 	public void draw() {
-		Texture t = type.texture;
-		
-		if (t!= null) {
-			GLGraphics.drawTexture(t, x, y);
-		}
+		type.sprite.draw(x,y);
 	}
 	
 	public boolean hasSolid() {

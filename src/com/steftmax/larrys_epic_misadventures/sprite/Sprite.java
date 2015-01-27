@@ -1,53 +1,59 @@
 package com.steftmax.larrys_epic_misadventures.sprite;
 
-import com.steftmax.larrys_epic_misadventures.resource.Loadable;
+import com.steftmax.larrys_epic_misadventures.math.Vector2;
 
 /**
+ * TODO actually make this class useful for drawing. For example let it store
+ * color and rotation, scaling, position. Upper layer of all images drawn to the
+ * screen.
  * 
- * Upper layer of all images drawn to the screen.
  * @author pieter3457
  *
  */
-public class Sprite implements Loadable {
+public class Sprite {
+
+	public Vector2 pos;
 	public int width, height;
-	private final Texture tex;
+	public boolean flipX = false, flipY = false;
+	private TextureRegion texReg;
 
 	public Sprite(Texture tex) {
-		this.tex = tex;
-		if (tex.isLoaded()) {
-			this.width = tex.getWidth();
-			this.height = tex.getHeight();
-		}
+		set(new TextureRegion(tex), new Vector2());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.resources.Loadable#load()
-	 */
-	@Override
-	public void load() {
-		
-		tex.load();
+	public Sprite(TextureRegion texReg) {
+		set(texReg, new Vector2());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.resources.Loadable#unload()
-	 */
-	@Override
+	public Sprite() {
+	}
+
+	public void set(TextureRegion region, Vector2 pos) {
+		this.texReg = region;
+		this.width = region.width;
+		this.height = region.height;
+		this.pos = pos;
+	}
+
+	public void set(TextureRegion region, float x, float y) {
+		this.texReg = region;
+		this.width = region.width;
+		this.height = region.height;
+		pos.set(x, y);
+	}
+
 	public void unload() {
-		
-		tex.unload();;
+
+		texReg.unload();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#isLoaded()
-	 */
-	@Override
-	public boolean isLoaded() {
-		return tex.isLoaded();
+
+	public void setDimensions(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
+
+	public void draw(float x, float y) {
+		texReg.draw(x, y);
 	}
 
 }

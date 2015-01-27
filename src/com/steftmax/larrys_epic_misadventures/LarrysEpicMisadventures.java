@@ -8,7 +8,8 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.map.MapData;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
-import com.steftmax.larrys_epic_misadventures.resource.LevelResources;
+import com.steftmax.larrys_epic_misadventures.resource.GameResources;
+import com.steftmax.larrys_epic_misadventures.resource.ResourceManager;
 import com.steftmax.larrys_epic_misadventures.state.GameState;
 import com.steftmax.larrys_epic_misadventures.update.Updater;
 
@@ -20,7 +21,7 @@ public class LarrysEpicMisadventures extends Game {
 	private KeyboardInput ki;
 	private MouseInput mi;
 	private Level level;
-	private LevelResources currentlyLoaded;
+	private ResourceManager currentlyLoaded;
 	private Drawer drawer;
 	private Updater updater;
 
@@ -47,7 +48,7 @@ public class LarrysEpicMisadventures extends Game {
 
 		System.out.println("Loading took " + (System.nanoTime() - time1)
 				/ 1000000000f + " seconds.");
-		setup(window, 1d, true, 1000000000L / 20L, gs);
+		setup(window, 1d, false, 1000000000L / 20L, gs);
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class LarrysEpicMisadventures extends Game {
 	}
 
 	public Level createLevel() {
-		currentlyLoaded = new LevelResources();
+		currentlyLoaded = new GameResources();
 		currentlyLoaded.load();
 		int[][] mapStructure = {
 
@@ -66,7 +67,7 @@ public class LarrysEpicMisadventures extends Game {
 
 		MapData data = new MapData(mapStructure, 32, 32);
 		TiledMap map = new TiledMap(data);
-		Level lvl = new Level();
+		Level lvl = new Level(currentlyLoaded);
 
 		Larry larry = new Larry(map, 32, 34, ki, mi, currentlyLoaded);
 		lvl.setPlayer(larry);

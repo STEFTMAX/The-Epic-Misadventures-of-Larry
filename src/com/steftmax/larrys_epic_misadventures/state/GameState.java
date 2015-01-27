@@ -31,7 +31,7 @@ public class GameState extends State {
 	public final Level lvl;
 	private final Game g;
 	public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
-	private Texture aim;
+	private Sprite aim;
 
 	private final List<Entity> returnObjects = new ArrayList<Entity>();
 
@@ -43,8 +43,8 @@ public class GameState extends State {
 		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 		
-		aim = new Texture(new Sprite("/gfx/weapons/crosshair_1.png"));
-		aim.load();
+		
+		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		
 		glMatrixMode(GL_PROJECTION);
 		glOrtho(0, 1280, 720, 0, 1, -1);
@@ -129,8 +129,9 @@ public class GameState extends State {
 		
 		camera.endFocus();
 		
-		GLGraphics.drawTexture(aim, (int) (mi.position.x - Math.floor(aim.height / 2d)),(int) (mi.position.y - Math.floor(aim.height / 2d)));
+		//GLGraphics.drawScaledTexture(aim, mi.position.x - aim.height,mi.position.y -aim.height, 2);
 		//hud.draw();
+		aim.draw(mi.position.x - aim.height,mi.position.y -aim.height);
 		
 		Display.update();
 	}

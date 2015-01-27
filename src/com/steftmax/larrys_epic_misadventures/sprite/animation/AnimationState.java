@@ -1,6 +1,6 @@
 package com.steftmax.larrys_epic_misadventures.sprite.animation;
 
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
+import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
 
 
 public class AnimationState {
@@ -19,8 +19,8 @@ public class AnimationState {
 		lastNanos = 0;
 	}
 
-	public Texture getCurrentTexture() {
-		return anim.getCurrentTexture(this);
+	public TextureRegion getCurrent() {
+		return anim.getCurrent(this);
 	}
 
 	public void update(long deltaNanos) {

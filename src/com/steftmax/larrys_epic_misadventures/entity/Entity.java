@@ -5,7 +5,7 @@ import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2;
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
+import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
 public abstract class Entity extends LevelObject implements Drawable, Updatable {
@@ -13,7 +13,7 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 	public final Vector2 lastPos, newPos, velocity;
 	protected float HP;
 	protected final int mass, maxHP;
-	protected Texture drawingTexture;
+	protected Sprite sprite;
 	public final AABB hitbox;
 	protected TiledMap map;
 	protected boolean isOnGround = false;
@@ -28,12 +28,12 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 		lastPos = new Vector2(x, y);
 		velocity = new Vector2(0,0);
 		hitbox = new AABB(0, 0, 0, 0);
-		
+		sprite = new Sprite();
 	}
 
 	protected void updateHitbox() {
-		final int width = drawingTexture.width;
-		final int height = drawingTexture.height;
+		final int width = sprite.width;
+		final int height = sprite.height;
 
 		hitbox.setBounds((int) newPos.x, (int) newPos.y - height, width, height);
 	}

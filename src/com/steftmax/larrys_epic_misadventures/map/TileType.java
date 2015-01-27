@@ -1,91 +1,70 @@
 package com.steftmax.larrys_epic_misadventures.map;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import com.steftmax.larrys_epic_misadventures.physics.CollisionChecker;
-import com.steftmax.larrys_epic_misadventures.resource.Loadable;
+import com.steftmax.larrys_epic_misadventures.resource.ResourceManager;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 
-public class TileType implements Loadable {
+
+
+public class TileType {
 
 	//public final Texture texture;
 	public final boolean hasSolid;
-	private final int id;
+	//private final int id;
 	public int height;
 	public int width;
 	
 	
-	private Sprite sprite;
-	Texture texture;
-	//TODO do stuff with the collideMap
-	private boolean[][] collideMap;
+	public final Sprite sprite;
+	
+	public static final String TILESETPATH = "gfx/tiles.png";
 
 	
 	private final static HashMap<Integer, TileType> tileTypes = new HashMap<Integer, TileType>();
 	
-
-	public TileType(int id, boolean hasSolid, Sprite sprite) {
-		this.id = id;
-		this.sprite = sprite;
-		this.hasSolid = hasSolid;
-	}
-
-	
-	
-	/**
-	 * Creates an air Tile
-	 * @param id
-	 * @param width
-	 * @param height
-	 */
-	public TileType(int id, int width, int height) {
-		this.id = id;
-		this.width = width;
-		this.height = height;
-		this.sprite = null;
-		this.hasSolid = false;
-	}
-
-
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.resources.Loadable#load()
-	 */
-	@Override
-	public void load() {
-		if (sprite!= null){
-			texture = new Texture(sprite);
-			texture.load();
-			this.width = texture.width;
-			this.height = texture.height;
-			
-			
-			if (hasSolid) {
-				
-				BufferedImage img = sprite.getImage();
-				collideMap = CollisionChecker.generateCollideMap(img);
-				
-			}
+	public enum Types {
+		GRASSBLOCK_LEFT(0),
+		GRASSBLOCK_MIDDLE(1),
+		GRASSBLOCK_RIGHT(2),
+		DIRTBLOCK_LEFT(3),
+		DIRTBLOCK_MIDDLE(4),
+		DIRTBLOCK_RIGHT(5),
+		PILLAR_TOP(6),
+		PILLAR_MIDDLE(7),
+		PILLAR_BOTTOM(8),
+		STONE(9),
+		STONE_PLATFORM(10);
+		
+		public final int id;
+		public final boolean isSolid;
+		
+		private Types(int id) {
+			this(id, true);
 		}
+		
+		private Types(int id, boolean isSolid) {
+			this.id = id;
+			this.isSolid = isSolid;
+		}
+	}
 	
+	public static void init(ResourceManager rm) {
+		
+		for (Types t : Types.values()) {
+			
+			new TileType(t.id, t.isSolid, new Sprite(rm.getSpriteSheet(TILESETPATH).get(t.id)));
+		}
+		
+	}
+
+	public TileType(int id, boolean hasSolid, Sprite s) {
+		//this.id = id;
+		this.sprite = s;
+		this.hasSolid = hasSolid;
 		tileTypes.put(id, this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.resources.Loadable#unload()
-	 */
-	@Override
-	public void unload() {
-		if (texture != null) texture.unload();
-		
-		tileTypes.remove(id);
-	}
 
 	public static TileType get(int id) {
 		return tileTypes.get(id);
