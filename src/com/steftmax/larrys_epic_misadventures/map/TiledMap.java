@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.util.HashSet;
 
 import com.steftmax.larrys_epic_misadventures.draw.Drawable;
-
+import com.steftmax.larrys_epic_misadventures.draw.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.level.LevelObject;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.math.Vector2;
@@ -33,12 +33,12 @@ public class TiledMap extends LevelObject implements Drawable, Updatable {
 	}
 
 	@Override
-	public void draw() {
+	public void draw(SpriteBatch batch) {
 		// int width = tileWidth;
 		// int height = tileHeight;
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[y].length; x++) {
-				tiles[y][x].draw();
+				tiles[y][x].draw(batch);
 			}
 		}
 

@@ -3,34 +3,33 @@ package com.steftmax.larrys_epic_misadventures.draw;
 import static org.lwjgl.opengl.GL11.*;
 
 import com.steftmax.larrys_epic_misadventures.math.Vector2;
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
+import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
 
 /**
  * @author pieter3457 Class that simplifies drawing in opengl
  */
 public class GLGraphics {
 
-	public static void drawTextureFromLeftBottomFlipped(Texture tex,
+	public static void drawFromLeftBottomFlipped(TextureRegion tex,
 			Vector2 newPos) {
-		drawTextureFlipped(tex, newPos.x, newPos.y - tex.height);
+		drawFlipped(tex, newPos.x, newPos.y - tex.height);
 	}
 
-	public static void drawTextureFromLeftBottom(Texture tex, Vector2 p) {
+	public static void drawFromLeftBottom(TextureRegion tex, Vector2 p) {
 
-		drawTexture(tex, p.x, p.y - tex.height);
+		draw(tex, p.x, p.y - tex.height);
 	}
 
-	public static void drawTexture(Texture tex, Vector2 pos) {
-		drawTexture(tex, pos.x, pos.y);
+	public static void draw(TextureRegion tex, Vector2 pos) {
+		draw(tex, pos.x, pos.y);
 	}
 
-	public static void drawTextureFlipped(Texture tex, Vector2 pos) {
-		drawTextureFlipped(tex, pos.x, pos.y);
+	public static void drawFlipped(TextureRegion tex, Vector2 pos) {
+		drawFlipped(tex, pos.x, pos.y);
 	}
 
-	public static void drawTexture(Texture tex, float x, float y) {
+	public static void draw(TextureRegion tex, float x, float y) {
 
-		tex.bind();
 		int height = tex.height;
 		int width = tex.width;
 
@@ -52,12 +51,9 @@ public class GLGraphics {
 
 		glEnd();
 
-		tex.unbind();
 	}
 
-	public static void drawTextureFlipped(Texture tex, float x, float y) {
-
-		tex.bind();
+	public static void drawFlipped(TextureRegion tex, float x, float y) {
 
 		int height = tex.height;
 		int width = tex.width;
@@ -78,16 +74,15 @@ public class GLGraphics {
 		glTexCoord2f(1, 0); // Right top
 		glVertex2f(x, y);
 		glEnd();
-		tex.unbind();
 	}
 	
-	public static void drawScaledTexture(Texture tex, float x, float y,
+	public static void drawScaled(TextureRegion tex, float x, float y,
 			float scale) {
 		glPushMatrix();
 		glTranslatef(-x, -y, 1f);
 		glScalef(scale, scale, 1);
 		
-		drawTexture(tex, x, y);
+		draw(tex, x, y);
 		
 		glPopMatrix();
 	}

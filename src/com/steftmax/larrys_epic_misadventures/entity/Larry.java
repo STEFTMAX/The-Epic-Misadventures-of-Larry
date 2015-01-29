@@ -1,5 +1,6 @@
 package com.steftmax.larrys_epic_misadventures.entity;
 
+import com.steftmax.larrys_epic_misadventures.draw.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
@@ -34,8 +35,9 @@ public class Larry extends ControllableEntity {
 	}
 
 	@Override
-	public void draw() {
-		sprite.draw(newPos.x, newPos.y);
+	public void draw(SpriteBatch batch) {
+		sprite.flipY = looksLeft;
+		batch.add(sprite);
 		// if (looksLeft) {
 		// GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);
 		// } else {

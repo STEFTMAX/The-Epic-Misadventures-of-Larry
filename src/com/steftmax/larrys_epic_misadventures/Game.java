@@ -2,6 +2,7 @@ package com.steftmax.larrys_epic_misadventures;
 
 import org.lwjgl.opengl.Display;
 
+import com.steftmax.larrys_epic_misadventures.draw.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.state.State;
 import com.steftmax.larrys_epic_misadventures.update.DeltaTimer;
@@ -61,7 +62,7 @@ public abstract class Game implements Runnable {
 			System.exit(-1);
 		}
 		// SleepMachine sleeper = new SleepMachine(maxfps);
-
+		SpriteBatch batch = new SpriteBatch(WINDOW.width, WINDOW.height);
 		while (!stop && !Display.isCloseRequested()) {
 
 			// sleeper.begin();
@@ -73,7 +74,7 @@ public abstract class Game implements Runnable {
 
 //			update((long) (delta * timeScale));
 			currentState.update((long) (delta * timeScale));
-			currentState.draw();
+			currentState.draw(batch);
 		}
 		destroy();
 	}

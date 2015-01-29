@@ -1,6 +1,5 @@
 package com.steftmax.larrys_epic_misadventures;
 
-import com.steftmax.larrys_epic_misadventures.draw.Drawer;
 import com.steftmax.larrys_epic_misadventures.draw.Window;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
@@ -11,7 +10,6 @@ import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 import com.steftmax.larrys_epic_misadventures.resource.GameResources;
 import com.steftmax.larrys_epic_misadventures.resource.ResourceManager;
 import com.steftmax.larrys_epic_misadventures.state.GameState;
-import com.steftmax.larrys_epic_misadventures.update.Updater;
 
 public class LarrysEpicMisadventures extends Game {
 
@@ -22,8 +20,6 @@ public class LarrysEpicMisadventures extends Game {
 	private MouseInput mi;
 	private Level level;
 	private ResourceManager currentlyLoaded;
-	private Drawer drawer;
-	private Updater updater;
 
 	// Private constructor to disable construction elsewhere than in main
 	// method.
@@ -85,10 +81,6 @@ public class LarrysEpicMisadventures extends Game {
 	 */
 	@Override
 	public void update(long delta) {
-
-		updater.update(delta);
-
-		drawer.draw();
 	}
 
 }

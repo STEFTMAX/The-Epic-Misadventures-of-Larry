@@ -17,7 +17,7 @@ public class Sprite {
 	public float scale;
 	public boolean flipX = false, flipY = false;
 	
-	private TextureRegion texReg;
+	public TextureRegion texReg;
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
@@ -54,16 +54,14 @@ public class Sprite {
 		this.height = height;
 	}
 
-	@Deprecated
-	public void draw(float x, float y) {
-		texReg.draw(x, y, width, height);
-	}
-
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
 	public Texture getTexture() {
 		return texReg.tex;
+	}
+	public int getVertexSize() {
+		return 4;
 	}
 
 }
