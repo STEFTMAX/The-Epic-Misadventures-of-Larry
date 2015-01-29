@@ -103,28 +103,12 @@ public class Texture implements Loadable {
 		id = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, id);
 		// Set the parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);// This
-																			// is
-																			// for
-																			// pixelated
-																			// look
-																			// :D.
-																			// Might
-																			// be
-																			// using
-																			// mipmaps
-																			// in
-																			// the
-																			// future
-																			// of
-																			// the
-																			// spirtebach
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);// ANTI
-																					// BORDERING
-																					// :D
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
+		//Anti bordering #1
 
 		this.height = img.getHeight();
 		this.width = img.getWidth();

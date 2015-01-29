@@ -101,8 +101,8 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 				(int) Math.ceil(Game.WINDOW.height));
 		
 		GL11.glTranslatef(xDrift, yDrift, 0);
-
-		GL11.glScalef(zoom, zoom, 0);
+		
+		GL11.glScalef(zoom, zoom, 1f);
 	}
 
 	@Override
