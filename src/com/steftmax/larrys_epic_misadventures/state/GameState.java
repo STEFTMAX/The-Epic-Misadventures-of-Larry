@@ -37,7 +37,7 @@ public class GameState extends State {
 
 		this.g = g;
 		this.lvl = lvl;
-		this.camera = new ChaseCamera(mi, 1280, 720, 10000000f, 2f, 0.001f);
+		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
@@ -102,6 +102,7 @@ public class GameState extends State {
 	 */
 	public void draw(SpriteBatch batch) {
 
+		camera.beginFocus();
 		batch.begin(camera.getViewingArea());
 		lvl.map.draw(batch);
 
@@ -113,9 +114,8 @@ public class GameState extends State {
 		// GLGraphics.drawScaledTexture(aim, mi.position.x -
 		// aim.height,mi.position.y -aim.height, 2);
 		// hud.draw();
-//		batch.add(aim);
+		batch.add(aim);
 		
-		camera.beginFocus();
 		batch.end();
 		camera.endFocus();
 		

@@ -1,10 +1,31 @@
 package com.steftmax.larrys_epic_misadventures.draw;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_COORD_ARRAY;
+import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glDisableClientState;
+import static org.lwjgl.opengl.GL11.glDrawArrays;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnableClientState;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glTexCoordPointer;
+import static org.lwjgl.opengl.GL11.glVertexPointer;
 
 import java.nio.FloatBuffer;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import org.lwjgl.BufferUtils;
 
@@ -18,23 +39,20 @@ import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
  *
  */
 public class SpriteBatch {
-
-	HashMap<Texture, HashSet<Sprite>> drawingBuffer = new HashMap<Texture, HashSet<Sprite>>();
+	
+	Texture lastTexture;
 	AABB aim;
-	boolean directRender = false;
 
 	FloatBuffer vertexData;
-	int vertexSize = 4;
-	
+	int vertexSize = 2;
+
 	FloatBuffer textureData;
 	int textureSize = 2;
 
 	float[] vertices;
 	float[] textures;
-	
-	private int verticesIndex;
-	private int texturesIndex;
-	
+
+	private int index = 0;
 
 	public SpriteBatch(int size, int width, int height) {
 
@@ -55,17 +73,14 @@ public class SpriteBatch {
 
 		vertexData = BufferUtils.createFloatBuffer(size * vertexSize * 4);
 		textureData = BufferUtils.createFloatBuffer(size * textureSize * 4);
-		//four for the four corners of a quad
-		vertices = new float[size*vertexSize * 4];
-		textures = new float[size*textureSize * 4];
+		// four for the four corners of a quad
+		vertices = new float[size * vertexSize * 4];
+		textures = new float[size * textureSize * 4];
 	}
 
 	public void begin(AABB aim) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		this.aim = aim;
-		
-		verticesIndex = 0;
-		texturesIndex = 0;
 	}
 
 	public void add(Sprite s) {
@@ -75,44 +90,12 @@ public class SpriteBatch {
 		}
 
 		Texture t = s.getTexture();
-
-		if (drawingBuffer.containsKey(t)) {
-			drawingBuffer.get(t).add(s);
-		} else {
-
-			// TODO Set pooling
-			final HashSet<Sprite> temp = new HashSet<Sprite>();
-			temp.add(s);
-			drawingBuffer.put(t, temp);
+		if (lastTexture != null && lastTexture != t) {
+			flush();
 		}
-	}
-
-	public void end() {
-		Texture texture = null;
-		for (Texture t : drawingBuffer.keySet()) {
-			texture = t;
-			t.bind();
-			for (Sprite s : drawingBuffer.get(t)) {
-				if (directRender)
-					drawImmediate(s);
-				else
-					addToBuffer(s);
-			}
-			t.unbind();
-		}
-		if (!directRender && texture != null) {
-			texture.bind();
-			drawVertexArrays();
-			texture.unbind();
-		}
-
-		texturesIndex = 0;
-		verticesIndex = 0;
-
-		drawingBuffer.clear();
-	}
-
-	private void addToBuffer(Sprite s) {
+		
+		lastTexture = t;
+		
 		final TextureRegion tr = s.texReg;
 
 		float u1 = tr.left;
@@ -134,89 +117,56 @@ public class SpriteBatch {
 			u2 = tmp;
 		}
 		// XY
-		vertices[verticesIndex ++] = x1;
-		vertices[verticesIndex ++] = y1;
-		textures[texturesIndex ++] = u1;
-		textures[texturesIndex ++] = v1;
-		
-		vertices[verticesIndex ++] = x2;
-		vertices[verticesIndex ++] = y1;
-		textures[texturesIndex ++] = u2;
-		textures[texturesIndex ++] = v1;
+		vertices[index] = x1;
+		textures[index++] = u1;
+		vertices[index] = y1;
+		textures[index++] = v1;
 
-		vertices[verticesIndex ++] = x2;
-		vertices[verticesIndex ++] = y2;
-		textures[texturesIndex ++] = u2;
-		textures[texturesIndex ++] = v2;
+		vertices[index] = x2;
+		textures[index++] = u2;
+		vertices[index] = y1;
+		textures[index++] = v1;
 
-		vertices[verticesIndex ++] = x1;
-		vertices[verticesIndex ++] = y2;
-		textures[texturesIndex ++] = u1;
-		textures[texturesIndex ++] = v2;
+		vertices[index] = x2;
+		textures[index++] = u2;
+		vertices[index] = y2;
+		textures[index++] = v2;
 
+		vertices[index] = x1;
+		textures[index++] = u1;
+		vertices[index] = y2;
+		textures[index++] = v2;
 	}
 
-	
-	
-	private void drawVertexArrays() {
-		vertexData.put(vertices, 0, verticesIndex);
-		vertexData.flip();
+	public void end() {
+		if (index > 0) {
+			flush();
+		}
+	}
+
+	private void flush() {
+		if (index  <= 0) return;
+
+		lastTexture.bind();
 		
-		textureData.put(textures, 0, texturesIndex);
-		textureData.flip();
-		
-		
+		vertexData.put(vertices, 0, index);
+		vertexData.rewind();
+
+		textureData.put(textures, 0, index);
+		textureData.rewind();
+
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-		glVertexPointer(2, 0 , vertexData);
+		glVertexPointer(2, 0, vertexData);
 		glTexCoordPointer(2, 0, textureData);
 
-		glDrawArrays(GL_QUADS, 0, verticesIndex);
+		glDrawArrays(GL_QUADS, 0, index);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		//vertexData.rewind();
-		
+		lastTexture.unbind();
+		index = 0;
+
 	}
-
-	private void drawImmediate(Sprite s) {
-		final TextureRegion tr = s.texReg;
-
-		float xleft = tr.left;
-		float xright = tr.right;
-
-		float ytop = tr.top;
-		float ybottom = tr.bottom;
-
-		float x1 = s.pos.x;
-		float x2 = s.pos.x + s.width;
-		float y1 = s.pos.y;
-		float y2 = s.pos.y + s.height;
-
-		if (s.flipY) {
-
-			float xmiddle = xleft;
-
-			xleft = xright;
-			xright = xmiddle;
-		}
-
-		glBegin(GL_TRIANGLES);
-		glTexCoord2f(xleft, ytop);// Right top
-		glVertex2f(x1, y1);
-		glTexCoord2f(xright, ytop);// Left top
-		glVertex2f(x2, y1);
-		glTexCoord2f(xright, ybottom);// Left bottem
-		glVertex2f(x2, y2);
-
-		glTexCoord2f(xright, ybottom); // Left bottom
-		glVertex2f(x2, y2);
-		glTexCoord2f(xleft, ybottom); // Right bottom
-		glVertex2f(x1, y2);
-		glTexCoord2f(xleft, ytop); // Right top
-		glVertex2f(x1, y1);
-		glEnd();
-	}
-
 }
