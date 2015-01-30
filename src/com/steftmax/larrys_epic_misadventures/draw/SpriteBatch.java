@@ -25,9 +25,16 @@ public class SpriteBatch {
 
 	FloatBuffer vertexData;
 	int vertexSize = 4;
+	
+	FloatBuffer textureData;
+	int textureSize = 2;
 
-	float[] data;
-	private int index;
+	float[] vertices;
+	float[] textures;
+	
+	private int verticesIndex;
+	private int texturesIndex;
+	
 
 	public SpriteBatch(int size, int width, int height) {
 
@@ -47,14 +54,18 @@ public class SpriteBatch {
 		glLoadIdentity();
 
 		vertexData = BufferUtils.createFloatBuffer(size * vertexSize * 4);
+		textureData = BufferUtils.createFloatBuffer(size * textureSize * 4);
 		//four for the four corners of a quad
-		data = new float[size*vertexSize * 4];
+		vertices = new float[size*vertexSize * 4];
+		textures = new float[size*textureSize * 4];
 	}
 
 	public void begin(AABB aim) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		this.aim = aim;
-		index = 0;
+		
+		verticesIndex = 0;
+		texturesIndex = 0;
 	}
 
 	public void add(Sprite s) {
@@ -95,7 +106,8 @@ public class SpriteBatch {
 			texture.unbind();
 		}
 
-		index = 0;
+		texturesIndex = 0;
+		verticesIndex = 0;
 
 		drawingBuffer.clear();
 	}
@@ -122,42 +134,45 @@ public class SpriteBatch {
 			u2 = tmp;
 		}
 		// XY
-		data[index ++] = x1;
-		data[index ++] = y1;
-		data[index ++] = u1;
-		data[index ++] = v1;
+		vertices[verticesIndex ++] = x1;
+		vertices[verticesIndex ++] = y1;
+		textures[texturesIndex ++] = u1;
+		textures[texturesIndex ++] = v1;
 		
-		data[index ++] = x2;
-		data[index ++] = y1;
-		data[index ++] = u2;
-		data[index ++] = v1;
+		vertices[verticesIndex ++] = x2;
+		vertices[verticesIndex ++] = y1;
+		textures[texturesIndex ++] = u2;
+		textures[texturesIndex ++] = v1;
 
-		data[index ++] = x2;
-		data[index ++] = y2;
-		data[index ++] = u2;
-		data[index ++] = v2;
+		vertices[verticesIndex ++] = x2;
+		vertices[verticesIndex ++] = y2;
+		textures[texturesIndex ++] = u2;
+		textures[texturesIndex ++] = v2;
 
-		data[index ++] = x1;
-		data[index ++] = y2;
-		data[index ++] = u1;
-		data[index ++] = v2;
+		vertices[verticesIndex ++] = x1;
+		vertices[verticesIndex ++] = y2;
+		textures[texturesIndex ++] = u1;
+		textures[texturesIndex ++] = v2;
 
 	}
 
 	
 	
 	private void drawVertexArrays() {
-		vertexData.put(data, 0, index);
+		vertexData.put(vertices, 0, verticesIndex);
 		vertexData.flip();
+		
+		textureData.put(textures, 0, texturesIndex);
+		textureData.flip();
 		
 		
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		glVertexPointer(2, 0 , vertexData);
-		glTexCoordPointer(2, 2*4, vertexData);
+		glTexCoordPointer(2, 0, textureData);
 
-		glDrawArrays(GL_QUADS, 0, index);
+		glDrawArrays(GL_QUADS, 0, verticesIndex);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
