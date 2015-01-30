@@ -62,7 +62,7 @@ public abstract class Game implements Runnable {
 			System.exit(-1);
 		}
 		// SleepMachine sleeper = new SleepMachine(maxfps);
-		SpriteBatch batch = new SpriteBatch(WINDOW.width, WINDOW.height);
+		SpriteBatch batch = new SpriteBatch(1024, WINDOW.width, WINDOW.height);
 		while (!stop && !Display.isCloseRequested()) {
 
 			// sleeper.begin();

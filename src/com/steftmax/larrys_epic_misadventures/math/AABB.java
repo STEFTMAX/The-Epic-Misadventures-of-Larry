@@ -65,4 +65,12 @@ public class AABB {
 		setPostion(x, y);
 		setDimensions(width, height);
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "x: " + x + " y: " + y + " width: " + width + " height: " + height;
+	}
 }

@@ -1,7 +1,5 @@
 package com.steftmax.larrys_epic_misadventures.state;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +8,6 @@ import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
-import com.steftmax.larrys_epic_misadventures.draw.GLGraphics;
 import com.steftmax.larrys_epic_misadventures.draw.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.entity.Entity;
 import com.steftmax.larrys_epic_misadventures.entity.Larry;
@@ -19,7 +16,6 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.math.QuadTree;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
 import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 
 /**
@@ -41,7 +37,7 @@ public class GameState extends State {
 
 		this.g = g;
 		this.lvl = lvl;
-		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
+		this.camera = new ChaseCamera(mi, 1280, 720, 10000000f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
@@ -106,7 +102,7 @@ public class GameState extends State {
 	 */
 	public void draw(SpriteBatch batch) {
 
-		batch.begin();//camera.getViewingArea());
+		batch.begin(camera.getViewingArea());
 		lvl.map.draw(batch);
 
 		for (Entity ent : lvl.getLevelObjects()) {
@@ -117,7 +113,7 @@ public class GameState extends State {
 		// GLGraphics.drawScaledTexture(aim, mi.position.x -
 		// aim.height,mi.position.y -aim.height, 2);
 		// hud.draw();
-		//batch.add(aim);
+//		batch.add(aim);
 		
 		camera.beginFocus();
 		batch.end();

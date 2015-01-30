@@ -86,22 +86,22 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 		final int halfWindowWidth = Game.WINDOW.width / 2, halfWindowHeight = Game.WINDOW.height / 2;
 
 		final float xMovement = zoom * pos.x
-				+ (mi.getMousePosition().x - halfWindowWidth)
+				+ ((int) mi.getMousePosition().x - halfWindowWidth)
 				* xLookSensitivity;
 		final float yMovement = zoom * pos.y
-				+ (mi.getMousePosition().y - halfWindowHeight)
+				+ ((int) mi.getMousePosition().y - halfWindowHeight)
 				* yLookSensitivity;
 
 		final float xDrift = halfWindowWidth - xMovement;
 		final float yDrift = halfWindowHeight - yMovement;
 
-		viewingArea.setBounds((int) Math.floor(xDrift / zoom),
-				(int) Math.floor(yDrift / zoom),
+		viewingArea.setBounds((int) Math.floor(xDrift / -zoom),
+				(int) Math.floor(yDrift / -zoom),
 				(int) Math.ceil(Game.WINDOW.width),
 				(int) Math.ceil(Game.WINDOW.height));
 		
 		GL11.glTranslatef(xDrift, yDrift, 0);
-		
+
 		GL11.glScalef(zoom, zoom, 1f);
 	}
 

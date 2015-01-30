@@ -38,7 +38,7 @@ public class TiledMap extends LevelObject implements Drawable, Updatable {
 		// int height = tileHeight;
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[y].length; x++) {
-				tiles[y][x].draw(batch);
+				//tiles[y][x].draw(batch);
 			}
 		}
 
