@@ -52,6 +52,7 @@ public class GameState extends State {
 	 */
 	@Override
 	public void update(long delta) {
+		
 		Display.setTitle("FPS: "
 				+ (int) (1 / TimeScaler.nanosToSecondsF(delta)));
 		qt.clear();

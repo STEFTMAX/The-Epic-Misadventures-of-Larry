@@ -26,6 +26,7 @@ import static org.lwjgl.opengl.GL11.glTexCoordPointer;
 import static org.lwjgl.opengl.GL11.glVertexPointer;
 
 import java.nio.FloatBuffer;
+import java.util.HashSet;
 
 import org.lwjgl.BufferUtils;
 
@@ -82,7 +83,7 @@ public class SpriteBatch {
 		glClear(GL_COLOR_BUFFER_BIT);
 		this.aim = aim;
 	}
-
+	
 	public void add(Sprite s) {
 		if (!aim.collides((int) Math.floor(s.pos.x), (int) Math.floor(s.pos.y),
 				s.width, s.height)) {
@@ -161,10 +162,10 @@ public class SpriteBatch {
 		glVertexPointer(2, 0, vertexData);
 		glTexCoordPointer(2, 0, textureData);
 
-		glDrawArrays(GL_QUADS, 0, index);
+		glDrawArrays(GL_QUADS, 0, index - 1);
 
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		lastTexture.unbind();
 		index = 0;
 

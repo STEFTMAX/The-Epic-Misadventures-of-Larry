@@ -28,7 +28,7 @@ public class Texture implements Loadable {
 
 	private boolean isLoaded = false;
 	private int id;
-	private String path = null;
+	public String path = null;
 	public int width, height;
 
 	/**
