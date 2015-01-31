@@ -37,7 +37,7 @@ public class Larry extends ControllableEntity {
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.flipY = looksLeft;
-		batch.add(sprite);
+		batch.draw(sprite);
 		// if (looksLeft) {
 		// GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);
 		// } else {

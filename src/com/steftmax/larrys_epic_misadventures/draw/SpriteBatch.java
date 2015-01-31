@@ -1,32 +1,8 @@
 package com.steftmax.larrys_epic_misadventures.draw;
 
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_COORD_ARRAY;
-import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glDisableClientState;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnableClientState;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glTexCoordPointer;
-import static org.lwjgl.opengl.GL11.glVertexPointer;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
-import java.util.HashSet;
 
 import org.lwjgl.BufferUtils;
 
@@ -84,7 +60,7 @@ public class SpriteBatch {
 		this.aim = aim;
 	}
 	
-	public void add(Sprite s) {
+	public void draw(Sprite s) {
 		if (!aim.collides((int) Math.floor(s.pos.x), (int) Math.floor(s.pos.y),
 				s.width, s.height)) {
 			return;
@@ -101,7 +77,6 @@ public class SpriteBatch {
 
 		float u1 = tr.left;
 		float u2 = tr.right;
-
 		float v1 = tr.top;
 		float v2 = tr.bottom;
 
@@ -116,6 +91,13 @@ public class SpriteBatch {
 
 			u1 = u2;
 			u2 = tmp;
+		}
+		
+		if (s.flipX) {
+			float tmp = v1;
+			
+			v1 = v2;
+			v2 = tmp;
 		}
 		// XY
 		vertices[index] = x1;

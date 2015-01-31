@@ -115,7 +115,7 @@ public class GameState extends State {
 		// GLGraphics.drawScaledTexture(aim, mi.position.x -
 		// aim.height,mi.position.y -aim.height, 2);
 		// hud.draw();
-		batch.add(aim);
+		batch.draw(aim);
 		
 		batch.end();
 		camera.endFocus();

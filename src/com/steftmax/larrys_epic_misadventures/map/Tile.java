@@ -36,7 +36,7 @@ public class Tile implements Drawable {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.add(s);
+		batch.draw(s);
 	}
 
 	public boolean hasSolid() {
