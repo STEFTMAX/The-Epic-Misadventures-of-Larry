@@ -13,6 +13,7 @@ public class MouseInput implements Updatable {
 
 	private HashSet<MouseClickListener> clickListeners = new HashSet<MouseClickListener>();
 	private HashSet<MouseScrollListener> scrollListeners = new HashSet<MouseScrollListener>();
+	private HashSet<MousePositionListener> positionListeners = new HashSet<MousePositionListener>();
 	public final Vector2 position = new Vector2();
 	private float sensitivity;
 
@@ -46,6 +47,7 @@ public class MouseInput implements Updatable {
 	public void clearListeners() {
 		clickListeners.clear();
 		scrollListeners.clear();
+		positionListeners.clear();
 	}
 
 	public void addListener(MouseListener listener) {
@@ -55,6 +57,9 @@ public class MouseInput implements Updatable {
 		if (listener instanceof MouseScrollListener) {
 			scrollListeners.add((MouseScrollListener) listener);
 		}
+		if (listener instanceof MousePositionListener) {
+			positionListeners.add((MousePositionListener) listener);
+		}
 	}
 
 	public void removeListener(MouseListener listener) {
@@ -63,6 +68,9 @@ public class MouseInput implements Updatable {
 		}
 		if (listener instanceof MouseScrollListener) {
 			scrollListeners.remove((MouseScrollListener) listener);
+		}
+		if (listener instanceof MousePositionListener) {
+			positionListeners.remove((MousePositionListener) listener);
 		}
 	}
 
@@ -74,7 +82,7 @@ public class MouseInput implements Updatable {
 	@Override
 	public void update(long delta) {
 		while (Mouse.next()) {
-			int button = Mouse.getEventButton();
+			final int button = Mouse.getEventButton();
 			if (button >= 0) {
 				// System.out.println("Mouse clicked at x: " + Mouse.getEventX()
 				// + " and y: " + Mouse.getEventY());
@@ -94,7 +102,7 @@ public class MouseInput implements Updatable {
 				}
 
 			}
-			int scroll = Mouse.getEventDWheel();
+			final int scroll = Mouse.getEventDWheel();
 			if (scroll != 0) {
 				for (MouseScrollListener listener : scrollListeners) {
 					listener.onScroll(scroll);
@@ -123,6 +131,9 @@ public class MouseInput implements Updatable {
 		}
 		if (!Mouse.isGrabbed()) {
 			position.set(Mouse.getX(), getMouseY());
+		}
+		for (MousePositionListener listener : positionListeners) {
+			listener.onPositionUpdate((int) position.x, (int) position.y);
 		}
 	}
 
