@@ -66,9 +66,9 @@ public class MenuState extends State {
 		mi.update(delta);
 		if (play.consumePressed()) {
 
+			deleteResources();
 			game.changeState(new GameState(game, LarrysEpicMisadventures
 					.createLevel(ki, mi), mi, ki));
-			deleteResources();
 			
 			return;
 		}
