@@ -52,8 +52,6 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 		if (button == 0) {
 			if (boundaryBox.containsPoint(x, y)) {
 				this.state = State.PRESS;
-				System.out.println("pressed!");
-				// TODO perform the action
 			}
 		}
 	}

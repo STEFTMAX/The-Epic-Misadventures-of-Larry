@@ -26,23 +26,21 @@ public class GameState extends State {
 
 	public final ChaseCamera camera;
 	public final Level lvl;
-	private final Game g;
 	public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
 	private Sprite aim;
 
 	private final List<Entity> returnObjects = new ArrayList<Entity>();
 
-	public GameState(Game g, Level lvl, MouseInput mi, KeyboardInput ki) {
-		super(mi, ki);
-
-		this.g = g;
+	public GameState(Game game, Level lvl, MouseInput mi, KeyboardInput ki) {
+		super(game, mi, ki);
+		mi.grab();
+		
 		this.lvl = lvl;
 		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
-		aim.setDimensions(aim.width * 2, aim.height * 2);
 	}
 
 	/*
@@ -121,5 +119,14 @@ public class GameState extends State {
 		camera.endFocus();
 		
 		Display.update();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.larrys_epic_misadventures.state.State#deleteResources()
+	 */
+	@Override
+	public void deleteResources() {
+		// TODO Auto-generated method stub
+		
 	}
 }

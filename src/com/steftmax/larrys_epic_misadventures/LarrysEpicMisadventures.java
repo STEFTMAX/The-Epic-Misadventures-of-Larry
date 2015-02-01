@@ -9,7 +9,7 @@ import com.steftmax.larrys_epic_misadventures.map.MapData;
 import com.steftmax.larrys_epic_misadventures.map.TiledMap;
 import com.steftmax.larrys_epic_misadventures.resource.GameResources;
 import com.steftmax.larrys_epic_misadventures.resource.ResourceManager;
-import com.steftmax.larrys_epic_misadventures.state.GameState;
+import com.steftmax.larrys_epic_misadventures.state.MenuState;
 
 public class LarrysEpicMisadventures extends Game {
 
@@ -37,14 +37,15 @@ public class LarrysEpicMisadventures extends Game {
 
 		Window window = new Window(width, height, NAME, null);
 		this.ki = new KeyboardInput();
-		this.mi = new MouseInput(false , .8f);
-		mi.grab();
-		level = createLevel();
-		GameState gs = new GameState(this, level, mi, ki);
-
+		this.mi = new MouseInput(false , 1f);
+//		Level level = createLevel();
+//		GameState gs = new GameState(this, level, mi, ki);
+		MenuState ms = new MenuState(this, mi, ki);
+		
+		
 		System.out.println("Loading took " + (System.nanoTime() - time1)
 				/ 1000000000f + " seconds.");
-		setup(window, 1d, false, 1000000000L / 20L, gs);
+		setup(window, 1d, false, 1000000000L / 20L, ms);
 	}
 
 	@Override

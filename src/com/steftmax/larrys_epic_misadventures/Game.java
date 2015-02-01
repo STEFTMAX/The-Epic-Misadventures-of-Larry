@@ -71,8 +71,6 @@ public abstract class Game implements Runnable {
 
 			if (delta > maxBetweenFrameNanos)
 				delta = maxBetweenFrameNanos;
-
-//			update((long) (delta * timeScale));
 			currentState.update((long) (delta * timeScale));
 			currentState.draw(batch);
 		}
@@ -100,6 +98,10 @@ public abstract class Game implements Runnable {
 
 	public synchronized void start() {
 		new Thread(this).start();
+	}
+	
+	public synchronized void changeState(State newState) {
+		currentState = newState;
 	}
 
 	public static int getWidth() {

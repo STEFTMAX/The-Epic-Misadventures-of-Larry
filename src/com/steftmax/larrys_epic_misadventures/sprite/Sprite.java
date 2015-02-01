@@ -14,17 +14,25 @@ public class Sprite {
 
 	public Vector2 pos;
 	public int width, height;
-	public float scale;
+	public float scaleX = 1, scaleY = 1;
 	public boolean flipX = false, flipY = false;
-	
+
 	public TextureRegion texReg;
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
 	}
 
+	public Sprite(Texture tex, float x, float y) {
+		set(new TextureRegion(tex), new Vector2(x, y));
+	}
+
 	public Sprite(TextureRegion texReg) {
 		set(texReg, new Vector2());
+	}
+
+	public Sprite(TextureRegion texReg, float x, float y) {
+		set(texReg, new Vector2(x, y));
 	}
 
 	public Sprite() {
@@ -49,17 +57,20 @@ public class Sprite {
 		texReg.unload();
 	}
 
-	public void setDimensions(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public void setScale(float scale) {
+		this.scaleX = scale;
+		this.scaleY = scale;
 	}
 
-	public void setScale(float scale) {
-		this.scale = scale;
+	public void setScale(float scaleX, float scaleY) {
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
 	}
+
 	public Texture getTexture() {
 		return texReg.tex;
 	}
+
 	public int getVertexSize() {
 		return 4;
 	}

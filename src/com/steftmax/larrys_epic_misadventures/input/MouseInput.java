@@ -6,6 +6,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 
 import com.steftmax.larrys_epic_misadventures.Game;
+import com.steftmax.larrys_epic_misadventures.draw.Camera;
 import com.steftmax.larrys_epic_misadventures.math.Vector2;
 import com.steftmax.larrys_epic_misadventures.update.Updatable;
 
@@ -16,6 +17,7 @@ public class MouseInput implements Updatable {
 	private HashSet<MousePositionListener> positionListeners = new HashSet<MousePositionListener>();
 	public final Vector2 position = new Vector2();
 	private float sensitivity;
+	private Camera camera;
 
 	public MouseInput() {
 		this(false, 1f);
@@ -87,17 +89,20 @@ public class MouseInput implements Updatable {
 				// System.out.println("Mouse clicked at x: " + Mouse.getEventX()
 				// + " and y: " + Mouse.getEventY());
 				// TODO seperate click and declick
+				updateMousePosition(Mouse.getEventX(), Game.WINDOW.height
+						- Mouse.getEventY());
 				if (Mouse.isButtonDown(button)) {
+
 					for (MouseClickListener listener : clickListeners) {
 
-						listener.onClick(button, Mouse.getEventX(),
-								Game.WINDOW.height - Mouse.getEventY());
+						listener.onClick(button, (int) position.x,
+								(int) position.y);
 					}
 				} else {
 					for (MouseClickListener listener : clickListeners) {
 
-						listener.onDeClick(button, Mouse.getEventX(),
-								getMouseY());
+						listener.onDeClick(button, (int) position.x,
+								(int) position.y);
 					}
 				}
 
@@ -130,19 +135,28 @@ public class MouseInput implements Updatable {
 			}
 		}
 		if (!Mouse.isGrabbed()) {
-			position.set(Mouse.getX(), getMouseY());
+			updateMousePosition(Mouse.getX(), Game.WINDOW.height - Mouse.getY());
 		}
 		for (MousePositionListener listener : positionListeners) {
 			listener.onPositionUpdate((int) position.x, (int) position.y);
 		}
 	}
 
-	private int getMouseY() {
-		return Game.WINDOW.height - Mouse.getEventY();
-	}
-
 	public Vector2 getMousePosition() {
 		return position;
+	}
+
+	private void updateMousePosition(int mouseX, int mouseY) {
+		if (camera != null) {
+			position.set(
+				(mouseX + camera.getX() * camera.getScale())
+						/ camera.getScale(),
+				(mouseY + camera.getY() * camera.getScale())
+						/ camera.getScale());
+		} else {
+			position.set(mouseX, mouseY);
+		}
+		
 	}
 
 	public void unGrab() {
@@ -151,5 +165,12 @@ public class MouseInput implements Updatable {
 
 	public void grab() {
 		Mouse.setGrabbed(true);
+	}
+
+	/**
+	 * @param cam
+	 */
+	public void setCamera(Camera camera) {
+		this.camera = camera;
 	}
 }

@@ -30,6 +30,7 @@ public class SpriteBatch {
 	float[] textures;
 
 	private int index = 0;
+	private boolean drawing = false, containmentTest = false;
 
 	public SpriteBatch(int size, int width, int height) {
 
@@ -56,12 +57,23 @@ public class SpriteBatch {
 	}
 
 	public void begin(AABB aim) {
+		drawing = true;
 		glClear(GL_COLOR_BUFFER_BIT);
 		this.aim = aim;
+		containmentTest = aim != null;
+	}
+	
+	public void begin() {
+		begin(null);
 	}
 	
 	public void draw(Sprite s) {
-		if (!aim.collides((int) Math.floor(s.pos.x), (int) Math.floor(s.pos.y),
+		if (!drawing) {
+			System.err.println("Must call begin before drawing!");
+			return;
+		}
+		
+		if (containmentTest && !aim.collides((int) Math.floor(s.pos.x), (int) Math.floor(s.pos.y),
 				s.width, s.height)) {
 			return;
 		}
@@ -80,11 +92,12 @@ public class SpriteBatch {
 		float v1 = tr.top;
 		float v2 = tr.bottom;
 
+		
 		float x1 = s.pos.x;
-		float x2 = s.pos.x + s.width;
+		float x2 = s.pos.x + s.width * s.scaleX;
 		float y1 = s.pos.y;
-		float y2 = s.pos.y + s.height;
-
+		float y2 = s.pos.y + s.height * s.scaleY;
+		
 		if (s.flipY) {
 
 			float tmp = u1;
@@ -99,6 +112,7 @@ public class SpriteBatch {
 			v1 = v2;
 			v2 = tmp;
 		}
+		
 		// XY
 		vertices[index] = x1;
 		textures[index++] = u1;
@@ -122,12 +136,11 @@ public class SpriteBatch {
 	}
 
 	public void end() {
-		if (index > 0) {
-			flush();
-		}
+		flush();
+		drawing = false;
 	}
 
-	private void flush() {
+	public void flush() {
 		if (index  <= 0) return;
 
 		lastTexture.bind();
@@ -151,5 +164,10 @@ public class SpriteBatch {
 		lastTexture.unbind();
 		index = 0;
 
+	}
+	
+	public void translate(float x, float y) {
+		flush();
+		glTranslatef(x, y, 0);
 	}
 }
