@@ -118,4 +118,28 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 	public AABB getViewingArea() {
 		return viewingArea;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.larrys_epic_misadventures.draw.Camera#getScale()
+	 */
+	@Override
+	public float getScale() {
+		return zoom;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.larrys_epic_misadventures.draw.Camera#getX()
+	 */
+	@Override
+	public float getX() {
+		return viewingArea.x;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.larrys_epic_misadventures.draw.Camera#getY()
+	 */
+	@Override
+	public float getY() {
+		return viewingArea.y;
+	}
 }

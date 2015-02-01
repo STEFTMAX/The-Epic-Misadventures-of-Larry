@@ -36,7 +36,7 @@ public class MenuState extends State {
 		
 		resources.load();
 		
-		background = new Sprite(resources.getTexture("gfx/title.png"), 140, 50);
+		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 		
 		final Texture sheet = resources.getTexture("gfx/sheet_buttons.png");
 		final int width = 64, height = 16;
