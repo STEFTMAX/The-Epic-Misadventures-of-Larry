@@ -3,6 +3,7 @@ package com.steftmax.larrys_epic_misadventures.state;
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.larrys_epic_misadventures.Game;
+import com.steftmax.larrys_epic_misadventures.LarrysEpicMisadventures;
 import com.steftmax.larrys_epic_misadventures.draw.Camera;
 import com.steftmax.larrys_epic_misadventures.draw.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.draw.StaticCamera;
@@ -20,24 +21,24 @@ import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
 public class MenuState extends State {
 
 	private final Button play, settings;
-	private Game game;
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
 
-	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 250, SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 250;
+	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 250,
+			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 250;
 
 	public MenuState(Game game, MouseInput mi, KeyboardInput ki) {
 		super(game, mi, ki);
 		mi.unGrab();
-		
+
 		cam = new StaticCamera(2f, 0, 0);
 		mi.setCamera(cam);
-		
+
 		resources.load();
-		
+
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
-		
+
 		final Texture sheet = resources.getTexture("gfx/sheet_buttons.png");
 		final int width = 64, height = 16;
 
@@ -45,11 +46,13 @@ public class MenuState extends State {
 				sheet, 0, 2 * height, width, height), new TextureRegion(sheet,
 				0, height, width, height), new TextureRegion(sheet, 0, 0,
 				width, height));
+
+		settings = new Button(mi, SETTINGSBUTTON_X, SETTINGSBUTTON_Y,
+				new TextureRegion(sheet, width, 2 * height, width, height),
+				new TextureRegion(sheet, width, height, width, height),
+				new TextureRegion(sheet, width, 0, width, height));
 		
-		settings = new Button(mi, SETTINGSBUTTON_X, SETTINGSBUTTON_Y, new TextureRegion(
-				sheet, width, 2 * height, width, height), new TextureRegion(sheet,
-				width, height, width, height), new TextureRegion(sheet, width, 0,
-				width, height));
+		Display.setVSyncEnabled(true);
 	}
 
 	/*
@@ -62,9 +65,14 @@ public class MenuState extends State {
 		ki.update(delta);
 		mi.update(delta);
 		if (play.consumePressed()) {
-			System.out.println("play!");
+
+			game.changeState(new GameState(game, LarrysEpicMisadventures
+					.createLevel(ki, mi), mi, ki));
+			deleteResources();
+			
+			return;
 		}
-		
+
 		if (settings.consumePressed()) {
 			game.stop();
 		}
@@ -79,22 +87,24 @@ public class MenuState extends State {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		
+
 		cam.beginFocus();
 		batch.begin();
-		
+
 		batch.draw(background);
-		
+
 		play.draw(batch);
 		settings.draw(batch);
-		
+
 		batch.end();
 		cam.endFocus();
-		
+
 		Display.update();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.steftmax.larrys_epic_misadventures.state.State#deleteResources()
 	 */
 	@Override

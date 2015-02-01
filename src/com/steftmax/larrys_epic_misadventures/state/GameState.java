@@ -16,7 +16,6 @@ import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.math.QuadTree;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
-import com.steftmax.larrys_epic_misadventures.update.TimeScaler;
 
 /**
  * @author pieter3457
@@ -41,6 +40,8 @@ public class GameState extends State {
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
+		mi.position.set(0, 0);
+		Display.setVSyncEnabled(false);
 	}
 
 	/*
@@ -51,11 +52,10 @@ public class GameState extends State {
 	@Override
 	public void update(long delta) {
 		
-		Display.setTitle("FPS: "
-				+ (int) (1 / TimeScaler.nanosToSecondsF(delta)));
 		qt.clear();
 		ki.update(delta);
 		mi.update(delta);
+		aim.set(mi.position.x- aim.width, mi.position.y - aim.height);
 
 		Set<Entity> set = lvl.getLevelObjects();
 
@@ -108,15 +108,13 @@ public class GameState extends State {
 		for (Entity ent : lvl.getLevelObjects()) {
 			ent.draw(batch);
 		}
-
-
-		// GLGraphics.drawScaledTexture(aim, mi.position.x -
-		// aim.height,mi.position.y -aim.height, 2);
-		// hud.draw();
+		batch.flush();
+		
+		camera.endFocus();
+		
 		batch.draw(aim);
 		
 		batch.end();
-		camera.endFocus();
 		
 		Display.update();
 	}

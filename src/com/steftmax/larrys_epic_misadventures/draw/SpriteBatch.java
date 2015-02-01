@@ -56,6 +56,7 @@ public class SpriteBatch {
 		textures = new float[size * textureSize * 4];
 	}
 
+	//TODO conainmentTest upgrade
 	public void begin(AABB aim) {
 		drawing = true;
 		glClear(GL_COLOR_BUFFER_BIT);

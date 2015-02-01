@@ -25,11 +25,14 @@ public abstract class Game implements Runnable {
 	private long maxBetweenFrameNanos;
 
 	public static Window WINDOW;
-	
+
 	private State currentState;
+	long renderCall = 0;
+
+	private long avgFrameTime = 0;
 
 	// private int maxfps;
-	
+
 	public void setup(Window w, double timeScale, boolean vSync,
 			long maxBetweenFrameNanos, State beginningState) {
 
@@ -39,7 +42,7 @@ public abstract class Game implements Runnable {
 		}
 
 		this.currentState = beginningState;
-		
+
 		Game.WINDOW = w;
 		this.timeScale = timeScale;
 
@@ -66,8 +69,10 @@ public abstract class Game implements Runnable {
 		while (!stop && !Display.isCloseRequested()) {
 
 			// sleeper.begin();
-
+			renderCall++;
 			long delta = timer.getDelta();
+			avgFrameTime += (delta - avgFrameTime) / renderCall;
+			Display.setTitle(avgFrameTime + "");
 
 			if (delta > maxBetweenFrameNanos)
 				delta = maxBetweenFrameNanos;
@@ -99,8 +104,10 @@ public abstract class Game implements Runnable {
 	public synchronized void start() {
 		new Thread(this).start();
 	}
-	
+
 	public synchronized void changeState(State newState) {
+		avgFrameTime = 0;
+		renderCall = 0;
 		currentState = newState;
 	}
 

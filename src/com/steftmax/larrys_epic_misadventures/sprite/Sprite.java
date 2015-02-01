@@ -74,5 +74,15 @@ public class Sprite {
 	public int getVertexSize() {
 		return 4;
 	}
+	public void set(Vector2 position) {
+		this.pos.set(position);
+	}
+	
+	public void lock (Vector2 position) {
+		this.pos = position;
+	}
+	public void set(float x, float y) {
+		pos.set(x, y);
+	}
 
 }
