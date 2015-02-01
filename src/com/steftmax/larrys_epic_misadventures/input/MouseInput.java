@@ -45,6 +45,12 @@ public class MouseInput implements Updatable {
 		return Mouse.getDWheel();
 	}
 
+	public void clear() {
+		position.set(0, 0);
+		camera = null;
+		clearListeners();
+	}
+
 	// Listener changing methods
 	public void clearListeners() {
 		clickListeners.clear();
@@ -88,9 +94,11 @@ public class MouseInput implements Updatable {
 			if (button >= 0) {
 				// System.out.println("Mouse clicked at x: " + Mouse.getEventX()
 				// + " and y: " + Mouse.getEventY());
-				// TODO seperate click and declick
-				updateMousePosition(Mouse.getEventX(), Game.WINDOW.height
-						- Mouse.getEventY());
+				
+				if (!Mouse.isGrabbed())
+					updateMousePosition(Mouse.getEventX(), Game.WINDOW.height
+							- Mouse.getEventY());
+				
 				if (Mouse.isButtonDown(button)) {
 
 					for (MouseClickListener listener : clickListeners) {
@@ -149,14 +157,14 @@ public class MouseInput implements Updatable {
 	private void updateMousePosition(int mouseX, int mouseY) {
 		if (camera != null) {
 			position.set(
-				(mouseX + camera.getX() * camera.getScale())
-						/ camera.getScale(),
-				(mouseY + camera.getY() * camera.getScale())
-						/ camera.getScale());
+					(mouseX + camera.getX() * camera.getScale())
+							/ camera.getScale(), (mouseY + camera.getY()
+							* camera.getScale())
+							/ camera.getScale());
 		} else {
 			position.set(mouseX, mouseY);
 		}
-		
+
 	}
 
 	public void unGrab() {

@@ -110,7 +110,8 @@ public class MenuState extends State {
 	@Override
 	public void deleteResources() {
 		resources.unload();
-		mi.setCamera(null);
+		mi.clear();
+		
 	}
 
 }
