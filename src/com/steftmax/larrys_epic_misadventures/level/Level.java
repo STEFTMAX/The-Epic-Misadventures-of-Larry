@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.steftmax.larrys_epic_misadventures.entity.ControllableEntity;
 import com.steftmax.larrys_epic_misadventures.entity.Entity;
-import com.steftmax.larrys_epic_misadventures.map.TiledMap;
+import com.steftmax.larrys_epic_misadventures.map.old.TiledMap;
 import com.steftmax.larrys_epic_misadventures.resource.ResourceManager;
 
 public class Level {

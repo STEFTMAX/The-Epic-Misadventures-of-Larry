@@ -6,7 +6,7 @@ package com.steftmax.larrys_epic_misadventures.entity;
 
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
-import com.steftmax.larrys_epic_misadventures.map.TiledMap;
+import com.steftmax.larrys_epic_misadventures.map.old.TiledMap;
 
 public abstract class ControllableEntity extends Entity {
 

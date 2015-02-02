@@ -1,6 +1,6 @@
 package com.steftmax.larrys_epic_misadventures.resource;
 
-import com.steftmax.larrys_epic_misadventures.map.TileType;
+import com.steftmax.larrys_epic_misadventures.map.old.TileType;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.PlaySequence;
 import com.steftmax.larrys_epic_misadventures.sprite.animation.SwingPlaySequence;
 

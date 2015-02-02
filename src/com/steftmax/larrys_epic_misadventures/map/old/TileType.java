@@ -1,4 +1,4 @@
-package com.steftmax.larrys_epic_misadventures.map;
+package com.steftmax.larrys_epic_misadventures.map.old;
 
 import java.util.HashMap;
 
