@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
@@ -15,6 +17,7 @@ import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
 import com.steftmax.larrys_epic_misadventures.math.QuadTree;
+import com.steftmax.larrys_epic_misadventures.resource.Settings;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
 
 /**
@@ -35,13 +38,32 @@ public class GameState extends State {
 		mi.grab();
 		
 		this.lvl = lvl;
-		this.camera = new ChaseCamera(mi, 1280, 720, 5f, 2f, 0.001f);
+		this.camera = new ChaseCamera(mi, Settings.getWidth(), Settings.getHeight(), 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
 		mi.position.set(0, 0);
+		
+		
 		Display.setVSyncEnabled(false);
+		
+		
+//		try {
+//			DisplayMode displayMode = null;
+//			DisplayMode[] modes;
+//			modes = Display.getAvailableDisplayModes();
+//			for (int i = 0; i < modes.length; i++) {
+//				if (modes[i].getWidth() == 1920 && modes[i].getHeight() == 1080
+//						&& modes[i].isFullscreenCapable()) {
+//					displayMode = modes[i];
+//				}
+//			}
+//			Display.setDisplayMode(displayMode);
+//			Display.setFullscreen(true);
+//		} catch (LWJGLException e1) {
+//			e1.printStackTrace();
+//		}
 	}
 
 	/*

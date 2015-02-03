@@ -16,7 +16,7 @@ import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
  *
  */
 public class SpriteBatch {
-	
+
 	Texture lastTexture;
 	AABB aim;
 
@@ -43,7 +43,7 @@ public class SpriteBatch {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glClearColor(.5f, .5f, .5f, 1f);
+		glClearColor(0f, 0f, 0f, 1f);
 
 		glDisable(GL_DEPTH_TEST);
 
@@ -56,26 +56,27 @@ public class SpriteBatch {
 		textures = new float[size * textureSize * 4];
 	}
 
-	//TODO conainmentTest upgrade
+	// TODO conainmentTest upgrade
 	public void begin(AABB aim) {
 		drawing = true;
 		glClear(GL_COLOR_BUFFER_BIT);
 		this.aim = aim;
 		containmentTest = aim != null;
 	}
-	
+
 	public void begin() {
 		begin(null);
 	}
-	
+
 	public void draw(Sprite s) {
 		if (!drawing) {
 			System.err.println("Must call begin before drawing!");
 			return;
 		}
-		
-		if (containmentTest && !aim.collides((int) Math.floor(s.pos.x), (int) Math.floor(s.pos.y),
-				s.width, s.height)) {
+
+		if (containmentTest
+				&& !aim.collides((int) Math.floor(s.pos.x),
+						(int) Math.floor(s.pos.y), s.width, s.height)) {
 			return;
 		}
 
@@ -83,9 +84,9 @@ public class SpriteBatch {
 		if (lastTexture != null && lastTexture != t) {
 			flush();
 		}
-		
+
 		lastTexture = t;
-		
+
 		final TextureRegion tr = s.texReg;
 
 		float u1 = tr.left;
@@ -93,12 +94,11 @@ public class SpriteBatch {
 		float v1 = tr.top;
 		float v2 = tr.bottom;
 
-		
 		float x1 = s.pos.x;
 		float x2 = s.pos.x + s.width * s.scaleX;
 		float y1 = s.pos.y;
 		float y2 = s.pos.y + s.height * s.scaleY;
-		
+
 		if (s.flipY) {
 
 			float tmp = u1;
@@ -106,14 +106,14 @@ public class SpriteBatch {
 			u1 = u2;
 			u2 = tmp;
 		}
-		
+
 		if (s.flipX) {
 			float tmp = v1;
-			
+
 			v1 = v2;
 			v2 = tmp;
 		}
-		
+
 		// XY
 		vertices[index] = x1;
 		textures[index++] = u1;
@@ -142,10 +142,11 @@ public class SpriteBatch {
 	}
 
 	public void flush() {
-		if (index  <= 0) return;
+		if (index <= 0)
+			return;
 
 		lastTexture.bind();
-		
+
 		vertexData.put(vertices, 0, index);
 		vertexData.rewind();
 
@@ -166,7 +167,7 @@ public class SpriteBatch {
 		index = 0;
 
 	}
-	
+
 	public void translate(float x, float y) {
 		flush();
 		glTranslatef(x, y, 0);

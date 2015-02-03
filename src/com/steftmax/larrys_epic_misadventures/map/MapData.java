@@ -1,6 +1,5 @@
 package com.steftmax.larrys_epic_misadventures.map;
 
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -10,7 +9,7 @@ import java.util.BitSet;
  *
  */
 public class MapData implements Serializable{
-	ArrayList<BufferedImage> layers = new ArrayList<BufferedImage>();
+	ArrayList<MapLayer> layers = new ArrayList<MapLayer>();
 	int width, height;
 	ArrayList<BitSet> collisionMap = new ArrayList<BitSet>();
 	

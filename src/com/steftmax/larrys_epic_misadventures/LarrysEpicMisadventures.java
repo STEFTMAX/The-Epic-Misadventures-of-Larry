@@ -49,7 +49,6 @@ public class LarrysEpicMisadventures extends Game {
 
 	@Override
 	public void destroy() {
-		currentlyLoaded.unload();
 	}
 
 	public static Level createLevel(KeyboardInput ki, MouseInput mi) {
