@@ -1,12 +1,8 @@
 package com.steftmax.larrys_epic_misadventures.state;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 
 import com.steftmax.larrys_epic_misadventures.Game;
 import com.steftmax.larrys_epic_misadventures.draw.ChaseCamera;
@@ -16,7 +12,6 @@ import com.steftmax.larrys_epic_misadventures.entity.Larry;
 import com.steftmax.larrys_epic_misadventures.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.level.Level;
-import com.steftmax.larrys_epic_misadventures.math.QuadTree;
 import com.steftmax.larrys_epic_misadventures.resource.Settings;
 import com.steftmax.larrys_epic_misadventures.sprite.Sprite;
 
@@ -28,10 +23,10 @@ public class GameState extends State {
 
 	public final ChaseCamera camera;
 	public final Level lvl;
-	public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
+//	public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
 	private Sprite aim;
 
-	private final List<Entity> returnObjects = new ArrayList<Entity>();
+//	private final List<Entity> returnObjects = new ArrayList<Entity>();
 
 	public GameState(Game game, Level lvl, MouseInput mi, KeyboardInput ki) {
 		super(game, mi, ki);
@@ -73,8 +68,6 @@ public class GameState extends State {
 	 */
 	@Override
 	public void update(long delta) {
-		
-		qt.clear();
 		ki.update(delta);
 		mi.update(delta);
 		aim.set(mi.position.x- aim.width, mi.position.y - aim.height);
@@ -84,38 +77,8 @@ public class GameState extends State {
 		for (Entity ent : set) {
 
 			ent.update(delta);
-			qt.add(ent);
 
 		}
-		// TODO PERFOMRANCE BITCH master quadtree keeps all entered Entities
-
-		for (Entity ent : set) {
-
-			returnObjects.clear();
-			qt.retrieve(returnObjects, ent);
-
-			for (int i = 0; i < returnObjects.size(); i++) {
-				for (int j = i + 1; j < returnObjects.size(); j++) {
-
-					if (returnObjects.get(i).hitbox.collides(returnObjects
-							.get(j).hitbox)) {
-						// returnObjects.
-					}
-				}
-			}
-
-			// AABB box1 = ent1.hitbox;
-			// for (Entity ent2 : returnObjects) {
-			// AABB box2 = ent2.hitbox;
-			//
-			// if (box1.collides(box2)) {
-			// ent1.onCollide(ent2);
-			// ent2.onCollide(ent1);
-			// break;
-			// }
-			// }
-		}
-
 	}
 
 	/**

@@ -72,7 +72,7 @@ public abstract class Game implements Runnable {
 			renderCall++;
 			long delta = timer.getDelta();
 			avgFrameTime += (delta - avgFrameTime) / renderCall;
-			Display.setTitle(avgFrameTime + "");
+			//Display.setTitle(avgFrameTime + "");
 
 			if (delta > maxBetweenFrameNanos)
 				delta = maxBetweenFrameNanos;

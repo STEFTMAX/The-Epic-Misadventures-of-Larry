@@ -24,6 +24,11 @@ public class MenuState extends State {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
+	
+	private Screen screen = Screen.MENU;
+	private enum Screen {
+		MENU, SETTINGS;
+	}
 
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 250,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 250;
@@ -74,7 +79,7 @@ public class MenuState extends State {
 		}
 
 		if (settings.consumePressed()) {
-			game.stop();
+			screen = Screen.SETTINGS;
 		}
 	}
 
@@ -92,9 +97,16 @@ public class MenuState extends State {
 		batch.begin();
 
 		batch.draw(background);
-
-		play.draw(batch);
-		settings.draw(batch);
+		switch (screen) {
+		case MENU:
+			play.draw(batch);
+			settings.draw(batch);
+			break;
+		case SETTINGS:
+			
+			break;
+		
+		}
 
 		batch.end();
 		cam.endFocus();
