@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.steftmax.larrys_epic_misadventures.entity.Entity;
+import com.steftmax.larrys_epic_misadventures.content.entity.Entity;
 
 /**
  * @author pieter3457 A class that stores entities for collision checking

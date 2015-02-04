@@ -2,11 +2,11 @@ package com.steftmax.larrys_epic_misadventures.resource;
 
 import java.util.HashMap;
 
-import com.steftmax.larrys_epic_misadventures.sprite.SpriteSheet;
-import com.steftmax.larrys_epic_misadventures.sprite.Texture;
-import com.steftmax.larrys_epic_misadventures.sprite.TextureRegion;
-import com.steftmax.larrys_epic_misadventures.sprite.animation.Animation;
-import com.steftmax.larrys_epic_misadventures.sprite.animation.PlaySequence;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.SpriteSheet;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.Texture;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.TextureRegion;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.animation.Animation;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.animation.PlaySequence;
 
 /**
  * @author pieter3457

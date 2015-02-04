@@ -22,6 +22,7 @@ public class Settings implements Serializable {
 	private final static String saveFileName = ".settings";
 	public final static int DEFAULT_WIDTH = 1280, DEFAULT_HEIGHT = 720;
 	private int currentWidth, currentHeight, maxFPS;
+	private float ingameMouseSensitivity;
 	private static Settings INSTANCE;
 
 	private static File getSettingsFile() {
@@ -80,17 +81,15 @@ public class Settings implements Serializable {
 			stream = new ObjectInputStream(is);
 			settings = (Settings) stream.readObject();
 		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			try {
 				if (stream != null)
 					stream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 
-		return settings;
+		return settings != null ? settings : new Settings();
 	}
 	
 	public static void setResolution(int width, int height) {
@@ -105,5 +104,9 @@ public class Settings implements Serializable {
 
 	public static int getHeight() {
 		return INSTANCE.currentHeight;
+	}
+	
+	public static float getIngameMouseSensitivity() {
+		return INSTANCE.ingameMouseSensitivity;
 	}
 }
