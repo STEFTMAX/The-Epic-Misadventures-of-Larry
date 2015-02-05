@@ -10,7 +10,6 @@ import com.steftmax.larrys_epic_misadventures.graphics.StaticCamera;
 import com.steftmax.larrys_epic_misadventures.graphics.sprite.Sprite;
 import com.steftmax.larrys_epic_misadventures.graphics.sprite.Texture;
 import com.steftmax.larrys_epic_misadventures.graphics.sprite.TextureRegion;
-import com.steftmax.larrys_epic_misadventures.render.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.render.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.resource.MenuResources;
 

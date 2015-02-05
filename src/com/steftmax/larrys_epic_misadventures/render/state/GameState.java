@@ -11,7 +11,6 @@ import com.steftmax.larrys_epic_misadventures.content.entity.Larry;
 import com.steftmax.larrys_epic_misadventures.graphics.ChaseCamera;
 import com.steftmax.larrys_epic_misadventures.graphics.SpriteBatch;
 import com.steftmax.larrys_epic_misadventures.graphics.sprite.Sprite;
-import com.steftmax.larrys_epic_misadventures.render.input.KeyboardInput;
 import com.steftmax.larrys_epic_misadventures.render.input.MouseInput;
 import com.steftmax.larrys_epic_misadventures.resource.Settings;
 

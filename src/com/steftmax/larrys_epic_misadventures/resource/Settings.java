@@ -32,8 +32,6 @@ public class Settings implements Serializable {
 	
 	static {
 		File saveFile = getSettingsFile();
-		//saveFile.mkdirs();
-		System.out.println(saveFile);
 		if (saveFile.exists()) {
 			INSTANCE = readSettings(saveFile);
 		} else {
@@ -108,5 +106,8 @@ public class Settings implements Serializable {
 	
 	public static float getIngameMouseSensitivity() {
 		return INSTANCE.ingameMouseSensitivity;
+	}
+	public static int getMaxFPS() {
+		return INSTANCE.maxFPS;
 	}
 }
