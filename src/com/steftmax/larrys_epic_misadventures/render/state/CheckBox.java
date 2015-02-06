@@ -2,6 +2,7 @@ package com.steftmax.larrys_epic_misadventures.render.state;
 
 import com.steftmax.larrys_epic_misadventures.graphics.Drawable;
 import com.steftmax.larrys_epic_misadventures.graphics.SpriteBatch;
+import com.steftmax.larrys_epic_misadventures.graphics.sprite.Sprite;
 import com.steftmax.larrys_epic_misadventures.graphics.sprite.TextureRegion;
 import com.steftmax.larrys_epic_misadventures.math.AABB;
 import com.steftmax.larrys_epic_misadventures.render.input.MouseClickListener;
@@ -13,13 +14,13 @@ import com.steftmax.larrys_epic_misadventures.render.input.MouseClickListener;
 public class CheckBox implements MouseClickListener, Drawable {
 	
 	private AABB boundaryBox;
-	private TextureRegion unchecked, checked;
+	private Sprite unchecked, checked;
 	private boolean isChecked = false;
 
 	public CheckBox(AABB boundaryBox, TextureRegion unchecked, TextureRegion checked, boolean isChecked) {
 		this.boundaryBox = boundaryBox;
-		this.unchecked = unchecked;
-		this.checked = checked;
+		this.unchecked = new Sprite(unchecked, boundaryBox.x, boundaryBox.y);
+		this.checked =  new Sprite(checked, boundaryBox.x, boundaryBox.y);
 		this.isChecked = isChecked;
 	}
 	
@@ -32,8 +33,11 @@ public class CheckBox implements MouseClickListener, Drawable {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-		
+		if (isChecked) {
+			batch.draw(checked);
+		} else {
+			batch.draw(unchecked);
+		}
 	}
 
 	/* (non-Javadoc)

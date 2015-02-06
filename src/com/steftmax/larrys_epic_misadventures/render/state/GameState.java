@@ -30,12 +30,12 @@ public class GameState extends State {
 	public GameState(Game game, Level lvl) {
 		super(game);
 		final MouseInput mi = game.getMouseInput();
-		
+
 		mi.center();
 		mi.grab();
-		
+
 		this.lvl = lvl;
-		
+
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
@@ -45,7 +45,7 @@ public class GameState extends State {
 		aim.setContainmentTest(false);
 
 		Display.setVSyncEnabled(false);
-		
+
 	}
 
 	/*
@@ -55,9 +55,11 @@ public class GameState extends State {
 	 */
 	@Override
 	public void update(long delta) {
-//		System.out.println(game.getMouseInput().position.x);
-//		System.out.println(game.getMouseInput().position.y);
-		aim.set(game.getMouseInput().position.x - aim.width, game.getMouseInput().position.y - aim.height);
+		// System.out.println(game.getMouseInput().position.x);
+		// System.out.println(game.getMouseInput().position.y);
+		aim.setScale(camera.getScale()/1.5f);
+		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
+				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
 		Set<Entity> set = lvl.getLevelObjects();
 

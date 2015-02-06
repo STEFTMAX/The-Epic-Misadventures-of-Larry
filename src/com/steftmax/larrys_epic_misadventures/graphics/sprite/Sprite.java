@@ -91,9 +91,16 @@ public class Sprite {
 	public void setContainmentTest(boolean containmentTest) {
 		this.containmentTest = containmentTest;
 	}
-	
+
 	public boolean testContainment() {
 		return containmentTest;
 	}
 
+	public float getScaledWidth() {
+		return width * scaleX;
+	}
+
+	public float getScaledHeight() {
+		return height * scaleY;
+	}
 }
