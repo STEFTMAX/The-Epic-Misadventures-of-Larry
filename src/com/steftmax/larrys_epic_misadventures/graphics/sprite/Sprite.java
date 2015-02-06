@@ -18,6 +18,7 @@ public class Sprite {
 	public boolean flipX = false, flipY = false;
 
 	public TextureRegion texReg;
+	public boolean containmentTest = true;
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
@@ -74,15 +75,25 @@ public class Sprite {
 	public int getVertexSize() {
 		return 4;
 	}
+
 	public void set(Vector2 position) {
 		this.pos.set(position);
 	}
-	
-	public void lock (Vector2 position) {
+
+	public void lock(Vector2 position) {
 		this.pos = position;
 	}
+
 	public void set(float x, float y) {
 		pos.set(x, y);
+	}
+
+	public void setContainmentTest(boolean containmentTest) {
+		this.containmentTest = containmentTest;
+	}
+	
+	public boolean testContainment() {
+		return containmentTest;
 	}
 
 }

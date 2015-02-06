@@ -42,6 +42,7 @@ public class GameState extends State {
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
+		aim.setContainmentTest(false);
 
 		Display.setVSyncEnabled(false);
 		

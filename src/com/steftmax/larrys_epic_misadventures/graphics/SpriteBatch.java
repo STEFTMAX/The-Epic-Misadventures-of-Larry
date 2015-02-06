@@ -74,9 +74,10 @@ public class SpriteBatch {
 			return;
 		}
 
-		if (containmentTest
+		if (containmentTest && s.containmentTest 
 				&& !aim.collides((int) Math.floor(s.pos.x),
 						(int) Math.floor(s.pos.y), s.width, s.height)) {
+			
 			return;
 		}
 

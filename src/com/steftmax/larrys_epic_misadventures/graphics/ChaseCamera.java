@@ -99,8 +99,8 @@ public class ChaseCamera implements Camera, MouseScrollListener {
 
 		viewingArea.setBounds((int) Math.floor(xDrift / -zoom),
 				(int) Math.floor(yDrift / -zoom),
-				(int) Math.ceil(width),
-				(int) Math.ceil(height));
+				(int) Math.ceil(width / zoom),
+				(int) Math.ceil(height / zoom));
 		
 		GL11.glTranslatef(xDrift, yDrift, 0);
 
