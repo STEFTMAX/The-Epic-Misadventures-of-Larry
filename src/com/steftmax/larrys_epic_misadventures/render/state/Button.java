@@ -13,8 +13,18 @@ import com.steftmax.larrys_epic_misadventures.render.input.MousePositionListener
  * @author pieter3457
  *
  */
+
+
 public class Button implements MouseClickListener, MousePositionListener, Drawable {
 
+	public interface Listener {
+		public void onPress(Button b);
+		
+		public void onRelease(Button b);
+		
+		public void onPressed(Button b);
+	}
+	
 	private enum State {
 		PRESS, HOVER, IDLE
 	}
@@ -22,17 +32,20 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 	private AABB boundaryBox;
 	private Sprite press, hover, idle;
 	private State state = State.IDLE;
-	private boolean isPressed = false;
+	
+	private Listener listener;
 
-	public Button(MouseInput mi, int x, int y, TextureRegion press,
+	public Button(Listener listener, MouseInput mi, int x, int y, TextureRegion press,
 			TextureRegion hover, TextureRegion idle) {
-		this(mi, new AABB(x, y, idle.width, idle.height), press, hover, idle);
+		this(listener, mi, new AABB(x, y, idle.width, idle.height), press, hover, idle);
 	}
 
-	public Button(MouseInput mi, AABB boundaryBox, TextureRegion press,
+	public Button(Listener listener, MouseInput mi, AABB boundaryBox, TextureRegion press,
 			TextureRegion hover, TextureRegion idle) {
 		mi.addListener(this);
-
+		
+		this.listener = listener;
+		
 		this.boundaryBox = boundaryBox;
 
 		this.press = new Sprite(press, boundaryBox.x, boundaryBox.y);
@@ -51,6 +64,7 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 	public void onClick(int button, int x, int y) {
 		if (button == 0) {
 			if (boundaryBox.containsPoint(x, y)) {
+				listener.onPress(this);
 				this.state = State.PRESS;
 			}
 		}
@@ -67,9 +81,10 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 	public void onDeClick(int button, int x, int y) {
 		if (state == State.PRESS && button == 0) {
 			if (boundaryBox.containsPoint(x, y)) {
+				listener.onPressed(this);
 				state = State.HOVER;
-				isPressed = true;
 			} else {
+				listener.onRelease(this);
 				state = State.IDLE;
 			}
 		}
@@ -95,12 +110,6 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 			batch.draw(press);
 			break;
 		}
-	}
-
-	public boolean consumePressed() {
-		final boolean temp = isPressed;
-		isPressed = false;
-		return temp;
 	}
 
 	public void onPositionUpdate(int x, int y) {

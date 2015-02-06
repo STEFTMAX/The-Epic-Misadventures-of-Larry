@@ -17,7 +17,7 @@ import com.steftmax.larrys_epic_misadventures.resource.MenuResources;
  * @author pieter3457
  *
  */
-public class MenuState extends State {
+public class MenuState extends State implements Button.Listener {
 
 	private final Button play, settings;
 	private final MenuResources resources = new MenuResources();
@@ -29,6 +29,7 @@ public class MenuState extends State {
 	}
 
 	private Screen screen = Screen.MENU;
+	private boolean switchToPlay;
 
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 250,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 250;
@@ -50,12 +51,12 @@ public class MenuState extends State {
 		final Texture sheet = resources.getTexture("gfx/sheet_buttons.png");
 		final int width = 64, height = 16;
 
-		play = new Button(mi, PLAYBUTTON_X, PLAYBUTTON_Y, new TextureRegion(
-				sheet, 0, 2 * height, width, height), new TextureRegion(sheet,
-				0, height, width, height), new TextureRegion(sheet, 0, 0,
-				width, height));
+		play = new Button(this, mi, PLAYBUTTON_X, PLAYBUTTON_Y,
+				new TextureRegion(sheet, 0, 2 * height, width, height),
+				new TextureRegion(sheet, 0, height, width, height),
+				new TextureRegion(sheet, 0, 0, width, height));
 
-		settings = new Button(mi, SETTINGSBUTTON_X, SETTINGSBUTTON_Y,
+		settings = new Button(this, mi, SETTINGSBUTTON_X, SETTINGSBUTTON_Y,
 				new TextureRegion(sheet, width, 2 * height, width, height),
 				new TextureRegion(sheet, width, height, width, height),
 				new TextureRegion(sheet, width, 0, width, height));
@@ -70,17 +71,12 @@ public class MenuState extends State {
 	 */
 	@Override
 	public void update(long delta) {
-		if (play.consumePressed()) {
-
+		if (switchToPlay) {
 			deleteResources();
-			game.changeState(new GameState(game, ((LarrysEpicMisadventures) game).createLevel()));
-
-			return;
+			game.changeState(new GameState(game,
+					((LarrysEpicMisadventures) game).createLevel()));
 		}
-
-		if (settings.consumePressed()) {
-			screen = Screen.SETTINGS;
-		}
+		
 	}
 
 	/*
@@ -123,6 +119,48 @@ public class MenuState extends State {
 	public void deleteResources() {
 		resources.unload();
 		game.getMouseInput().clear();
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onPress
+	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
+	 */
+	@Override
+	public void onPress(Button b) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onRelease
+	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
+	 */
+	@Override
+	public void onRelease(Button b) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onPressed
+	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
+	 */
+	@Override
+	public void onPressed(Button b) {
+
+		if (b == play) {
+			switchToPlay = true;
+		}
+
+		if (b == settings) {
+			screen = Screen.SETTINGS;
+		}
 
 	}
 
