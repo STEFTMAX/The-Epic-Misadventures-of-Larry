@@ -30,16 +30,18 @@ public class GameState extends State {
 	public GameState(Game game, Level lvl) {
 		super(game);
 		final MouseInput mi = game.getMouseInput();
+		
+		mi.center();
 		mi.grab();
+		
 		this.lvl = lvl;
+		
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
-		
-		mi.center();
 
 		Display.setVSyncEnabled(false);
 		
@@ -52,6 +54,8 @@ public class GameState extends State {
 	 */
 	@Override
 	public void update(long delta) {
+//		System.out.println(game.getMouseInput().position.x);
+//		System.out.println(game.getMouseInput().position.y);
 		aim.set(game.getMouseInput().position.x - aim.width, game.getMouseInput().position.y - aim.height);
 
 		Set<Entity> set = lvl.getLevelObjects();

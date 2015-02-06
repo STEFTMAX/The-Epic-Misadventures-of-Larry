@@ -22,7 +22,7 @@ public class Settings implements Serializable {
 	private final static String saveFileName = ".settings";
 	public final static int DEFAULT_WIDTH = 1280, DEFAULT_HEIGHT = 720;
 	private int currentWidth, currentHeight, maxFPS;
-	private float ingameMouseSensitivity;
+	private float ingameMouseSensitivity = 1;
 	private static Settings INSTANCE;
 
 	private static File getSettingsFile() {
