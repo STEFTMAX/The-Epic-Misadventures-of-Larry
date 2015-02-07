@@ -95,10 +95,10 @@ public class MouseInput implements Updatable {
 		while (Mouse.next()) {
 			// update position 
 			if (!Mouse.isGrabbed()) {
-				updateMousePosition(Mouse.getEventX(), height - Mouse.getEventY());
+				updateMousePosition(Mouse.getEventX(),Mouse.getEventY());
 				
 			} else  {
-				position.add(Mouse.getEventDX(), -Mouse.getEventDY(),
+				position.add(Mouse.getEventDX(), Mouse.getEventDY(),
 						sensitivity);
 
 				if (position.x < 0) {

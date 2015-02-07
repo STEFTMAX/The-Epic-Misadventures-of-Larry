@@ -10,7 +10,7 @@ public class TextureRegion implements Loadable {
 
 	public final Texture tex;
 	public final int x, y, width, height;
-	public float left, right, top, bottom;
+	public float u1, u2, v1, v2;
 	private final static float BLEED = 0.000015f;
 
 	public TextureRegion(Texture t) {
@@ -23,37 +23,37 @@ public class TextureRegion implements Loadable {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
-		left =  (x / (float) tex.width);
-		right =  ((x + width) / (float) tex.width);
-		top = (y / (float) tex.height);
-		bottom = ((y + height) / (float) tex.height);
-		
 
-//		Antibordering #2
+		// this way because texturecoordinates are y flipped
+		u1 = (x / (float) tex.width);
+		u2 = ((x + width) / (float) tex.width);
+		v1 = ((y + height) / (float) tex.height);
+		v2 = (y / (float) tex.height);
+
+		// Antibordering #2
 		bleed();
-		
-//		System.out.println(texture);
-//		System.out.println(left);
-//		System.out.println(right);
-//		System.out.println(top);
-//		System.out.println(bottom);
-//		System.out.println(x);
-//		System.out.println(y);
-//		System.out.println(width);
-//		System.out.println(height);
-//		
-		
+
+		// System.out.println(texture);
+		// System.out.println(left);
+		// System.out.println(right);
+		// System.out.println(top);
+		// System.out.println(bottom);
+		// System.out.println(x);
+		// System.out.println(y);
+		// System.out.println(width);
+		// System.out.println(height);
+		//
+
 	}
 
 	/**
 	 * 
 	 */
 	private void bleed() {
-		left +=BLEED;
-		right -=BLEED;
-		top +=BLEED;
-		bottom -=BLEED;
+		u1 += BLEED;
+		u2 -= BLEED;
+		v2 += BLEED;
+		v1 -= BLEED;
 	}
 
 	/*

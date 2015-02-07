@@ -35,7 +35,7 @@ public class SpriteBatch {
 	public SpriteBatch(int size, int width, int height) {
 
 		glMatrixMode(GL_PROJECTION);
-		glOrtho(0, width, height, 0, 1, -1);
+		glOrtho(0, width, 0, height, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 
 		glEnable(GL_TEXTURE_2D);
@@ -90,10 +90,10 @@ public class SpriteBatch {
 
 		final TextureRegion tr = s.texReg;
 
-		float u1 = tr.left;
-		float u2 = tr.right;
-		float v1 = tr.top;
-		float v2 = tr.bottom;
+		float u1 = tr.u1;
+		float u2 = tr.u2;
+		float v1 = tr.v1;
+		float v2 = tr.v2;
 
 		float x1 = s.pos.x;
 		float x2 = s.pos.x + s.width * s.scaleX;
@@ -102,20 +102,20 @@ public class SpriteBatch {
 
 		if (s.flipY) {
 
-			float tmp = u1;
+			final float tmp = u1;
 
 			u1 = u2;
 			u2 = tmp;
 		}
 
 		if (s.flipX) {
-			float tmp = v1;
+			final float tmp = v1;
 
 			v1 = v2;
 			v2 = tmp;
 		}
 
-		// XY
+		// Texture coordinates are always yFlipped
 		vertices[index] = x1;
 		textures[index++] = u1;
 		vertices[index] = y1;
