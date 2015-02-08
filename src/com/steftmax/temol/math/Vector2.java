@@ -73,4 +73,19 @@ public class Vector2 {
 		return (float) Math.sqrt((x * x) + (y * y));
 	}
 
+	public float dotProduct(Vector2 v) {
+		return dotProduct(v.x, v.y);
+	}
+
+	private float dotProduct(float x, float y) {
+		return this.x * x + this.y * y;
+	}
+
+	public void normalize() {
+		final float length = toLength();
+		if (length != 0) {
+			x = x / length;
+			y = y / length;
+		}
+	}
 }
