@@ -24,6 +24,8 @@ public class GameResources extends ResourceManager{
 		
 		loadAnimation("gfx/blaze_breathing.png", 3, 1, PlaySequence.REPEAT, 2, 0);
 		
+		loadTexture("gfx/light.png");
+		
 		TileType.init(this);
 	}
 

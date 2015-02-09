@@ -52,7 +52,7 @@ public class TEMoL extends Game {
 		{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 } };
 
 		MapData data = new MapData(mapStructure, 32, 32);
-		TiledMap map = new TiledMap(data);
+		TiledMap map = new TiledMap(data,res);
 		Level lvl = new Level(res);
 
 		Larry larry = new Larry(map, 32, 34, keyboardInput, mouseInput, res);

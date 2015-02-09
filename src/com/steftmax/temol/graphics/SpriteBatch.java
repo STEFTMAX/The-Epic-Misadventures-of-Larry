@@ -69,38 +69,38 @@ public class SpriteBatch {
 	}
 
 	public void draw(Sprite s) {
+		draw(s.texReg, s.pos.x, s.pos.x + s.width * s.scaleX, s.pos.y, s.pos.y
+				+ s.height * s.scaleY, s.flipX, s.flipY, s.containmentTest);
+	}
+
+	public void draw(final TextureRegion tr, float x1, float x2, float y1,
+			float y2, boolean flipX, boolean flipY, boolean containmentTest) {
 		if (!drawing) {
 			System.err.println("Must call begin before drawing!");
 			return;
 		}
 
-		if (containmentTest && s.containmentTest 
-				&& !aim.collides((int) Math.floor(s.pos.x),
-						(int) Math.floor(s.pos.y), s.width, s.height)) {
-			
+		if (this.containmentTest
+				&& containmentTest
+				&& !aim.collides((int) Math.floor(x1), (int) Math.floor(y1),
+						(int) (x2 - x1), (int) (y2 - y1))) {
+
 			return;
 		}
 
-		Texture t = s.getTexture();
+		Texture t = tr.tex;
 		if (lastTexture != null && lastTexture != t) {
 			flush();
 		}
 
 		lastTexture = t;
 
-		final TextureRegion tr = s.texReg;
-
 		float u1 = tr.u1;
 		float u2 = tr.u2;
 		float v1 = tr.v1;
 		float v2 = tr.v2;
 
-		float x1 = s.pos.x;
-		float x2 = s.pos.x + s.width * s.scaleX;
-		float y1 = s.pos.y;
-		float y2 = s.pos.y + s.height * s.scaleY;
-
-		if (s.flipY) {
+		if (flipY) {
 
 			final float tmp = u1;
 
@@ -108,7 +108,7 @@ public class SpriteBatch {
 			u2 = tmp;
 		}
 
-		if (s.flipX) {
+		if (flipX) {
 			final float tmp = v1;
 
 			v1 = v2;

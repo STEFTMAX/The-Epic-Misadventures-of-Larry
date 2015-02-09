@@ -11,6 +11,7 @@ import com.steftmax.temol.content.entity.Larry;
 import com.steftmax.temol.graphics.ChaseCamera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.Settings;
 
@@ -43,6 +44,7 @@ public class GameState extends State {
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
 		aim.setScale(2f);
 		aim.setContainmentTest(false);
+		//light.set(Settings.getWidth() / 2, Settings.getHeight() / 2);
 
 		Display.setVSyncEnabled(false);
 
@@ -57,7 +59,7 @@ public class GameState extends State {
 	public void update(long delta) {
 		// System.out.println(game.getMouseInput().position.x);
 		// System.out.println(game.getMouseInput().position.y);
-		aim.setScale(camera.getScale()/1.5f);
+		aim.setScale(camera.getScale() / 1.5f);
 		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
@@ -75,13 +77,15 @@ public class GameState extends State {
 	 */
 	public void draw(SpriteBatch batch) {
 
+		final AABB viewingarea = camera.getViewingArea();
 		camera.beginFocus();
-		batch.begin(camera.getViewingArea());
+		batch.begin(viewingarea);
 		lvl.map.draw(batch);
 
 		for (Entity ent : lvl.getLevelObjects()) {
 			ent.draw(batch);
 		}
+		lvl.map.drawLights(batch);
 		batch.flush();
 
 		camera.endFocus();
@@ -89,7 +93,20 @@ public class GameState extends State {
 		batch.draw(aim);
 
 		batch.end();
-
+		// glBegin(GL_QUADS);
+		// // glVertex2i(viewingarea.x, viewingarea.y);
+		// // glVertex2i(viewingarea.x + viewingarea.width, viewingarea.y);
+		// // glVertex2i(viewingarea.x + viewingarea.width, viewingarea.y
+		// // + viewingarea.height);
+		// // glVertex2i(viewingarea.x, viewingarea.y + viewingarea.height);
+		//
+		// glColor4f(0, 0, 0, .8f);
+		// glVertex2i(0, 0);
+		// glVertex2i(Settings.getWidth(), 0);
+		// glVertex2i(Settings.getWidth(), Settings.getHeight());
+		// glVertex2i(0, Settings.getHeight());
+		// glEnd();
+		// glColor3f(1, 1, 1);
 		Display.update();
 	}
 
