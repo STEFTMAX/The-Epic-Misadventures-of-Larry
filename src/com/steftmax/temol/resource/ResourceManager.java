@@ -12,13 +12,12 @@ import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
  * @author pieter3457
  *
  */
-public abstract class ResourceManager implements Loadable {
+public abstract class ResourceManager{
 
 	HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	HashMap<String, SpriteSheet> sheets = new HashMap<String, SpriteSheet>();
 	HashMap<String, Animation> animations = new HashMap<String, Animation>();
 
-	@Override
 	public abstract void load();
 
 	public Texture getTexture(String path) {
@@ -43,7 +42,6 @@ public abstract class ResourceManager implements Loadable {
 	public void loadSpriteSheet(String path, int rows, int collumns) {
 
 		final SpriteSheet s = new SpriteSheet(path, rows, collumns);
-		s.load();
 
 		sheets.put(path, s);
 	}
@@ -56,7 +54,6 @@ public abstract class ResourceManager implements Loadable {
 			PlaySequence sequence, int fps, int skipLastFrames) {
 		
 		final SpriteSheet sheet = new SpriteSheet(path, rows, collumns);
-		sheet.load();
 		
 		final TextureRegion[] sprites = sheet.getFrames();
 		
@@ -68,38 +65,27 @@ public abstract class ResourceManager implements Loadable {
 		
 		animations.put(path, new Animation(frames, sequence, fps));
 	}
-
-	@Override
+	
 	public void unload() {
 		// Textures
 		for (Texture t : textures.values()) {
-			t.unload();
+			t.dispose();
 		}
 		textures.clear();
 
 		// SpriteSheets
 		for (SpriteSheet s : sheets.values()) {
-			s.unload();
+			s.dispose();
 		}
 		sheets.clear();
 
 		// Animations
 		for (Animation a : animations.values()) {
-			a.unload();
+			a.dispose();
 		}
 		animations.clear();
 		
 		System.gc();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#isLoaded()
-	 */
-	@Override
-	public boolean isLoaded() {
-		return textures.size() > 0;
 	}
 
 }

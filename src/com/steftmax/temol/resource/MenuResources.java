@@ -5,11 +5,7 @@ package com.steftmax.temol.resource;
  *
  */
 public class MenuResources extends ResourceManager{
-
-	/* (non-Javadoc)
-	 * @see com.steftmax.larrys_epic_misadventures.resource.ResourceManager#load()
-	 */
-	@Override
+	
 	public void load() {
 		loadTexture("gfx/sheet_buttons.png");
 		loadTexture("gfx/menu.png");

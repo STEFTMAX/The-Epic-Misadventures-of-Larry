@@ -27,13 +27,6 @@ public class Animation {
 					frames.length);
 		}
 	}
-	
-	public void unload() {
-		for (TextureRegion s: frames) {
-			s.unload();
-		}
-	}
-
 	public TextureRegion getCurrent(AnimationState data) {
 		return frames[data.lastFrame];
 	}
@@ -48,5 +41,11 @@ public class Animation {
 
 	public int getHeight(AnimationState data) {
 		return frames[data.lastFrame].height;
+	}
+
+	public void dispose() {
+		for (TextureRegion s: frames) {
+			s.dispose();
+		}
 	}
 }

@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
 
-import com.steftmax.temol.resource.Loadable;
+import com.steftmax.temol.resource.Disposable;
 import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
@@ -24,11 +24,9 @@ import com.steftmax.temol.resource.loader.ResourceLoader;
  * @author pieter3457
  *
  */
-public class Texture implements Loadable {
+public class Texture implements Disposable {
 
-	private boolean isLoaded = false;
 	private int id;
-	public String path = null;
 	public int width, height;
 
 	/**
@@ -46,35 +44,6 @@ public class Texture implements Loadable {
 	}
 
 	public Texture(String path) {
-		this.path = path;
-	}
-
-	public void bind() {
-		glBindTexture(GL_TEXTURE_2D, id);
-	}
-
-	public void unbind() {
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
-	@Override
-	public void unload() {
-		unbind();
-		glDeleteTextures(id);
-		isLoaded = false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sessionstraps.game_engine.resources.Loadable#load()
-	 */
-	@Override
-	public void load() {
-
-		if (isLoaded) {
-			return;
-		}
 
 		final InputStream is = ResourceLoader.load(path);
 		BufferedImage img;
@@ -108,7 +77,7 @@ public class Texture implements Loadable {
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
-		//Anti bordering #1
+		// Anti bordering #1
 
 		this.height = img.getHeight();
 		this.width = img.getWidth();
@@ -119,18 +88,24 @@ public class Texture implements Loadable {
 				decodePNG(img, true));
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-
-		isLoaded = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#isLoaded()
-	 */
+	public void bind() {
+		glBindTexture(GL_TEXTURE_2D, id);
+	}
+
+	public void unbind() {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 	@Override
-	public boolean isLoaded() {
-		return isLoaded;
+	public void dispose() {
+		unbind();
+		glDeleteTextures(id);
+	}
+
+	public void load() {
+
 	}
 
 	/**
@@ -143,7 +118,7 @@ public class Texture implements Loadable {
 	 * @return A ByteBuffer with all the pixels in it
 	 */
 	public static ByteBuffer decodePNG(BufferedImage texture, boolean alpha) {
-
+		
 		ByteBuffer buffer = BufferUtils.createByteBuffer(texture.getWidth()
 				* texture.getHeight() * (alpha ? 4 : 3));
 

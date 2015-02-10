@@ -1,12 +1,12 @@
 package com.steftmax.temol.graphics.sprite;
 
-import com.steftmax.temol.resource.Loadable;
+import com.steftmax.temol.resource.Disposable;
 
 /**
  * @author pieter3457
  *
  */
-public class TextureRegion implements Loadable {
+public class TextureRegion implements Disposable {
 
 	public final Texture tex;
 	public final int x, y, width, height;
@@ -59,30 +59,10 @@ public class TextureRegion implements Loadable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#load()
+	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#dispose()
 	 */
 	@Override
-	public void load() {
-		tex.load();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#unload()
-	 */
-	@Override
-	public void unload() {
-		tex.unload();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Loadable#isLoaded()
-	 */
-	@Override
-	public boolean isLoaded() {
-		return tex.isLoaded();
+	public void dispose() {
+		tex.dispose();
 	}
 }

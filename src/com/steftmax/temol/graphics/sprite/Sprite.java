@@ -1,6 +1,7 @@
 package com.steftmax.temol.graphics.sprite;
 
 import com.steftmax.temol.math.Vector2;
+import com.steftmax.temol.resource.Disposable;
 
 /**
  * TODO actually make this class useful for drawing. For example let it store
@@ -10,7 +11,7 @@ import com.steftmax.temol.math.Vector2;
  * @author pieter3457
  *
  */
-public class Sprite {
+public class Sprite implements Disposable{
 
 	public Vector2 pos;
 	public int width, height;
@@ -53,9 +54,9 @@ public class Sprite {
 		pos.set(x, y);
 	}
 
-	public void unload() {
+	public void dispose() {
 
-		texReg.unload();
+		texReg.dispose();
 	}
 
 	public void setScale(float scale) {
