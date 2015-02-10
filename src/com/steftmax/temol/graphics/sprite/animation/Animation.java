@@ -1,8 +1,9 @@
 package com.steftmax.temol.graphics.sprite.animation;
 
 import com.steftmax.temol.graphics.sprite.TextureRegion;
+import com.steftmax.temol.resource.Disposable;
 
-public class Animation {
+public class Animation implements Disposable{
 
 	// Essential animation variables
 	private TextureRegion[] frames;
@@ -43,6 +44,7 @@ public class Animation {
 		return frames[data.lastFrame].height;
 	}
 
+	@Override
 	public void dispose() {
 		for (TextureRegion s: frames) {
 			s.dispose();
