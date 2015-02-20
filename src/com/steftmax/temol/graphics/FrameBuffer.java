@@ -3,6 +3,7 @@ package com.steftmax.temol.graphics;
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.graphics.sprite.Texture;
+import com.steftmax.temol.resource.Disposable;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -13,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
  * @author pieter3457
  *
  */
-public class FrameBuffer {
+public class FrameBuffer implements Disposable{ //TODO let it implement disposable
 	private int id;
 	private Texture texture;
 	
@@ -39,5 +40,20 @@ public class FrameBuffer {
 	public void end() {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.temol.resource.Disposable#dispose()
+	 */
+	@Override
+	public void dispose() {
+		glDeleteFramebuffersEXT(id);
+	}
+
+	/**
+	 * @return
+	 */
+	public Texture getTexture() {
+		return texture;
 	}
 }
