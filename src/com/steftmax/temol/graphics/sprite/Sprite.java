@@ -70,7 +70,7 @@ public class Sprite implements Disposable{
 	}
 
 	public Texture getTexture() {
-		return texReg.tex;
+		return texReg.texture;
 	}
 
 	public int getVertexSize() {

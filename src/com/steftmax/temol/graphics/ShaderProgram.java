@@ -26,7 +26,7 @@ public class ShaderProgram implements Disposable {
 
 		// initialize fragment
 		if (fragment != null) {
-			fragmentID = createShader(vertex, GL_FRAGMENT_SHADER);
+			fragmentID = createShader(fragment, GL_FRAGMENT_SHADER);
 			glAttachShader(programID, fragmentID);
 		}
 		// Link the program

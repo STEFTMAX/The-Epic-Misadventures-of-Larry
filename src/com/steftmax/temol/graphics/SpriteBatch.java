@@ -88,7 +88,7 @@ public class SpriteBatch {
 			return;
 		}
 
-		Texture t = tr.tex;
+		Texture t = tr.texture;
 		if (lastTexture != null && lastTexture != t) {
 			flush();
 		}
