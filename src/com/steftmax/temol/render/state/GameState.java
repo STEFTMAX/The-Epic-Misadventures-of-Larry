@@ -15,6 +15,7 @@ import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
+import com.steftmax.temol.math.QuadTree;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.Settings;
 import com.steftmax.temol.resource.TextFile;
@@ -27,7 +28,7 @@ public class GameState extends State {
 
 	public final ChaseCamera camera;
 	public final Level lvl;
-	// public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
+	public QuadTree qt = new QuadTree(4, 0, 0, 1024, 1024, 10);
 	private Sprite aim;
 
 	int lightSize = 256;
@@ -79,10 +80,11 @@ public class GameState extends State {
 		Set<Entity> set = lvl.getLevelObjects();
 
 		for (Entity ent : set) {
-
+			qt.add(ent);
 			ent.update(delta);
 
 		}
+		qt.clear();
 	}
 
 	/**

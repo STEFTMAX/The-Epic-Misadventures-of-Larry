@@ -24,7 +24,7 @@ public abstract class Pool<P extends Poolable> {
 		this.maxObjects = maxObjects;
 	}
 	
-	public void put(P object) {
+	public void eat(P object) {
 		if (maxObjects < pooledObjects.size() + 1) return;
 		object.reset();
 		pooledObjects.add(object);

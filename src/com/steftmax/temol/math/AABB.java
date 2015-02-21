@@ -15,8 +15,9 @@ public class AABB {
 		this.width = width;
 		this.height = height;
 	}
+
 	public AABB() {
-		this(0,0,0,0);
+		this(0, 0, 0, 0);
 	}
 
 	public void setDimensions(int width, int height) {
@@ -41,7 +42,7 @@ public class AABB {
 		}
 		return false;
 	}
-	
+
 	public boolean collides(int x, int y, int width, int height) {
 		if (this.x < x + width) {
 			if (x < this.x + this.width) {
@@ -54,23 +55,29 @@ public class AABB {
 		}
 		return false;
 	}
-	
+
 	public boolean collides(AABB otherBox) {
-		
+
 		return collides(otherBox.x, otherBox.y, otherBox.width, otherBox.height);
 
 	}
-	
+
 	public void setBounds(int x, int y, int width, int height) {
-		setPostion(x, y);
-		setDimensions(width, height);
+
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "x: " + x + " y: " + y + " width: " + width + " height: " + height;
+		return "x: " + x + " y: " + y + " width: " + width + " height: "
+				+ height;
 	}
 }
