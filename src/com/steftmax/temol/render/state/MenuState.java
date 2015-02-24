@@ -7,6 +7,7 @@ import com.steftmax.temol.TEMoL;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
+import com.steftmax.temol.graphics.font.BitmapFont;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
@@ -23,6 +24,7 @@ public class MenuState extends State implements Button.Listener {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
+	private BitmapFont font;
 
 	private enum Screen {
 		MENU, SETTINGS;
@@ -45,6 +47,9 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
+
+		font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+				resources.getSpriteSheet("font/font1.png").getFrames());
 
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 
@@ -73,10 +78,9 @@ public class MenuState extends State implements Button.Listener {
 	public void update(long delta) {
 		if (switchToPlay) {
 			deleteResources();
-			game.changeState(new GameState(game,
-					((TEMoL) game).createLevel()));
+			game.changeState(new GameState(game, ((TEMoL) game).createLevel()));
 		}
-		
+
 	}
 
 	/*
@@ -93,6 +97,8 @@ public class MenuState extends State implements Button.Listener {
 		batch.begin();
 
 		batch.draw(background);
+		
+		font.draw(batch, "SWAG!!!", 150, 315, 1, 1);
 		switch (screen) {
 		case MENU:
 			play.draw(batch);
