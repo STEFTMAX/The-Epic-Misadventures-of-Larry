@@ -28,7 +28,7 @@ public class GameState extends State {
 
 	public final ChaseCamera camera;
 	public final Level lvl;
-	public QuadTree qt = new QuadTree(4, 0, 0, 1024, 1024, 10);
+	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
 
 	int lightSize = 256;
@@ -73,7 +73,7 @@ public class GameState extends State {
 	public void update(long delta) {
 		// System.out.println(game.getMouseInput().position.x);
 		// System.out.println(game.getMouseInput().position.y);
-		aim.setScale(camera.getScale() / 1.5f);
+		aim.setScale(camera.getScale());
 		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 

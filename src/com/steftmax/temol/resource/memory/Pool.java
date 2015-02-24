@@ -9,6 +9,8 @@ import java.util.List;
  */
 public abstract class Pool<P extends Poolable> {
 	int maxObjects;
+	
+	int peak;
 
 	List<P> pooledObjects = new ArrayList<P>();
 
@@ -28,6 +30,8 @@ public abstract class Pool<P extends Poolable> {
 		if (maxObjects < pooledObjects.size() + 1) return;
 		object.reset();
 		pooledObjects.add(object);
+		peak = Math.max(peak, pooledObjects.size());
+		System.out.println(peak);
 	}
 	
 	protected abstract P newObject();
