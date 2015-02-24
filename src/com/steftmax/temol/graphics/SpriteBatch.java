@@ -89,7 +89,7 @@ public class SpriteBatch {
 		}
 
 		Texture t = tr.texture;
-		if (lastTexture != null && lastTexture != t) {
+		if (lastTexture != null || lastTexture != t) {
 			flush();
 		}
 
