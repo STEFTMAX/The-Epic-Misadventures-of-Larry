@@ -5,6 +5,7 @@ import org.lwjgl.opengl.Display;
 import com.steftmax.temol.Game;
 import com.steftmax.temol.TEMoL;
 import com.steftmax.temol.graphics.Camera;
+import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
 import com.steftmax.temol.graphics.font.BitmapFont;
@@ -98,7 +99,7 @@ public class MenuState extends State implements Button.Listener {
 
 		batch.draw(background);
 		
-		font.draw(batch, "SWAG!!!", 150, 315, 1, 1);
+		font.draw(batch, "JE MOEDER IS DIK!", 0, 0, 1, 1, new Color(0, 127, 127, 127));
 		switch (screen) {
 		case MENU:
 			play.draw(batch);

@@ -1,5 +1,6 @@
 package com.steftmax.temol.graphics.sprite;
 
+import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.resource.Disposable;
 
@@ -11,7 +12,7 @@ import com.steftmax.temol.resource.Disposable;
  * @author pieter3457
  *
  */
-public class Sprite implements Disposable{
+public class Sprite implements Disposable {
 
 	public Vector2 pos;
 	public int width, height;
@@ -20,6 +21,7 @@ public class Sprite implements Disposable{
 
 	public TextureRegion texReg;
 	public boolean containmentTest = true;
+	public Color color = new Color(127,127,127,127);
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
