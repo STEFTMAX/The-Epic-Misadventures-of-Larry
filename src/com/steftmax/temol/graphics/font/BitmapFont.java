@@ -23,7 +23,7 @@ public class BitmapFont {
 		if (!letters.contains(" ")) {
 			letters = letters + " ";
 		}
-		
+
 		this.letters = letters;
 
 		this.glyphs = new TextureRegion[letters.length() + 1];
@@ -39,11 +39,12 @@ public class BitmapFont {
 
 	public void draw(SpriteBatch batch, String text, float x, float y,
 			float scaleX, float scaleY, Color c) {
-		
+
 		float px;
 		for (int i = 0; i < text.length(); i++) {
-			TextureRegion glyph = glyphs[letters.indexOf(Character.toLowerCase(text.charAt(i)))];
-			px = x + i * glyph.width;
+			TextureRegion glyph = glyphs[letters.indexOf(Character
+					.toLowerCase(text.charAt(i)))];
+			px = x + i * glyph.width * scaleX;
 
 			batch.draw(glyph, px, px + glyph.width * scaleX, y, y
 					+ glyph.height * scaleY, false, false, false, c);

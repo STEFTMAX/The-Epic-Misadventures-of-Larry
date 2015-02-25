@@ -99,7 +99,7 @@ public class MenuState extends State implements Button.Listener {
 
 		batch.draw(background);
 		
-		font.draw(batch, "JE MOEDER IS DIK!", 0, 0, 1, 1, new Color(0, 127, 127, 127));
+		font.draw(batch, "echo: dat swag doe", 0, 0, .4f, .3f, new Color(0, 127, 127, 127));
 		switch (screen) {
 		case MENU:
 			play.draw(batch);
