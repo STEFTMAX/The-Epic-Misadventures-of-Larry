@@ -12,13 +12,13 @@ public class BitmapFont {
 	final String letters;
 	final TextureRegion[] glyphs;
 	private Color color;
-
-	public BitmapFont(String letters, TextureRegion[] glyphs, Color color) {
-		this(letters, glyphs);
-		this.color = color;
-	}
+	private int glyphWidth, glyphHeight;
 
 	public BitmapFont(String letters, TextureRegion[] glyphs) {
+		this(letters, glyphs, new Color(1, 1, 1, 1));
+	}
+
+	public BitmapFont(String letters, TextureRegion[] glyphs, Color color) {
 		letters = letters.toLowerCase();
 		if (!letters.contains(" ")) {
 			letters = letters + " ";
@@ -30,11 +30,36 @@ public class BitmapFont {
 		for (int i = 0; i < this.glyphs.length; i++) {
 			this.glyphs[i] = glyphs[i];
 		}
+		// cuz monospace u know
+		this.glyphWidth = glyphs[0].width;
+		this.glyphHeight = glyphs[0].height;
+
+		this.color = color;
 	}
 
 	public void draw(SpriteBatch batch, String text, float x, float y,
 			float scaleX, float scaleY) {
 		draw(batch, text, x, y, scaleX, scaleY, this.color);
+	}
+
+	public void draw(SpriteBatch batch, String text, float x, float y,
+			int pixWidth, int pixHeight, boolean keepRatio) {
+		draw(batch, text, x, y, pixWidth, pixHeight, this.color, keepRatio);
+	}
+
+	public void draw(SpriteBatch batch, String text, float x, float y,
+			int pixWidth, int pixHeight, Color color, boolean keepRatio) {
+
+		float scaleX = (float) pixWidth / (text.length() * glyphWidth);
+		float scaleY = (float) pixHeight / (glyphHeight);
+
+		if (keepRatio) {
+			float finalScale = Math.min(scaleX, scaleY);
+			scaleX = finalScale;
+			scaleY = finalScale;
+		}
+
+		draw(batch, text, x, y, scaleX, scaleY, color);
 	}
 
 	public void draw(SpriteBatch batch, String text, float x, float y,

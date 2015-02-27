@@ -50,7 +50,8 @@ public class MenuState extends State implements Button.Listener {
 		resources.load();
 
 		font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				resources.getSpriteSheet("font/font1.png").getFrames());
+				resources.getSpriteSheet("font/font1.png").getFrames(),
+				new Color(.5F, .7F, .3F, 1F));
 
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 
@@ -98,8 +99,7 @@ public class MenuState extends State implements Button.Listener {
 		batch.begin();
 
 		batch.draw(background);
-		
-		font.draw(batch, "echo: dat swag doe", 0, 0, .4f, .3f, new Color(0, 127, 127, 127));
+		font.draw(batch, "echo: dat swag doe", 0, 0, 531, 135, true);
 		switch (screen) {
 		case MENU:
 			play.draw(batch);

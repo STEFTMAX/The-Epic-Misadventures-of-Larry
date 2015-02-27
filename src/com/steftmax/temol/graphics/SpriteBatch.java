@@ -27,15 +27,17 @@ public class SpriteBatch {
 	FloatBuffer textureData;
 	int textureSize = 2;
 
-	ByteBuffer colorData;
+	FloatBuffer colorData;
 	int colorSize = 4;
 
 	float[] vertices;
 	float[] textures;
-	byte[] colors;
+	float[] colors;
 
 	private int index = 0;
 	private boolean drawing = false, containmentTest = false;
+	
+	private Color color = new Color(1, 1, 1, 1);
 
 	public SpriteBatch(int size, int width, int height) {
 
@@ -56,11 +58,11 @@ public class SpriteBatch {
 
 		vertexData = BufferUtils.createFloatBuffer(size * vertexSize * 4);
 		textureData = BufferUtils.createFloatBuffer(size * textureSize * 4);
-		colorData = BufferUtils.createByteBuffer(size * colorSize * 4);
+		colorData = BufferUtils.createFloatBuffer(size * colorSize * 4);
 		// four for the four corners of a quad
 		vertices = new float[size * vertexSize * 4];
 		textures = new float[size * textureSize * 4];
-		colors = new byte[size * colorSize * 4];
+		colors = new float[size * colorSize * 4];
 	}
 
 	// TODO conainmentTest upgrade
@@ -79,6 +81,11 @@ public class SpriteBatch {
 		draw(s.texReg, s.pos.x, s.pos.x + s.width * s.scaleX, s.pos.y, s.pos.y
 				+ s.height * s.scaleY, s.flipX, s.flipY, s.containmentTest,
 				s.color);
+	}
+	
+	public void draw(final TextureRegion tr, float x1, float x2, float y1,
+			float y2, boolean flipX, boolean flipY, boolean containmentTest) {
+		draw(tr, x1, x2, y1, y2, flipX, flipY, containmentTest, this.color);
 	}
 
 	public void draw(final TextureRegion tr, float x1, float x2, float y1,
@@ -109,10 +116,10 @@ public class SpriteBatch {
 		float v1 = tr.v1;
 		float v2 = tr.v2;
 		
-		final byte red = color.red;
-		final byte green = color.green;
-		final byte blue = color.blue;
-		final byte alpha = color.alpha;
+		final float red = color.red;
+		final float green = color.green;
+		final float blue = color.blue;
+		final float alpha = color.alpha;
 
 		if (flipY) {
 
@@ -192,7 +199,7 @@ public class SpriteBatch {
 
 		glVertexPointer(2, 0, vertexData);
 		glTexCoordPointer(2, 0, textureData);
-		glColorPointer(4, false, 0, colorData);
+		glColorPointer(4, 0, colorData);
 
 		glDrawArrays(GL_QUADS, 0, index - 1);
 

@@ -5,19 +5,44 @@ package com.steftmax.temol.graphics;
  *
  */
 public class Color {
-	public byte red, green, blue, alpha;
+	public float red, green, blue, alpha;
 
 	public Color(float red, float green, float blue, float alpha) {
-		red /= 2f;
-		blue /= 2f;
-		green /= 2f;
-		alpha /= 2f;
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+		this.alpha = alpha;
+		normalize();
 	}
-	
-	public Color(int red, int green, int blue, int alpha) {
-		this.red = (byte) red;
-		this.green = (byte) green;
-		this.blue = (byte) blue;
-		this.alpha = (byte) alpha;
+
+	public void normalize() {
+		if (red > 1f) {
+			red = 1f;
+		} else {
+			if (red < 0f) {
+				red = 0f;
+			}
+		}
+		if (green > 1f) {
+			green = 1f;
+		} else {
+			if (green < 0f) {
+				green = 0f;
+			}
+		}
+		if (blue > 1f) {
+			blue = 1f;
+		} else {
+			if (blue < 0f) {
+				blue = 0f;
+			}
+		}
+		if (alpha > 1f) {
+			alpha = 1f;
+		} else {
+			if (alpha < 0f) {
+				alpha = 0f;
+			}
+		}
 	}
 }
