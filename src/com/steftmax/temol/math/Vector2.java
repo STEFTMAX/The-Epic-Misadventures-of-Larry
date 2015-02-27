@@ -88,4 +88,9 @@ public class Vector2 {
 			y = y / length;
 		}
 	}
+
+	public void set(Vector2 v, float scale) {
+		this.x = v.x * scale;
+		this.y = v.y * scale;
+	}
 }

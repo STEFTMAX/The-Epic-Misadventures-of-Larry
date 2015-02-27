@@ -1,7 +1,6 @@
 package com.steftmax.temol;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
@@ -88,6 +87,7 @@ public abstract class Game implements Runnable {
 
 			currentState.update((long) (delta * timeScale));
 			currentState.draw(batch);
+			Display.update();
 		}
 		destroy();
 	}
@@ -110,7 +110,7 @@ public abstract class Game implements Runnable {
 
 	public synchronized void changeState(State lastState, Class<? extends State> newState) {
 		if (lastState != null) {
-			lastState.onExit();
+			lastState.deleteResources();
 			mouseInput.clear();
 			keyboardInput.clear();
 		}

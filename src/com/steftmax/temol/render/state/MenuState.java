@@ -78,7 +78,6 @@ public class MenuState extends State implements Button.Listener {
 			game.changeState(this, GameState.class);
 		}
 		if (switchToMapEditor) {
-			deleteResources();
 			game.changeState(this, MapEditorState.class);
 		}
 
@@ -111,7 +110,6 @@ public class MenuState extends State implements Button.Listener {
 		batch.end();
 		cam.endFocus();
 
-		Display.update();
 	}
 
 	/*

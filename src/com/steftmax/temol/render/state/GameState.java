@@ -114,7 +114,6 @@ public class GameState extends State {
 
 		batch.end();
 		defaultShader.unbind();
-		Display.update();
 	}
 
 	/*
@@ -124,6 +123,10 @@ public class GameState extends State {
 	 */
 	@Override
 	public void deleteResources() {
+		shadowMapFBO.dispose();
+		occluders.dispose();
+		occludersFBO.dispose();
+		defaultShader.dispose();
 		resources.unload();
 	}
 
@@ -163,15 +166,5 @@ public class GameState extends State {
 		lvl.setPlayer(larry);
 
 		return lvl;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.temol.render.state.State#onExit()
-	 */
-	@Override
-	public void onExit() {
-		deleteResources();
 	}
 }
