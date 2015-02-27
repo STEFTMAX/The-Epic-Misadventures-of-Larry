@@ -60,4 +60,9 @@ public class KeyboardInput implements Updatable{
 	public boolean isShiftDown() {
 		return keys[shift];
 	}
+	
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -16,4 +16,9 @@ public abstract class State implements Updatable, Drawable {
 	}
 	
 	public abstract void deleteResources();
+
+	/**
+	 * 
+	 */
+	public abstract void onExit();
 }

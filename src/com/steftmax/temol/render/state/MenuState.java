@@ -3,12 +3,9 @@ package com.steftmax.temol.render.state;
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
-import com.steftmax.temol.TEMoL;
 import com.steftmax.temol.graphics.Camera;
-import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
-import com.steftmax.temol.graphics.font.BitmapFont;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
@@ -25,14 +22,13 @@ public class MenuState extends State implements Button.Listener {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
-	private BitmapFont font;
 
 	private enum Screen {
 		MENU, SETTINGS;
 	}
 
 	private Screen screen = Screen.MENU;
-	private boolean switchToPlay;
+	private boolean switchToPlay, switchToMapEditor;
 
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 80,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 80;
@@ -49,9 +45,9 @@ public class MenuState extends State implements Button.Listener {
 
 		resources.load();
 
-		font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				resources.getSpriteSheet("font/font1.png").getFrames(),
-				new Color(.5F, .7F, .3F, 1F));
+		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		// resources.getSpriteSheet("font/font1.png").getFrames(),
+		// new Color(.5F, .7F, .3F, 1F));
 
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 
@@ -79,8 +75,11 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void update(long delta) {
 		if (switchToPlay) {
+			game.changeState(this, GameState.class);
+		}
+		if (switchToMapEditor) {
 			deleteResources();
-			game.changeState(new GameState(game, ((TEMoL) game).createLevel()));
+			game.changeState(this, MapEditorState.class);
 		}
 
 	}
@@ -99,7 +98,6 @@ public class MenuState extends State implements Button.Listener {
 		batch.begin();
 
 		batch.draw(background);
-		font.draw(batch, "echo: dat swag doe", 0, 0, 531, 135, true);
 		switch (screen) {
 		case MENU:
 			play.draw(batch);
@@ -124,8 +122,10 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void deleteResources() {
 		resources.unload();
-		game.getMouseInput().clear();
+	}
 
+	public void onExit() {
+		deleteResources();
 	}
 
 	/*
@@ -165,7 +165,7 @@ public class MenuState extends State implements Button.Listener {
 		}
 
 		if (b == settings) {
-			screen = Screen.SETTINGS;
+			switchToMapEditor = true;
 		}
 
 	}

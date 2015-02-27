@@ -8,6 +8,8 @@ import com.steftmax.temol.Game;
 import com.steftmax.temol.content.Level;
 import com.steftmax.temol.content.entity.Entity;
 import com.steftmax.temol.content.entity.Larry;
+import com.steftmax.temol.content.map.old.MapData;
+import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.ChaseCamera;
 import com.steftmax.temol.graphics.FrameBuffer;
 import com.steftmax.temol.graphics.ShaderProgram;
@@ -17,6 +19,7 @@ import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.QuadTree;
 import com.steftmax.temol.render.input.MouseInput;
+import com.steftmax.temol.resource.GameResources;
 import com.steftmax.temol.resource.Settings;
 import com.steftmax.temol.resource.TextFile;
 
@@ -30,6 +33,7 @@ public class GameState extends State {
 	public final Level lvl;
 	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
+	private GameResources resources = new GameResources();
 
 	int lightSize = 256;
 
@@ -41,7 +45,7 @@ public class GameState extends State {
 
 	// private final List<Entity> returnObjects = new ArrayList<Entity>();
 
-	public GameState(Game game, Level lvl) {
+	public GameState(Game game) {
 		super(game);
 		defaultShader = new ShaderProgram(null, new TextFile(
 				"/shaders/fragment").fileContents);
@@ -50,7 +54,7 @@ public class GameState extends State {
 		mi.center();
 		mi.grab();
 
-		this.lvl = lvl;
+		this.lvl = createLevel();
 
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
@@ -120,7 +124,54 @@ public class GameState extends State {
 	 */
 	@Override
 	public void deleteResources() {
-		// TODO Auto-generated method stub
+		resources.unload();
+	}
 
+	public Level createLevel() {
+		resources.load();
+
+		int[][] mapStructure = {
+
+		{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 } };
+
+		MapData data = new MapData(mapStructure, 32, 32);
+		TiledMap map = new TiledMap(data, resources);
+		Level lvl = new Level(resources);
+		lvl.setMap(map);
+		Larry larry = new Larry(map, 32, 34, game.getKeyboardInput(),
+				game.getMouseInput(), resources);
+		lvl.setPlayer(larry);
+
+		return lvl;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.steftmax.temol.render.state.State#onExit()
+	 */
+	@Override
+	public void onExit() {
+		deleteResources();
 	}
 }
