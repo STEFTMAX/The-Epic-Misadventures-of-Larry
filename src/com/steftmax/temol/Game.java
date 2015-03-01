@@ -89,6 +89,7 @@ public abstract class Game implements Runnable {
 			currentState.draw(batch);
 			Display.update();
 		}
+		currentState.deleteResources();
 		destroy();
 	}
 

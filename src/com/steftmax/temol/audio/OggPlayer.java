@@ -242,31 +242,4 @@ public class OggPlayer {
 			}
 		}
 	}
-	
-	/**
-	 * Plays an ogg file.
-	 * @param args[0] the class path containing the file to play.
-	 */
-	public static void main(String args[]) {
-		OggPlayer ogg = new OggPlayer();
-		try {
-			if (args.length < 1) {
-				args = new String[1];
-				args[0] = "/audio/Madrugada - Ice.ogg";
-			}
-            
-			AL.create();
-			InputStream input = ogg.getClass().getResourceAsStream(args[0]);
-			ogg.open(new OggInputStream(input));
-			ogg.play();
-    		while (ogg.update()) {
-				Thread.sleep(5);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			ogg.release();
-			AL.destroy();
-		}
-	}
 }

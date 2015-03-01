@@ -6,6 +6,7 @@ import java.nio.ByteOrder;
 
 import com.jcraft.jogg.*;
 import com.jcraft.jorbis.*;
+import com.steftmax.temol.resource.loader.ResourceLoader;
 
 
 /**
@@ -75,6 +76,14 @@ public class OggInputStream extends FilterInputStream {
 	private byte readDummy[] = new byte[1];
 	
 
+	/**
+	 * Creates an ogginputstream from the specified path in the directory
+	 * @param path The path to load from
+	 */
+	public OggInputStream(String path) {
+		this(ResourceLoader.load(path));
+	}
+	
 	/**
 	 * Creates an OggInputStream that decompressed the specified ogg file.
 	 */
@@ -525,29 +534,5 @@ public class OggInputStream extends FilterInputStream {
 		s = s + "channels        " + info.channels        + "\n";
 		s = s + "rate (hz)       " + info.rate            ;
 		return s;
-	}
-
-
-	/**
-	 * Tests this class by decoding an ogg file to a byte buffer.
-	 */
-	public static void main(String args[]) {
-		try {
-			InputStream in = new Object().getClass().getResourceAsStream("/audio/slash.ogg");
-			ByteArrayOutputStream byteOut = new ByteArrayOutputStream(1024*256);
-			byteOut.reset();
-			byte copyBuffer[] = new byte[1024*4];
-			OggInputStream oggInput = new OggInputStream(in);
-			boolean done = false;
-			while (!done) {
-				int bytesRead = oggInput.read(copyBuffer, 0, copyBuffer.length);
-				byteOut.write(copyBuffer, 0, bytesRead);
-				done = (bytesRead != copyBuffer.length || bytesRead < 0);
-			}
-			System.out.println(byteOut.size() + " bytes read");
-			System.out.println(oggInput);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
