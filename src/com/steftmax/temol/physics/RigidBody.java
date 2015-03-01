@@ -8,6 +8,8 @@ import com.steftmax.temol.render.Updatable;
  *
  */
 public abstract class RigidBody implements Updatable{
+	
+	public int id;
 	public float mass, drag, airresistance;
 	public Vector2 position;
 	public Vector2 velocity;
@@ -31,5 +33,10 @@ public abstract class RigidBody implements Updatable{
 	
 	public void addForce(float x, float y) {
 		force.add(x, y);
+	}
+
+	// TODO 
+	public boolean onGround() {
+		return true;
 	}
 }

@@ -1,8 +1,12 @@
 package com.steftmax.temol.render.state;
 
+import java.io.IOException;
+
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
+import com.steftmax.temol.audio.OggInputStream;
+import com.steftmax.temol.audio.OggPlayer;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
@@ -11,6 +15,7 @@ import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
+import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
  * @author pieter3457
@@ -22,6 +27,7 @@ public class MenuState extends State implements Button.Listener {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
+	OggPlayer plyr;
 
 	private enum Screen {
 		MENU, SETTINGS;
@@ -44,6 +50,9 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
+		plyr = new OggPlayer();
+		plyr.open(new OggInputStream(ResourceLoader.load("music/sung.ogg")));
+		plyr.play();
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
@@ -74,6 +83,11 @@ public class MenuState extends State implements Button.Listener {
 	 */
 	@Override
 	public void update(long delta) {
+		try {
+			plyr.update();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (switchToPlay) {
 			game.changeState(this, GameState.class);
 		}
@@ -120,6 +134,7 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void deleteResources() {
 		resources.unload();
+		plyr.release();
 	}
 
 	public void onExit() {
