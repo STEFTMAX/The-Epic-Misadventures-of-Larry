@@ -8,6 +8,7 @@ import com.steftmax.temol.Game;
 import com.steftmax.temol.audio.Music;
 import com.steftmax.temol.audio.OggInputStream;
 import com.steftmax.temol.audio.OggPlayer;
+import com.steftmax.temol.audio.Sound;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
@@ -53,6 +54,11 @@ public class MenuState extends State implements Button.Listener {
 		resources.load();
 		music = new Music("music/sung.ogg");
 		music.play();
+		try {
+			new Sound("sfx/handgunreload1.wav");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
