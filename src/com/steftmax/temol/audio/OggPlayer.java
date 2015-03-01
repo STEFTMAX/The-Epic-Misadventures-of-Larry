@@ -1,7 +1,6 @@
 package com.steftmax.temol.audio;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -76,6 +75,7 @@ public class OggPlayer {
 			alDeleteBuffers(buffers);
 			check();
 		}
+		AL.destroy();
 	}
 
 

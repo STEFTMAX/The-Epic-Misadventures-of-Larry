@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
+import com.steftmax.temol.audio.Music;
 import com.steftmax.temol.audio.OggInputStream;
 import com.steftmax.temol.audio.OggPlayer;
 import com.steftmax.temol.graphics.Camera;
@@ -27,7 +28,7 @@ public class MenuState extends State implements Button.Listener {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
-	OggPlayer plyr;
+	Music music;
 
 	private enum Screen {
 		MENU, SETTINGS;
@@ -50,9 +51,8 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
-		plyr = new OggPlayer();
-		plyr.open(new OggInputStream(ResourceLoader.load("music/sung.ogg")));
-		plyr.play();
+		music = new Music("music/sung.ogg");
+		music.play();
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
@@ -84,7 +84,8 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void update(long delta) {
 		try {
-			plyr.update();
+			
+			music.update();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,34 +135,13 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void deleteResources() {
 		resources.unload();
-		plyr.release();
+		music.dispose();
 	}
-
-	public void onExit() {
-		deleteResources();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onPress
-	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
-	 */
+	
 	@Override
-	public void onPress(Button b) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onRelease
-	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
-	 */
+	public void onPress(Button b) {}
 	@Override
-	public void onRelease(Button b) {
-	}
+	public void onRelease(Button b) {}
 
 	/*
 	 * (non-Javadoc)

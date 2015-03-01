@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -42,6 +43,12 @@ public abstract class Game implements Runnable {
 
 	public Game(long maxBetweenFrameNanos) {
 
+		try {
+			AL.create();
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.timer = new DeltaTimer(timeScale);
 
 		this.maxBetweenFrameNanos = maxBetweenFrameNanos;
