@@ -10,6 +10,7 @@ import com.steftmax.temol.resource.loader.ResourceLoader;
 import static org.lwjgl.openal.AL10.*;
 
 /**
+ * Represents a sound. It is loaded from a WAV file.
  * @author pieter3457
  *
  */
@@ -61,6 +62,7 @@ public class Sound {
 		byte[] pcm = new byte[leftover];
 
 		input.read(pcm);
+		
 		input.close();
 
 		int bytes = pcm.length - (pcm.length % (channels > 1 ? 4 : 2));
@@ -90,5 +92,11 @@ public class Sound {
 				return chunkLength;
 			dis.skipBytes(chunkLength);
 		}
+	}
+	
+	public void play() {
+		int sourceID = alGenSources();// TODO sources system
+		alSourcei(sourceID, AL_BUFFER,  bufferID);
+		alSourcePlay(sourceID);
 	}
 }

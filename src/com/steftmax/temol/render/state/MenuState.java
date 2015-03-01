@@ -53,12 +53,20 @@ public class MenuState extends State implements Button.Listener {
 
 		resources.load();
 		music = new Music("music/sung.ogg");
-		music.play();
+		//music.play();
+		Sound sound = null;
 		try {
-			new Sound("sfx/handgunreload1.wav");
+			sound = new Sound("sfx/handgunreload1.wav");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		sound.play();
+		try {
+			Thread.sleep(531);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		sound.play();
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
