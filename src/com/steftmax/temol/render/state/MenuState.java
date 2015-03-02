@@ -8,6 +8,7 @@ import com.steftmax.temol.Game;
 import com.steftmax.temol.audio.Music;
 import com.steftmax.temol.audio.OggInputStream;
 import com.steftmax.temol.audio.OggPlayer;
+import com.steftmax.temol.audio.OpenALSystem;
 import com.steftmax.temol.audio.Sound;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
@@ -30,6 +31,7 @@ public class MenuState extends State implements Button.Listener {
 	private Camera cam;
 	private Sprite background;
 	Music music;
+	Sound sound;
 
 	private enum Screen {
 		MENU, SETTINGS;
@@ -52,21 +54,16 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
-		music = new Music("music/sung.ogg");
-		//music.play();
-		Sound sound = null;
+		
+		OpenALSystem system = new OpenALSystem();
+		music = new Music(system, "music/sung.ogg");
+		music.play();
 		try {
-			sound = new Sound("sfx/handgunreload1.wav");
+			sound = new Sound(system, "sfx/handgunreload1.wav");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		sound.play();
-		try {
-			Thread.sleep(531);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		sound.play();
+		
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
@@ -90,6 +87,7 @@ public class MenuState extends State implements Button.Listener {
 		Display.setVSyncEnabled(true);
 	}
 
+	long time;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -109,7 +107,11 @@ public class MenuState extends State implements Button.Listener {
 		if (switchToMapEditor) {
 			game.changeState(this, MapEditorState.class);
 		}
-
+		time += delta;
+		if (time > 1000000000) { 
+			time = 0;
+			sound.play();
+		}
 	}
 
 	/*

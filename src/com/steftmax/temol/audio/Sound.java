@@ -17,8 +17,11 @@ import static org.lwjgl.openal.AL10.*;
 public class Sound {
 	public final int channels;
 	private final int bufferID;
+	private final OpenALSystem system;
 
-	public Sound(String path) throws IOException {
+	public Sound(OpenALSystem system, String path) throws IOException {
+		
+		this.system = system;
 
 		DataInputStream input = new DataInputStream(new BufferedInputStream(
 				ResourceLoader.load(path)));
@@ -95,7 +98,7 @@ public class Sound {
 	}
 	
 	public void play() {
-		int sourceID = alGenSources();// TODO sources system
+		int sourceID = system.obtainSource(0);
 		alSourcei(sourceID, AL_BUFFER,  bufferID);
 		alSourcePlay(sourceID);
 	}

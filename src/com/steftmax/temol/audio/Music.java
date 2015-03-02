@@ -18,27 +18,26 @@ public class Music implements Disposable {
 
 	private IntBuffer buffers = OpenALSystem.createIntBuffer(2);
 
-	private IntBuffer source = OpenALSystem.createIntBuffer(1);
+	private int sourceID;
 
 	private ByteBuffer dataBuffer = ByteBuffer.allocateDirect(4096 * 8);
 
 	private OggInputStream oggInputStream;
 
 
-	public Music(String path) {
+	public Music(OpenALSystem system, String path) {
 		oggInputStream = new OggInputStream(path);
 
 		buffers.rewind();
 		alGenBuffers(buffers);
 		check();
 
-		source.rewind();
-		alGenSources(source);
+		sourceID = system.obtainSource(0);
 		check();
 
-		alSourcef(source.get(0),AL_GAIN, 1);
-		alSourcef(source.get(0), AL_ROLLOFF_FACTOR, 0);
-		alSourcei(source.get(0), AL_SOURCE_RELATIVE, AL_FALSE);
+		alSourcef(sourceID,AL_GAIN, 1);
+		alSourcef(sourceID, AL_ROLLOFF_FACTOR, 0);
+		alSourcei(sourceID, AL_SOURCE_RELATIVE, AL_FALSE);
 	}
 
 	protected void check() {
@@ -59,8 +58,8 @@ public class Music implements Disposable {
 			}
 		}
 
-		alSourceQueueBuffers(source.get(0), buffers);
-		alSourcePlay(source.get(0));
+		alSourceQueueBuffers(sourceID, buffers);
+		alSourcePlay(sourceID);
 
 		return true;
 	}
@@ -69,7 +68,7 @@ public class Music implements Disposable {
 	 * check if the source is playing
 	 */
 	public boolean playing() {
-		return (alGetSourcei(source.get(0), AL_SOURCE_STATE) == AL_PLAYING);
+		return (alGetSourcei(sourceID, AL_SOURCE_STATE) == AL_PLAYING);
 	}
 
 	/*
@@ -79,10 +78,6 @@ public class Music implements Disposable {
 	 */
 	@Override
 	public void dispose() {
-		alSourceStop(source);
-		empty();
-		alDeleteSources(source);
-		check();
 		alDeleteBuffers(buffers);
 		check();
 		try {
@@ -96,10 +91,10 @@ public class Music implements Disposable {
 	 * empties the queue
 	 */
 	protected void empty() {
-		int queued = alGetSourcei(source.get(0), AL_BUFFERS_QUEUED);
+		int queued = alGetSourcei(sourceID, AL_BUFFERS_QUEUED);
 		while (queued-- > 0) {
 			IntBuffer buffer = OpenALSystem.createIntBuffer(1);
-			alSourceUnqueueBuffers(source.get(0), buffer);
+			alSourceUnqueueBuffers(sourceID, buffer);
 			check();
 		}
 	}
@@ -132,23 +127,23 @@ public class Music implements Disposable {
 	 */
 	public synchronized boolean update() throws IOException {
 		boolean active = true;
-		int processed = alGetSourcei(source.get(0), AL_BUFFERS_PROCESSED);
+		int processed = alGetSourcei(sourceID, AL_BUFFERS_PROCESSED);
 		while (processed-- > 0) {
 			IntBuffer buffer = OpenALSystem.createIntBuffer(1);
-			alSourceUnqueueBuffers(source.get(0), buffer);
+			alSourceUnqueueBuffers(sourceID, buffer);
 			check();
 
 			active = stream(buffer.get(0));
 			buffer.rewind();
 
-			alSourceQueueBuffers(source.get(0), buffer);
+			alSourceQueueBuffers(sourceID, buffer);
 			check();
 		}
 
 		return active;
 	}
 	
-	public void setLooping() {
-	    alSourcei(source.get(0), AL_LOOPING,  AL_TRUE);
+	public void setLooping(boolean value) {
+	    alSourcei(sourceID, AL_LOOPING,  value ? AL_TRUE : AL_FALSE);
 	}
 }
