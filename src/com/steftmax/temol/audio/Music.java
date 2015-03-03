@@ -105,9 +105,7 @@ public class Music implements Disposable {
 					dataBuffer.capacity());
 			if (bytesRead >= 0) {
 				dataBuffer.rewind();
-				boolean mono = (oggInputStream.getFormat() == OggInputStream.FORMAT_MONO16);
-				int format = (mono ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
-				alBufferData(buffer, format, dataBuffer,
+				alBufferData(buffer, oggInputStream.getFormat(), dataBuffer,
 						oggInputStream.getRate());
 				check();
 				return true;
