@@ -3,6 +3,7 @@ package com.steftmax.temol.audio;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import static org.lwjgl.openal.AL10.*;
 
 import com.jcraft.jogg.*;
 import com.jcraft.jorbis.*;
@@ -22,12 +23,6 @@ import com.steftmax.temol.resource.loader.ResourceLoader;
  * data directly into a native buffer.
  */
 public class OggInputStream extends FilterInputStream {
-
-	/** The mono 16 bit format */
-	public static final int FORMAT_MONO16 = 1;
-	
-	/** The stereo 16 bit format */
-	public static final int FORMAT_STEREO16 = 2;
 
 	// temp vars
 	private float[][][] _pcm = new float[1][][];
@@ -104,9 +99,9 @@ public class OggInputStream extends FilterInputStream {
 	 */
 	public int getFormat() {
 		if (info.channels == 1) {
-			return FORMAT_MONO16;
+			return AL_FORMAT_MONO16;
 		} else {
-			return FORMAT_STEREO16;
+			return AL_FORMAT_STEREO16;
 		}
 	}
 
