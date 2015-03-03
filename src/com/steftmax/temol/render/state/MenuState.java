@@ -6,8 +6,6 @@ import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
 import com.steftmax.temol.audio.Music;
-import com.steftmax.temol.audio.OggInputStream;
-import com.steftmax.temol.audio.OggPlayer;
 import com.steftmax.temol.audio.OpenALSystem;
 import com.steftmax.temol.audio.Sound;
 import com.steftmax.temol.graphics.Camera;
@@ -18,7 +16,6 @@ import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
-import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
  * @author pieter3457
@@ -98,6 +95,7 @@ public class MenuState extends State implements Button.Listener {
 		try {
 			
 			music.update();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,11 +104,6 @@ public class MenuState extends State implements Button.Listener {
 		}
 		if (switchToMapEditor) {
 			game.changeState(this, MapEditorState.class);
-		}
-		time += delta;
-		if (time > 1000000000) { 
-			time = 0;
-			sound.play();
 		}
 	}
 

@@ -10,6 +10,7 @@ public class MenuResources extends ResourceManager{
 		loadTexture("gfx/sheet_buttons.png");
 		loadTexture("gfx/menu.png");
 		loadSpriteSheet("font/font1.png", 16, 16);
+		loadSpriteSheet("gfx/test.png");
 	}
 
 

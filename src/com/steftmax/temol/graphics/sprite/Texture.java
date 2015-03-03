@@ -77,7 +77,13 @@ public class Texture implements Disposable {
 			}
 		}
 
-		initTexture(img.getWidth(), img.getHeight(), decodePNG(img, true),
+		
+		initTexture(img.getWidth(), img.getHeight(), decodeImage(img, true),
+				minfilter, magfilter);
+	}
+
+	public Texture(BufferedImage img, int minfilter, int magfilter) {
+		initTexture(img.getWidth(), img.getHeight(), decodeImage(img, true),
 				minfilter, magfilter);
 	}
 
@@ -87,6 +93,13 @@ public class Texture implements Disposable {
 	 */
 	public Texture(int width, int height, int minfilter, int magfilter) {
 		initTexture(width, height, null, minfilter, magfilter);
+	}
+
+	/**
+	 * @param sheet
+	 */
+	public Texture(BufferedImage sheet) {
+		this(sheet, GL_NEAREST, GL_NEAREST);
 	}
 
 	private void initTexture(int width, int height, ByteBuffer data,
@@ -139,8 +152,7 @@ public class Texture implements Disposable {
 	 *            Whether or not to use alpha in this ByteBuffer
 	 * @return A ByteBuffer with all the pixels in it
 	 */
-	public static ByteBuffer decodePNG(BufferedImage texture, boolean alpha) {
-
+	public static ByteBuffer decodeImage(BufferedImage texture, boolean alpha) {
 		ByteBuffer buffer = BufferUtils.createByteBuffer(texture.getWidth()
 				* texture.getHeight() * (alpha ? 4 : 3));
 
