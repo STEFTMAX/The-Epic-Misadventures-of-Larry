@@ -69,16 +69,44 @@ public class Vector2 {
 		set(v.x, v.y);
 	}
 
+	public float lengthSquared() {
+		return (x * x) + (y * y);
+	}
+
 	public float toLength() {
-		return (float) Math.sqrt((x * x) + (y * y));
+		return (float) Math.sqrt(lengthSquared());
 	}
 
 	public float dotProduct(Vector2 v) {
 		return dotProduct(v.x, v.y);
 	}
 
-	private float dotProduct(float x, float y) {
-		return this.x * x + this.y * y;
+	public float dotProduct(float x, float y) {
+		return dotProduct(this.x, this.y, x, y);
+	}
+
+	public static float dotProduct(Vector2 v1, Vector2 v2) {
+		return dotProduct(v1.x, v1.y, v2.x, v2.y);
+	}
+
+	public static float dotProduct(float x1, float y1, float x2, float y2) {
+		return x1 * x2 + y1 * y2;
+	}
+
+	public float crossProduct(Vector2 v) {
+		return crossProduct(x, y, v.x, v.y);
+	}
+
+	public float crossProduct(float x, float y) {
+		return crossProduct(this.x, this.y, x, y);
+	}
+
+	public static float crossProduct(Vector2 v1, Vector2 v2) {
+		return crossProduct(v1.x, v1.y, v2.x, v2.y);
+	}
+
+	public static float crossProduct(float x1, float y1, float x2, float y2) {
+		return x1 * y2 - y1 * x2;
 	}
 
 	public void normalize() {
@@ -93,4 +121,10 @@ public class Vector2 {
 		this.x = v.x * scale;
 		this.y = v.y * scale;
 	}
+
+	public void reset() {
+		this.x = 0;
+		this.y = 0;
+	}
+
 }
