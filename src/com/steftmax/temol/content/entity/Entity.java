@@ -1,18 +1,18 @@
 package com.steftmax.temol.content.entity;
 
-import com.steftmax.temol.content.LevelObject;
 import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.Vector2;
+import com.steftmax.temol.physics.RigidBody;
 import com.steftmax.temol.render.Updatable;
 
-public abstract class Entity extends LevelObject implements Drawable, Updatable {
+public abstract class Entity extends RigidBody implements Drawable, Updatable {
 
 	public final Vector2 lastPos, newPos, velocity;
 	protected float HP;
-	protected final int mass, maxHP;
+	protected final int maxHP;
 	protected Sprite sprite;
 	public final AABB hitbox;
 	protected TiledMap map;
@@ -23,7 +23,6 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 		this.map = map;
 		this.HP = maxHP;
 		this.maxHP = maxHP;
-		this.mass = mass;
 		newPos = new Vector2(x, y);
 		lastPos = new Vector2(x, y);
 		velocity = new Vector2(0,0);
@@ -42,22 +41,4 @@ public abstract class Entity extends LevelObject implements Drawable, Updatable 
 	public AABB getHitbox() {
 		return hitbox;
 	}
-
-	public void onCollide(Entity collideEnt) {
-		// TODO
-	}
-	
-	
-
-	
-//	public void applyForce(float x, float y) {
-//		//F = m * a
-//		//a = F / m
-//		
-////		last_acceleration = acceleration
-////		position += velocity * time_step + ( 0.5 * last_acceleration * time_step^2 )
-////		new_acceleration = force / mass 
-////		avg_acceleration = ( last_acceleration + new_acceleration ) / 2
-////		velocity += avg_acceleration * time_step
-//	}
 }

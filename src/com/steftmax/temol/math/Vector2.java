@@ -65,6 +65,17 @@ public class Vector2 {
 		this.y *= v.y;
 	}
 
+//	public void multiply(Matrix2 m) {
+//		this.x = this.x * m.values[0] + this.y * m.values[1];
+//		this.y = this.y * m.values[2] + this.x * m.values[3];
+//	}
+	
+	public static void multiply(Matrix2 m, Vector2 v, Vector2 result) {
+
+		result.x = v.x * m.values[0] + v.y * m.values[1];
+		result.y = v.y * m.values[3] + v.x * m.values[2];
+	}
+
 	public void set(Vector2 v) {
 		set(v.x, v.y);
 	}
@@ -125,6 +136,16 @@ public class Vector2 {
 	public void reset() {
 		this.x = 0;
 		this.y = 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Vector2 x = " + x + " y = " + y;
 	}
 
 }

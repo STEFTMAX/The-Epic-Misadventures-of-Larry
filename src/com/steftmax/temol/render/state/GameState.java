@@ -1,13 +1,12 @@
 package com.steftmax.temol.render.state;
 
-import java.util.Set;
-
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
 import com.steftmax.temol.content.Level;
 import com.steftmax.temol.content.entity.Entity;
 import com.steftmax.temol.content.entity.Larry;
+import com.steftmax.temol.content.entity.QuadCopter;
 import com.steftmax.temol.content.map.old.MapData;
 import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.ChaseCamera;
@@ -18,6 +17,7 @@ import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.QuadTree;
+import com.steftmax.temol.physics.PhysicsWorld;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.GameResources;
 import com.steftmax.temol.resource.Settings;
@@ -34,6 +34,7 @@ public class GameState extends State {
 	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
 	private GameResources resources = new GameResources();
+	PhysicsWorld pw = new PhysicsWorld();
 
 	int lightSize = 256;
 
@@ -50,11 +51,14 @@ public class GameState extends State {
 		defaultShader = new ShaderProgram(null, new TextFile(
 				"/shaders/fragment").fileContents);
 		final MouseInput mi = game.getMouseInput();
+		QuadCopter qc = new QuadCopter(resources);
+		pw.addBody(qc);
 
 		mi.center();
-		mi.grab();
+//		mi.grab();
 
 		this.lvl = createLevel();
+		lvl.addLevelEntity(qc);
 
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
@@ -81,14 +85,15 @@ public class GameState extends State {
 		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
-		Set<Entity> set = lvl.getLevelObjects();
-
-		for (Entity ent : set) {
-			qt.add(ent);
-			ent.update(delta);
-
-		}
-		qt.clear();
+		pw.update(delta);
+//		Set<Entity> set = lvl.getLevelObjects();
+//
+//		for (Entity ent : set) {
+//			qt.add(ent);
+//			ent.update(delta);
+//
+//		}
+//		qt.clear();
 	}
 
 	/**
@@ -157,6 +162,7 @@ public class GameState extends State {
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 } };
 
+		
 		MapData data = new MapData(mapStructure, 32, 32);
 		TiledMap map = new TiledMap(data, resources);
 		Level lvl = new Level(resources);

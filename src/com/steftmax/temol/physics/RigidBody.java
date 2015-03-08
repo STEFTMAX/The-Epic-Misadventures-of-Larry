@@ -1,6 +1,7 @@
 package com.steftmax.temol.physics;
 
 import com.steftmax.temol.math.Vector2;
+import com.steftmax.temol.render.TimeScaler;
 import com.steftmax.temol.render.Updatable;
 
 /**
@@ -10,33 +11,37 @@ import com.steftmax.temol.render.Updatable;
 public abstract class RigidBody implements Updatable{
 	
 	public int id;
-	public float mass, drag, airresistance;
-	public Vector2 position;
-	public Vector2 velocity;
-	public Vector2 acceleration;
-	public Vector2 force;
+	public float mass = 1f, inertia = 1f, friction, drag;
 	
-	/* (non-Javadoc)
-	 * @see com.steftmax.temol.render.Updatable#update(long)
-	 */
-	@Override
-	public void update(long delta) {
-		acceleration.set(force, 1/mass);
-		velocity.add(acceleration, .5f);
-		position.add(velocity);
-		velocity.add(acceleration, .5f);
+	public float rotation = 0f;
+	public Vector2 position = new Vector2();
+	
+	public float angularVelocity = 0f;
+	public Vector2 linearVelocity = new Vector2();
+	
+	public Vector2 acceleration = new Vector2();
+	
+	public float torque = 0f;
+	public Vector2 force = new Vector2();
+	
+	
+	
+	public void addForce(Vector2 relativePosition, Vector2 force) {
+		
+		this.force.add(force);
+		torque += relativePosition.crossProduct(force);
 	}
 	
 	public void addForce(Vector2 force) {
 		addForce(force.x, force.y);
 	}
 	
-	public void addForce(float x, float y) {
-		force.add(x, y);
+	public void addForce(float dx, float dy) {
+		force.add(dx, dy);
 	}
 
 	// TODO 
 	public boolean onGround() {
-		return true;
+		return false;
 	}
 }

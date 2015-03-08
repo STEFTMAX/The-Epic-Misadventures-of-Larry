@@ -14,6 +14,7 @@ import com.steftmax.temol.graphics.StaticCamera;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
+import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
 
@@ -61,6 +62,7 @@ public class MenuState extends State implements Button.Listener {
 			e.printStackTrace();
 		}
 		
+		System.out.println(new Vector2(1f,0f).dotProduct(new Vector2(1f,1f)));
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),

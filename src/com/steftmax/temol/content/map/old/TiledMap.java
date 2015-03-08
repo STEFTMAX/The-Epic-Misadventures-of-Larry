@@ -4,17 +4,15 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import com.steftmax.temol.content.LevelObject;
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.Updatable;
 import com.steftmax.temol.resource.ResourceManager;
 
-public class TiledMap extends LevelObject implements Drawable, Updatable {
+public class TiledMap implements Drawable, Updatable {
 
 	public final Tile[][] tiles;
 	private final int gridWidth, gridHeight;
