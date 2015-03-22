@@ -2,6 +2,7 @@ package com.steftmax.temol.content.entity;
 
 import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.animation.AnimationState;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.TimeScaler;
@@ -23,14 +24,15 @@ public class Larry extends ControllableEntity {
 	// they hold.
 	public Larry(TiledMap map, float x, float y, KeyboardInput ki,
 			MouseInput mi, ResourceManager rm) {
-		super(map, x, y, 50, 10, ki, mi);
+		super(60, -1, 1, .5f, 10, mi, ki);
 
 		walkingAnimationState = new AnimationState(
 				rm.getAnimation("gfx/larry_walking.png"));
 		standingAnimationState = new AnimationState(
 				rm.getAnimation("gfx/larry_breathing.png"));
 		// Just so there always is a texture in the drawingTexture pointer
-		sprite.set(standingAnimationState.getCurrent(), newPos);
+		sprite= new Sprite(standingAnimationState.getCurrent());
+		sprite.set(position);
 		updateHitbox();
 	}
 
@@ -48,55 +50,44 @@ public class Larry extends ControllableEntity {
 	@Override
 	public void update(long delta) {
 
-		lastPos.set(newPos);
+		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
+				.isLeftDown()))) {
 
-		isOnGround = map.isOnGround(hitbox);
-		// move this to entity part
-		if (!isOnGround) {
-
-			velocity.add(0f, 100f, TimeScaler.nanosToSecondsF(delta));
-			newPos.add(velocity, TimeScaler.nanosToSecondsF(delta));
-
+			standingAnimationState.update(delta);
+			sprite.set(standingAnimationState.getCurrent(), position);
+			walkingAnimationState.stop();
 		} else {
-			velocity.set(0, 0);
-			if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
-					.isLeftDown()))) {
-
-				standingAnimationState.update(delta);
-				sprite.set(standingAnimationState.getCurrent(), newPos);
-				walkingAnimationState.stop();
-			} else {
-				standingAnimationState.stop();
-				if (ki.isLeftDown()) {
-					long usingDelta = delta;
-					if (ki.isShiftDown()) {
-						usingDelta *= sprintMultiplier;
-					}
-					newPos.subtract(walkingSpeed,
-							TimeScaler.nanosToSecondsF(usingDelta));
-					looksLeft = true;
-					walkingAnimationState.update(usingDelta);
-					sprite.set(walkingAnimationState.getCurrent(), newPos);
-
+			standingAnimationState.stop();
+			if (ki.isLeftDown()) {
+				long usingDelta = delta;
+				if (ki.isShiftDown()) {
+					usingDelta *= sprintMultiplier;
 				}
+				position.subtract(walkingSpeed,
+						TimeScaler.nanosToSecondsF(usingDelta));
+				looksLeft = true;
+				walkingAnimationState.update(usingDelta);
+				sprite.set(walkingAnimationState.getCurrent(), position);
 
-				if (ki.isRightDown()) {
-					long usingDelta = delta;
-					if (ki.isShiftDown()) {
-						usingDelta *= sprintMultiplier;
-					}
-					newPos.add(walkingSpeed,
-							TimeScaler.nanosToSecondsF(usingDelta));
-					looksLeft = false;
-					walkingAnimationState.update(usingDelta);
-					sprite.set(walkingAnimationState.getCurrent(), newPos);
+			}
+
+			if (ki.isRightDown()) {
+				long usingDelta = delta;
+				if (ki.isShiftDown()) {
+					usingDelta *= sprintMultiplier;
 				}
+				position.add(walkingSpeed,
+						TimeScaler.nanosToSecondsF(usingDelta));
+				looksLeft = false;
+				walkingAnimationState.update(usingDelta);
+				sprite.set(walkingAnimationState.getCurrent(), position);
+
 			}
 		}
 
-		//TODO this should lock him at the head and be universal, to be tested 
-		updateHitbox();
-		lockingVector.set(newPos.x + hitbox.width / 2f, newPos.y + 27);
+		// TODO this should lock him at the head and be universal, to be tested
+		// updateHitbox();
+		// lockingVector.set(position.x + hitbox.width / 2f, position.y + 27);
 	}
 
 	/**

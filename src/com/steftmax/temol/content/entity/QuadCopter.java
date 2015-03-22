@@ -5,26 +5,22 @@ import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.Matrix2;
 import com.steftmax.temol.math.Vector2;
+import com.steftmax.temol.render.input.KeyboardInput;
+import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
 
 /**
  * @author pieter3457
  *
  */
-public class QuadCopter extends Entity {
+public class QuadCopter extends ControllableEntity {
 
-	/**
-	 * @param map
-	 * @param x
-	 * @param y
-	 * @param mass
-	 * @param maxHP
-	 */
-	public QuadCopter(ResourceManager rm) {
-		super(null, 0, 0, 0, 0);
+	public QuadCopter(ResourceManager rm, MouseInput mi, KeyboardInput ki) {
+		super(.5f, .5f, 0, .2f, -0, mi, ki);
 
 		this.sprite = new Sprite(new TextureRegion(
-				rm.getTexture("gfx/quadcopter.png")));
+				rm.getTexture("gfx/alienquadcopter.png")));
+		sprite.setScale(.08f);
 	}
 
 	private Sprite sprite;
@@ -58,18 +54,36 @@ public class QuadCopter extends Entity {
 	Matrix2 transform = new Matrix2();
 
 	final private Motor leftMotor = new Motor(new Vector2(0,8), new Vector2(
-			-.24f, .1f)), rightMotor = new Motor(new Vector2(0, 11),
+			-.24f, .1f)), rightMotor = new Motor(new Vector2(0, 8),
 			new Vector2(.24f, .1f));
 
 	@Override
 	public void update(long delta) {
-		transform.setRotate(rotation);
-		leftMotor.transform(transform);
-		rightMotor.transform(transform);
-		leftMotor.applyForce(this);
-		rightMotor.applyForce(this);
-		System.out.println("Torque" + torque);
-		System.out.println("Force" + force);
+		
+		if (ki.isRightDown()) {
+			rightMotor.force.set(0,12);
+		} else {
+
+			rightMotor.force.set(0,10);
+		}
+		
+		
+		if (ki.isLeftDown()) {
+			leftMotor.force.set(0,12);
+		} else {
+
+			leftMotor.force.set(0,10);
+		}
+		
+		if (ki.isUpDown()) {
+
+			transform.setRotate(rotation);
+			leftMotor.transform(transform);
+			rightMotor.transform(transform);
+			leftMotor.applyForce(this);
+			rightMotor.applyForce(this);
+		}
+		
 		sprite.set(position.x, position.y);
 	}
 

@@ -92,6 +92,7 @@ public abstract class Game implements Runnable {
 		}
 		currentState.deleteResources();
 		destroy();
+		System.exit(0);
 	}
 
 	/**

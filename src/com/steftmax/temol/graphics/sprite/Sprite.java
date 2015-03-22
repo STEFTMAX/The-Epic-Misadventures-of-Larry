@@ -19,9 +19,12 @@ public class Sprite implements Disposable {
 	public float scaleX = 1, scaleY = 1;
 	public boolean flipX = false, flipY = false;
 
+	float rotation = 0f;
+	public final Vector2 origin = new Vector2();
+
 	public TextureRegion texReg;
 	public boolean containmentTest = true;
-	public Color color = new Color(127,127,127,127);
+	public Color color = new Color(127, 127, 127, 127);
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
@@ -39,13 +42,11 @@ public class Sprite implements Disposable {
 		set(texReg, new Vector2(x, y));
 	}
 
-	public Sprite() {
-	}
-
 	public void set(TextureRegion region, Vector2 pos) {
 		this.texReg = region;
 		this.width = region.width;
 		this.height = region.height;
+		centerOrigin();
 		this.pos = pos;
 	}
 
@@ -53,12 +54,29 @@ public class Sprite implements Disposable {
 		this.texReg = region;
 		this.width = region.width;
 		this.height = region.height;
+		centerOrigin();
 		pos.set(x, y);
+	}
+
+	public void centerOrigin() {
+		origin.set(width / 2, height / 2);
+	}
+
+	public void setOrigin(Vector2 v) {
+		origin.set(v);
+	}
+
+	public void setOrigin(float x, float y) {
+		origin.set(x, y);
 	}
 
 	public void dispose() {
 
 		texReg.dispose();
+	}
+
+	public void setRotation(float radians) {
+		this.rotation = radians;
 	}
 
 	public void setScale(float scale) {
@@ -105,5 +123,15 @@ public class Sprite implements Disposable {
 
 	public float getScaledHeight() {
 		return height * scaleY;
+	}
+
+	/**
+	 * @param width
+	 * @param height
+	 */
+	public void setDimensions(int width, int height) {
+		this.width = width;
+		this.height = height;
+
 	}
 }

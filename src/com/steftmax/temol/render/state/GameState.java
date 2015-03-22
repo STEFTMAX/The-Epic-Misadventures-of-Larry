@@ -51,11 +51,11 @@ public class GameState extends State {
 		defaultShader = new ShaderProgram(null, new TextFile(
 				"/shaders/fragment").fileContents);
 		final MouseInput mi = game.getMouseInput();
-		QuadCopter qc = new QuadCopter(resources);
+		QuadCopter qc = new QuadCopter(resources, mi, game.getKeyboardInput());
 		pw.addBody(qc);
 
 		mi.center();
-//		mi.grab();
+		// mi.grab();
 
 		this.lvl = createLevel();
 		lvl.addLevelEntity(qc);
@@ -86,14 +86,14 @@ public class GameState extends State {
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
 		pw.update(delta);
-//		Set<Entity> set = lvl.getLevelObjects();
-//
-//		for (Entity ent : set) {
-//			qt.add(ent);
-//			ent.update(delta);
-//
-//		}
-//		qt.clear();
+		// Set<Entity> set = lvl.getLevelObjects();
+		//
+		// for (Entity ent : set) {
+		// qt.add(ent);
+		// ent.update(delta);
+		//
+		// }
+		// qt.clear();
 	}
 
 	/**
@@ -162,7 +162,6 @@ public class GameState extends State {
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 } };
 
-		
 		MapData data = new MapData(mapStructure, 32, 32);
 		TiledMap map = new TiledMap(data, resources);
 		Level lvl = new Level(resources);

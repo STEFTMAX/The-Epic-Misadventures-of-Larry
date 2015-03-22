@@ -3,51 +3,41 @@ package com.steftmax.temol.audio;
 import static org.lwjgl.openal.AL10.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import com.steftmax.temol.resource.Disposable;
+import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
  * @author pieter3457
  *
  */
-public class Music implements Disposable {
+public class Music extends Audio implements Disposable {
 
 	boolean looping = false;
 
 	private IntBuffer buffers = OpenALSystem.createIntBuffer(2);
 
-	private int sourceID;
-
 	private ByteBuffer dataBuffer = ByteBuffer.allocateDirect(4096 * 8);
 
-	private OggInputStream oggInputStream;
+	private OggInputStream stream;
+
+	private String path;
 
 
-	public Music(OpenALSystem system, String path) {
-		oggInputStream = new OggInputStream(path);
+	public Music(String path) {
+		this.path = path;
+		stream = new OggInputStream(path);
 
 		buffers.rewind();
 		alGenBuffers(buffers);
 		check();
-
-		sourceID = system.obtainSource(0);
-		check();
-
-		alSourcef(sourceID,AL_GAIN, 1);
-		alSourcef(sourceID, AL_ROLLOFF_FACTOR, 0);
-		alSourcei(sourceID, AL_SOURCE_RELATIVE, AL_FALSE);
 	}
 
-	protected void check() {
-		int error = alGetError();
-		if (error != AL_NO_ERROR) {
-			System.out.println("OpenAL error was raised. errorCode=" + error);
-		}
-	}
-
-	public boolean play() {
+	public boolean play(int musicSource) {
+		this.sourceID = musicSource;
 		if (playing()) {
 			return true;
 		}
@@ -78,10 +68,11 @@ public class Music implements Disposable {
 	 */
 	@Override
 	public void dispose() {
+		stop();
 		alDeleteBuffers(buffers);
 		check();
 		try {
-			oggInputStream.close();
+			stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -101,12 +92,12 @@ public class Music implements Disposable {
 
 	protected boolean stream(int buffer) {
 		try {
-			int bytesRead = oggInputStream.read(dataBuffer, 0,
+			int bytesRead = stream.read(dataBuffer, 0,
 					dataBuffer.capacity());
 			if (bytesRead >= 0) {
 				dataBuffer.rewind();
-				alBufferData(buffer, oggInputStream.getFormat(), dataBuffer,
-						oggInputStream.getRate());
+				alBufferData(buffer, stream.getFormat(), dataBuffer,
+						stream.getRate());
 				check();
 				return true;
 			}
@@ -124,7 +115,12 @@ public class Music implements Disposable {
 	 *         reached.
 	 */
 	public synchronized boolean update() throws IOException {
+		
+		int state = alGetSourcei(sourceID, AL_SOURCE_STATE);
+		if (state == AL_PAUSED) return false;
+		
 		boolean active = true;
+		
 		int processed = alGetSourcei(sourceID, AL_BUFFERS_PROCESSED);
 		while (processed-- > 0) {
 			IntBuffer buffer = OpenALSystem.createIntBuffer(1);
@@ -137,11 +133,32 @@ public class Music implements Disposable {
 			alSourceQueueBuffers(sourceID, buffer);
 			check();
 		}
+		if (!active) {
+			if (looping) {
+				active = true;
+				loop();
+			}
+		}
 
 		return active;
 	}
 	
+	/**
+	 * @throws IOException 
+	 * 
+	 */
+	private void loop() throws IOException {
+		stream.close();
+		stream = new OggInputStream(path);
+	}
+
 	public void setLooping(boolean value) {
-	    alSourcei(sourceID, AL_LOOPING,  value ? AL_TRUE : AL_FALSE);
+		looping = value;
+	}
+	
+	public void stop() {
+		alSourceUnqueueBuffers(sourceID);
+		alSourceStop(sourceID);
+		this.sourceID = -1;
 	}
 }

@@ -40,7 +40,7 @@ public class MenuState extends State implements Button.Listener {
 
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 80,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 80;
-
+	OpenALSystem system;
 	public MenuState(Game game) {
 		super(game);
 
@@ -53,9 +53,10 @@ public class MenuState extends State implements Button.Listener {
 
 		resources.load();
 		
-		OpenALSystem system = new OpenALSystem();
-		music = new Music(system, "music/sung.ogg");
-		music.play();
+		system = new OpenALSystem();
+		music = new Music("music/menu.ogg");
+		system.setMusic(music);
+		music.setLooping(true);
 		try {
 			sound = new Sound(system, "sfx/handgunreload1.wav");
 		} catch (IOException e) {
@@ -97,13 +98,6 @@ public class MenuState extends State implements Button.Listener {
 	 */
 	@Override
 	public void update(long delta) {
-		try {
-			
-			music.update();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		if (switchToPlay) {
 			game.changeState(this, GameState.class);
 		}
@@ -149,7 +143,7 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void deleteResources() {
 		resources.unload();
-		music.dispose();
+		system.dispose();
 	}
 	
 	@Override

@@ -10,8 +10,17 @@ import com.steftmax.temol.render.Updatable;
  */
 public abstract class RigidBody implements Updatable{
 	
+	
+	public RigidBody(int id, float mass, float inertia, float friction, float drag) {
+		this.id = id;
+		this.mass = mass;
+		this.inertia =inertia;
+		this.friction = friction;
+		this.drag = drag;
+	}
+	
 	public int id;
-	public float mass = 1f, inertia = 1f, friction, drag;
+	public float mass, inertia, friction, drag;
 	
 	public float rotation = 0f;
 	public Vector2 position = new Vector2();
