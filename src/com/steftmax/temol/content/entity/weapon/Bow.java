@@ -17,7 +17,7 @@ public class Bow extends Weapon {
 	boolean playing;
 	private TextureRegion[] frames;
 	private Larry larry;
-	private static final int YOFFSET = 0, XOFFSET = 0;
+	private static final int YOFFSET = 0, XOFFSET = 0, FINALFRAME = 6;
 
 	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry) {
 		super(gameResources, mi);
@@ -32,11 +32,11 @@ public class Bow extends Weapon {
 
 	public void update(long delta) {
 		if (mi.primaryDown()) {
-			if (frameN < 6) {
+			if (frameN < FINALFRAME) {
 				currentTime += delta;
 				frameN = (int) Math.floor(currentTime / stepTime);
-				if (frameN > 6) {
-					frameN = 6;
+				if (frameN > FINALFRAME) {
+					frameN = FINALFRAME;
 				}
 			}
 		} else {
