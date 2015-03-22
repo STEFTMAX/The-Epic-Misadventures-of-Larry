@@ -1,5 +1,7 @@
 package com.steftmax.temol.render.state;
 
+import java.util.Set;
+
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
@@ -34,7 +36,6 @@ public class GameState extends State {
 	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
 	private GameResources resources = new GameResources();
-	PhysicsWorld pw = new PhysicsWorld();
 
 	int lightSize = 256;
 
@@ -51,14 +52,11 @@ public class GameState extends State {
 		defaultShader = new ShaderProgram(null, new TextFile(
 				"/shaders/fragment").fileContents);
 		final MouseInput mi = game.getMouseInput();
-		QuadCopter qc = new QuadCopter(resources, mi, game.getKeyboardInput());
-		pw.addBody(qc);
 
 		mi.center();
-		// mi.grab();
+		mi.grab();
 
 		this.lvl = createLevel();
-		lvl.addLevelEntity(qc);
 
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
@@ -85,15 +83,15 @@ public class GameState extends State {
 		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
-		pw.update(delta);
-		// Set<Entity> set = lvl.getLevelObjects();
-		//
-		// for (Entity ent : set) {
-		// qt.add(ent);
-		// ent.update(delta);
-		//
-		// }
-		// qt.clear();
+		// pw.update(delta);
+		Set<Entity> set = lvl.getLevelObjects();
+
+		for (Entity ent : set) {
+			qt.add(ent);
+			ent.update(delta);
+
+		}
+		qt.clear();
 	}
 
 	/**

@@ -18,6 +18,8 @@ public class MouseInput implements Updatable {
 	public final Vector2 position = new Vector2();
 	private float sensitivity;
 	private Camera camera;
+	
+	private boolean primaryButton, secondaryButton;
 
 	public MouseInput() {
 		this(false, 1f);
@@ -92,6 +94,9 @@ public class MouseInput implements Updatable {
 		final int width = Settings.getWidth();
 		final int height = Settings.getHeight();
 
+		primaryButton =  Mouse.isButtonDown(0);
+		secondaryButton =Mouse.isButtonDown(1);
+		
 		while (Mouse.next()) {
 			// update position 
 			if (!Mouse.isGrabbed()) {
@@ -126,8 +131,12 @@ public class MouseInput implements Updatable {
 			// Keyevents
 			if (button >= 0) {
 
-				if (Mouse.isButtonDown(button)) {
-
+				if (Mouse.getEventButtonState()) {
+					
+					if (button == 0) primaryButton = true;
+					if (button == 1) secondaryButton = true;
+					
+					
 					for (MouseClickListener listener : clickListeners) {
 
 						listener.onClick(button, (int) position.x,
@@ -184,5 +193,12 @@ public class MouseInput implements Updatable {
 	 */
 	public void setCamera(Camera camera) {
 		this.camera = camera;
+	}
+	
+	public boolean primaryDown() {
+		return primaryButton;
+	}
+	public boolean secondaryDown() {
+		return secondaryButton;
 	}
 }

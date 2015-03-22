@@ -25,6 +25,16 @@ public class Sprite implements Disposable {
 	public TextureRegion texReg;
 	public boolean containmentTest = true;
 	public Color color = new Color(127, 127, 127, 127);
+	
+	public void setTextureRegion(TextureRegion textureRegion) {
+		this.texReg = textureRegion;
+	}
+	
+	public void setToTextureRegion(TextureRegion textureRegion) {
+		this.texReg = textureRegion;
+		this.width = textureRegion.width;
+		this.height = textureRegion.height;
+	}
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
@@ -40,6 +50,15 @@ public class Sprite implements Disposable {
 
 	public Sprite(TextureRegion texReg, float x, float y) {
 		set(texReg, new Vector2(x, y));
+	}
+
+	
+	public Sprite() {
+		this.pos = new Vector2();
+	}
+	
+	public Sprite(Vector2 position) {
+		this.pos = position;
 	}
 
 	public void set(TextureRegion region, Vector2 pos) {

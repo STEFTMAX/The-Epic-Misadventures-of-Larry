@@ -1,5 +1,7 @@
 package com.steftmax.temol.content.entity;
 
+import com.steftmax.temol.content.entity.weapon.Bow;
+import com.steftmax.temol.content.entity.weapon.Weapon;
 import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.sprite.Sprite;
@@ -18,7 +20,8 @@ public class Larry extends ControllableEntity {
 
 	private AnimationState walkingAnimationState, standingAnimationState;
 
-	private boolean looksLeft = false;
+	public boolean looksLeft = false;
+	private Weapon weapon;
 
 	// Entities should only keep one animation state object for all animations
 	// they hold.
@@ -27,12 +30,13 @@ public class Larry extends ControllableEntity {
 		super(60, -1, 1, .5f, 10, mi, ki);
 
 		walkingAnimationState = new AnimationState(
-				rm.getAnimation("gfx/larry_walking.png"));
+				rm.getAnimation("gfx/walking legs.png"));
 		standingAnimationState = new AnimationState(
 				rm.getAnimation("gfx/larry_breathing.png"));
 		// Just so there always is a texture in the drawingTexture pointer
 		sprite= new Sprite(standingAnimationState.getCurrent());
 		sprite.set(position);
+		weapon = new Bow(rm, mi, this);
 		updateHitbox();
 	}
 
@@ -40,6 +44,7 @@ public class Larry extends ControllableEntity {
 	public void draw(SpriteBatch batch) {
 		sprite.flipY = looksLeft;
 		batch.draw(sprite);
+		weapon.draw(batch);
 		// if (looksLeft) {
 		// GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);
 		// } else {
@@ -87,7 +92,8 @@ public class Larry extends ControllableEntity {
 
 		// TODO this should lock him at the head and be universal, to be tested
 		// updateHitbox();
-		// lockingVector.set(position.x + hitbox.width / 2f, position.y + 27);
+		 lockingVector.set(position.x + hitbox.width / 2f, position.y + 27);
+		 weapon.update(delta);
 	}
 
 	/**
