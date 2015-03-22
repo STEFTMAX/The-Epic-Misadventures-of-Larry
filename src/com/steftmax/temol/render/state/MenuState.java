@@ -71,7 +71,7 @@ public class MenuState extends State implements Button.Listener {
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 
 		final Texture sheet = resources.getTexture("gfx/sheet_buttons.png");
-		final int width = 64, height = 16;
+		final int width = 256, height = 64;
 
 		play = new Button(this, mi, PLAYBUTTON_X, PLAYBUTTON_Y,
 				new TextureRegion(sheet, 0, 2 * height, width, height),
@@ -83,6 +83,9 @@ public class MenuState extends State implements Button.Listener {
 				new TextureRegion(sheet, width, height, width, height),
 				new TextureRegion(sheet, width, 0, width, height));
 
+		play.setDimensions(64, 16);
+		settings.setDimensions(64, 16);
+		
 		Display.setVSyncEnabled(true);
 	}
 
