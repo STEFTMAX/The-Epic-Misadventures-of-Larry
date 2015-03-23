@@ -17,7 +17,8 @@ public class Bow extends Weapon {
 	boolean playing;
 	private TextureRegion[] frames;
 	private Larry larry;
-	private static final int YOFFSET = 0, XOFFSET = 0, FINALFRAME = 6;
+	private static final int XFLIPPEDOFFSET = -15,
+			FINALFRAME = 6;
 
 	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry) {
 		super(gameResources, mi);
@@ -45,7 +46,8 @@ public class Bow extends Weapon {
 		}
 		frame.setToTextureRegion(frames[frameN]);
 
-		frame.set(larry.position.x + XOFFSET, larry.position.y + YOFFSET);
+		frame.set(larry.getWeaponMountPoint());
+		if (larry.looksLeft) frame.pos.add(XFLIPPEDOFFSET, 0);
 		frame.flipY = larry.looksLeft;
 	}
 
