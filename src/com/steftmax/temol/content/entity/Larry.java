@@ -46,15 +46,8 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.flipY = looksLeft;
-		sprite.centerOrigin();
 		batch.draw(sprite);
-		sprite.rotate(.001f);
 		weapon.draw(batch);
-		// if (looksLeft) {
-		// GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);
-		// } else {
-		// GLGraphics.drawTextureFromLeftBottom(drawingTexture, newPos);
-		// }
 	}
 
 	@Override
@@ -100,7 +93,7 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 		 lockingVector.set(position.x + hitbox.width / 2f, position.y + 27);
 		 weaponPoint.set(position.x, position.y);
 		 int frame = walkingAnimationState.getFrameNumber();
-		 if (frame >3 && frame < 10 || frame > 16 && frame < 23) {
+		 if (frame >1 && frame < 11 || frame > 13 && frame < 24) {
 			 weaponPoint.add(0, 1);
 		 }
 		 weapon.update(delta);
