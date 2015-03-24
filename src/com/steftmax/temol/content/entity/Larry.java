@@ -38,6 +38,7 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 		// Just so there always is a texture in the drawingTexture pointer
 		sprite= new Sprite(standingAnimationState.getCurrent());
 		sprite.set(position);
+		sprite.centerOrigin();
 		weapon = new Bow(rm, mi, this);
 		updateHitbox();
 	}
@@ -45,7 +46,9 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.flipY = looksLeft;
+		sprite.centerOrigin();
 		batch.draw(sprite);
+		sprite.rotate(.001f);
 		weapon.draw(batch);
 		// if (looksLeft) {
 		// GLGraphics.drawTextureFromLeftBottomFlipped(drawingTexture, newPos);

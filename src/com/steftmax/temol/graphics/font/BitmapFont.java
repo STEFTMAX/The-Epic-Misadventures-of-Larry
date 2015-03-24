@@ -72,7 +72,7 @@ public class BitmapFont {
 			px = x + i * glyph.width * scaleX;
 
 			batch.draw(glyph, px, px + glyph.width * scaleX, y, y
-					+ glyph.height * scaleY, false, false, false, c);
+					+ glyph.height * scaleY, false, false, false, c, 0);
 		}
 	}
 }

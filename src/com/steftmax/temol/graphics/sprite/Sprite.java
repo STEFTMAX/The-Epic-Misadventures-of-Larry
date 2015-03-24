@@ -19,11 +19,10 @@ public class Sprite implements Disposable {
 	public float scaleX = 1, scaleY = 1;
 	public boolean flipX = false, flipY = false;
 
-	float rotation = 0f;
+	public float rotation = 0f; // in radians
 	public final Vector2 origin = new Vector2();
 
 	public TextureRegion texReg;
-	public boolean containmentTest = true;
 	public Color color = new Color(127, 127, 127, 127);
 	
 	public void setTextureRegion(TextureRegion textureRegion) {
@@ -128,14 +127,6 @@ public class Sprite implements Disposable {
 		pos.set(x, y);
 	}
 
-	public void setContainmentTest(boolean containmentTest) {
-		this.containmentTest = containmentTest;
-	}
-
-	public boolean testContainment() {
-		return containmentTest;
-	}
-
 	public float getScaledWidth() {
 		return width * scaleX;
 	}
@@ -152,5 +143,9 @@ public class Sprite implements Disposable {
 		this.width = width;
 		this.height = height;
 
+	}
+
+	public void rotate(float radians) {
+		rotation += radians;
 	}
 }

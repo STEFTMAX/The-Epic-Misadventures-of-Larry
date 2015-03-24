@@ -63,7 +63,6 @@ public class GameState extends State {
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
-		aim.setContainmentTest(false);
 		// light.set(Settings.getWidth() / 2, Settings.getHeight() / 2);
 
 		Display.setVSyncEnabled(false);
@@ -100,9 +99,8 @@ public class GameState extends State {
 	public void draw(SpriteBatch batch) {
 		defaultShader.bind();
 
-		final AABB viewingarea = camera.getViewingArea();
 		camera.beginFocus();
-		batch.begin(viewingarea);
+		batch.begin();
 		lvl.map.draw(batch);
 
 		for (Entity ent : lvl.getLevelObjects()) {

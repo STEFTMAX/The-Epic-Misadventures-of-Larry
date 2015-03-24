@@ -109,8 +109,8 @@ public class TiledMap implements Drawable, Updatable {
 		final int width = s.width / 2;
 		final int height = s.height / 2;
 		for (Vector2 light : lightPositions) {
-			batch.draw(s, light.x - width, light.x + width, light.y - height,
-					light.y + height, false, false, false);
+//			batch.draw(s, light.x - width, light.x + width, light.y - height,
+//					light.y + height, false, false);
 		}
 	}
 }
