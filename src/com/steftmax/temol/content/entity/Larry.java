@@ -20,7 +20,7 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 	private Vector2 lockingVector = new Vector2();
 	private Vector2 weaponPoint = new Vector2();
 
-	private AnimationState walkingAnimationState, standingAnimationState;
+	private AnimationState walkingAnimationState;
 
 	public boolean looksLeft = false;
 	private Weapon weapon;
@@ -33,10 +33,8 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 
 		walkingAnimationState = new AnimationState(
 				rm.getAnimation("gfx/walking legs.png"));
-		standingAnimationState = new AnimationState(
-				rm.getAnimation("gfx/larry_breathing.png"));
 		// Just so there always is a texture in the drawingTexture pointer
-		sprite= new Sprite(standingAnimationState.getCurrent());
+		sprite= new Sprite(walkingAnimationState.getCurrent());
 		sprite.set(position);
 		sprite.centerOrigin();
 		weapon = new Bow(rm, mi, this);
@@ -56,11 +54,9 @@ public class Larry extends ControllableEntity implements WeaponWearer{
 		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
 				.isLeftDown()))) {
 
-			standingAnimationState.update(delta);
-			sprite.set(standingAnimationState.getCurrent(), position);
 			walkingAnimationState.stop();
+			sprite.set(walkingAnimationState.getCurrent(), position);
 		} else {
-			standingAnimationState.stop();
 			if (ki.isLeftDown()) {
 				long usingDelta = delta;
 				if (ki.isShiftDown()) {
