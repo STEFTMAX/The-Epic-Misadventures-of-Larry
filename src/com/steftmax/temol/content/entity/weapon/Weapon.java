@@ -16,4 +16,6 @@ public abstract class Weapon implements Drawable, Updatable{
 	public Weapon(ResourceManager gameResources, MouseInput mi) {
 		this.mi = mi;
 	}
+	
+	public abstract boolean drawsFace();
 }
