@@ -34,5 +34,9 @@ public class AnimationState {
 	public int getHeight() {
 		return anim.getWidth(this);
 	}
+	
+	public int getFrameNumber() {
+		return lastFrame;
+	}
 
 }

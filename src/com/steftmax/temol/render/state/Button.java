@@ -52,6 +52,26 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 		this.hover = new Sprite(hover, boundaryBox.x, boundaryBox.y);
 		this.idle = new Sprite(idle, boundaryBox.x, boundaryBox.y);
 	}
+	
+	public void setDimensions(int width, int height) {
+		press.setDimensions(width, height);
+		hover.setDimensions(width, height);
+		idle.setDimensions(width, height);
+		boundaryBox.setDimensions(width, height);
+	}
+	
+	public Button(Listener listener, MouseInput mi, AABB boundaryBox, Sprite press, Sprite hover, Sprite idle) {
+
+		mi.addListener(this);
+		
+		this.listener = listener;
+		
+		this.boundaryBox = boundaryBox;
+
+		this.press = press;
+		this.hover = hover;
+		this.idle = idle;
+	}
 
 	/*
 	 * (non-Javadoc)

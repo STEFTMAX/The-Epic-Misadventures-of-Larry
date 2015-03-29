@@ -1,8 +1,10 @@
 package com.steftmax.temol;
 
+import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -48,7 +50,8 @@ public abstract class Game implements Runnable {
 		initDisplay(Settings.getWidth(), Settings.getHeight(), false, null,
 				null);
 
-		this.mouseInput = new MouseInput(false, Settings.getIngameMouseSensitivity());
+		this.mouseInput = new MouseInput(false,
+				Settings.getIngameMouseSensitivity());
 		this.keyboardInput = new KeyboardInput();
 	}
 
@@ -85,8 +88,11 @@ public abstract class Game implements Runnable {
 
 			currentState.update((long) (delta * timeScale));
 			currentState.draw(batch);
+			Display.update();
 		}
+		currentState.deleteResources();
 		destroy();
+		System.exit(0);
 	}
 
 	/**
@@ -105,10 +111,20 @@ public abstract class Game implements Runnable {
 		stop = true;
 	}
 
-	public synchronized void changeState(State newState) {
+	public synchronized void changeState(State lastState, Class<? extends State> newState) {
+		if (lastState != null) {
+			lastState.deleteResources();
+			mouseInput.clear();
+			keyboardInput.clear();
+		}
 		avgFrameTime = 0;
 		renderCall = 0;
-		currentState = newState;
+		try {
+			Constructor<? extends State> c = newState.getDeclaredConstructor(Game.class);
+			currentState = c.newInstance(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public MouseInput getMouseInput() {

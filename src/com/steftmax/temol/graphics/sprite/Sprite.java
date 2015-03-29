@@ -1,5 +1,6 @@
 package com.steftmax.temol.graphics.sprite;
 
+import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.resource.Disposable;
 
@@ -11,15 +12,28 @@ import com.steftmax.temol.resource.Disposable;
  * @author pieter3457
  *
  */
-public class Sprite implements Disposable{
+public class Sprite implements Disposable {
 
 	public Vector2 pos;
 	public int width, height;
 	public float scaleX = 1, scaleY = 1;
 	public boolean flipX = false, flipY = false;
 
+	public float rotation = 0f; // in radians
+	public final Vector2 origin = new Vector2();
+
 	public TextureRegion texReg;
-	public boolean containmentTest = true;
+	public Color color = new Color(127, 127, 127, 127);
+	
+	public void setTextureRegion(TextureRegion textureRegion) {
+		this.texReg = textureRegion;
+	}
+	
+	public void setToTextureRegion(TextureRegion textureRegion) {
+		this.texReg = textureRegion;
+		this.width = textureRegion.width;
+		this.height = textureRegion.height;
+	}
 
 	public Sprite(Texture tex) {
 		set(new TextureRegion(tex), new Vector2());
@@ -37,13 +51,20 @@ public class Sprite implements Disposable{
 		set(texReg, new Vector2(x, y));
 	}
 
+	
 	public Sprite() {
+		this.pos = new Vector2();
+	}
+	
+	public Sprite(Vector2 position) {
+		this.pos = position;
 	}
 
 	public void set(TextureRegion region, Vector2 pos) {
 		this.texReg = region;
 		this.width = region.width;
 		this.height = region.height;
+		centerOrigin();
 		this.pos = pos;
 	}
 
@@ -51,12 +72,29 @@ public class Sprite implements Disposable{
 		this.texReg = region;
 		this.width = region.width;
 		this.height = region.height;
+		centerOrigin();
 		pos.set(x, y);
+	}
+
+	public void centerOrigin() {
+		origin.set(width / 2, height / 2);
+	}
+
+	public void setOrigin(Vector2 v) {
+		origin.set(v);
+	}
+
+	public void setOrigin(float x, float y) {
+		origin.set(x, y);
 	}
 
 	public void dispose() {
 
 		texReg.dispose();
+	}
+
+	public void setRotation(float radians) {
+		this.rotation = radians;
 	}
 
 	public void setScale(float scale) {
@@ -70,7 +108,7 @@ public class Sprite implements Disposable{
 	}
 
 	public Texture getTexture() {
-		return texReg.tex;
+		return texReg.texture;
 	}
 
 	public int getVertexSize() {
@@ -89,19 +127,25 @@ public class Sprite implements Disposable{
 		pos.set(x, y);
 	}
 
-	public void setContainmentTest(boolean containmentTest) {
-		this.containmentTest = containmentTest;
-	}
-
-	public boolean testContainment() {
-		return containmentTest;
-	}
-
 	public float getScaledWidth() {
 		return width * scaleX;
 	}
 
 	public float getScaledHeight() {
 		return height * scaleY;
+	}
+
+	/**
+	 * @param width
+	 * @param height
+	 */
+	public void setDimensions(int width, int height) {
+		this.width = width;
+		this.height = height;
+
+	}
+
+	public void rotate(float radians) {
+		rotation += radians;
 	}
 }

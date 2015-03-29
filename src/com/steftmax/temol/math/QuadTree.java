@@ -7,165 +7,266 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.steftmax.temol.content.entity.Entity;
+import com.steftmax.temol.resource.memory.Pool;
+import com.steftmax.temol.resource.memory.Poolable;
 
 /**
- * @author pieter3457 A class that stores entities for collision checking
+ * A class that stores entities for collision checking
+ * 
+ * @author pieter3457
  * 
  */
-public class QuadTree {
-	private final QuadTree[] children = new QuadTree[4];
 
-	private int x, y, width, height;
+public class QuadTree extends TreeElement {
 
-	private final HashSet<Entity> entities = new HashSet<Entity>();
+	final int maxLevels;
 
-	public int level, maxLevels;
+	final int maxObjects;
 
-	private boolean isSplit = false;
+	final LeafPool leafpool;
+	final NodePool nodepool;
 
-	private int maxObjects;
+	final Node base;
 
-	private final static int TOPLEFT = 1, TOPRIGHT = 0, BOTTOMLEFT = 2,
-			BOTTOMRIGHT = 3;
-
-	private QuadTree(final int maxObjects, int x, int y, int width, int height,
-			int maxLevels, int level) {
-
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+	public QuadTree(final int maxObjects, int x, int y, int width, int height,
+			int maxLevels) {
+		boundary = new AABB(x, y, width, height);
 		this.maxLevels = maxLevels;
 		this.maxObjects = maxObjects;
-		this.level = level;
-	}
+		leafpool = new LeafPool(this);
+		nodepool = new NodePool(this);
+		base = nodepool.getObject();
+		//level 0 baseNode
+		base.set(x, y, width, height, 0, null);
 
-	public QuadTree(final int maxObjects, int width, int height, int maxLevels) {
-		this(maxObjects, 0, 0, width, height, maxLevels, 0);
 	}
 
 	public void add(Entity e) {
-		int id = getChildID(e, width / 2, height / 2);
-		if (id < 0) {
-			entities.add(e);
-		} else {
-			if (isSplit) {
-				children[id].add(e);
-			} else {
-				if (entities.size() + 1 > maxObjects
-						&& this.maxLevels > this.level) {
-					split();
-					children[id].add(e);
-				} else {
-					entities.add(e);
-				}
-			}
-		}
+		base.add(e);
 	}
 
-	/**
-	 * 
-	 */
-	private void split() {
-
-		int halfwidth = this.width / 2;
-		int halfheight = this.height / 2;
-		int newlevel = this.level + 1;
-
-		children[TOPRIGHT] = new QuadTree(maxObjects, x + halfwidth, y,
-				halfwidth, halfheight, maxLevels, newlevel);
-		children[TOPLEFT] = new QuadTree(maxObjects, x, y, halfwidth,
-				halfheight, maxLevels, newlevel);
-		children[BOTTOMLEFT] = new QuadTree(maxObjects, x, y + halfheight,
-				halfwidth, halfheight, maxLevels, newlevel);
-		children[BOTTOMRIGHT] = new QuadTree(maxObjects, x + halfwidth, y
-				+ halfheight, halfwidth, halfheight, maxLevels, newlevel);
-
-		Iterator<Entity> iter = entities.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			int id = getChildID(e, halfwidth, halfheight);
-			if (id >= 0) {
-				children[id].add(e);
-				iter.remove();
-			}
-		}
-		isSplit = true;
-	}
-
-	private int getChildID(Entity ent, int halfwidth, int halfheight) {
-		AABB r = ent.getHitbox();
-
-		int index = -1;
-		int verticalMidpoint = x + halfwidth;
-		int horizontalMidpoint = y + halfwidth;
-
-		boolean topQuadrant = (r.y < horizontalMidpoint && r.y + r.height < horizontalMidpoint);
-		boolean bottomQuadrant = (r.y > horizontalMidpoint);
-
-		if (r.x < verticalMidpoint && r.x + r.width < verticalMidpoint) {
-			if (topQuadrant) {
-				index = 1;
-			} else if (bottomQuadrant) {
-				index = 2;
-			}
-		}
-
-		else if (r.x > verticalMidpoint) {
-			if (topQuadrant) {
-				index = 0;
-			} else if (bottomQuadrant) {
-				index = 3;
-			}
-		}
-
-		return index;
-	}
-
-	// TODO Pooling
 	public void clear() {
-		if (isSplit) {
-			for (QuadTree child : children) {
-				child.clear();
-			}
-		} else {
-			entities.clear();
-		}
-		this.isSplit = false;
+		base.clear();
+	}
+	//
+	// public void draw() {
+	// GL11.glBegin(GL11.GL_QUADS);
+	// GL11.glColor3f(0, 0, 0);
+	// GL11.glVertex2i(boundary.x, boundary.y);
+	// GL11.glVertex2i(boundary.x + boundary.width, boundary.y);
+	// GL11.glVertex2i(boundary.x + boundary.width, boundary.y + height);
+	// GL11.glVertex2i(boundary.x, boundary.y + boundary.height);
+	//
+	// GL11.glColor3f(1f / level, 0.5f / level, 0.25f / level);
+	// GL11.glVertex2i(boundary.x + 1, boundary.y + 1);
+	// GL11.glVertex2i(boundary.x + boundary.width - 2, boundary.y + 1);
+	// GL11.glVertex2i(boundary.x + boundary.width - 2, boundary.y
+	// + boundary.height - 2);
+	// GL11.glVertex2i(boundary.x + 1, boundary.y + boundary.height - 2);
+	//
+	// GL11.glEnd();
+	//
+	// if (isSplit) {
+	// for (F child : children) {
+	// child.draw();
+	// }
+	// }
+	// }
+	//
+	// public List<Entity> retrieve(List<Entity> returnObjects, Entity ent) {
+	// int index = getChildID(ent, width / 2, height / 2);
+	// if (index != -1 && isSplit) {
+	// children[index].retrieve(returnObjects, ent);
+	// }
+	//
+	// returnObjects.addAll(entities);
+	//
+	// return returnObjects;
+	// }
+
+}
+
+abstract class TreeElement implements Poolable {
+	QuadTree master;
+	Node upper;
+	int level;
+
+	AABB boundary = new AABB();
+
+	public void reset() {
+		boundary.setBounds(0, 0, 0, 0);
+		level = 0;
+		upper = null;
 	}
 
-	public void draw() {
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glColor3f(0, 0, 0);
-		GL11.glVertex2i(x, y);
-		GL11.glVertex2i(x + width, y);
-		GL11.glVertex2i(x + width, y + height);
-		GL11.glVertex2i(x, y + height);
+	abstract void clear();
 
-		GL11.glColor3f(1f / level, 0.5f / level, 0.25f / level);
-		GL11.glVertex2i(x + 1, y + 1);
-		GL11.glVertex2i(x + width - 2, y + 1);
-		GL11.glVertex2i(x + width - 2, y + height - 2);
-		GL11.glVertex2i(x + 1, y + height - 2);
+	abstract void add(Entity ent);
+}
 
-		GL11.glEnd();
+class Node extends TreeElement implements Poolable {
 
-		if (isSplit) {
-			for (QuadTree child : children) {
-				child.draw();
-			}
+	// TreeElement leftTop, rightTop, leftBottom, rightBottom;
+	public static final int LEFTBOTTOM = 0, LEFTTOP = 2, RIGHTBOTTOM = 1,
+			RIGHTTOP = 3;
+
+	TreeElement[] children = new TreeElement[4];
+
+	public Node(QuadTree master) {
+		this.master = master;
+	}
+
+	public void reset() {
+		super.reset();
+		for (int i = 0; i < children.length; i++) {
+			children[i] = null;
 		}
 	}
 
-	public List<Entity> retrieve(List<Entity> returnObjects, Entity ent) {
-		int index = getChildID(ent, width / 2, height / 2);
-		if (index != -1 && isSplit) {
-			children[index].retrieve(returnObjects, ent);
+	public void set(int x, int y, int width, int height, int level, Node upper) {
+		boundary.setBounds(x, y, width, height);
+		this.level = level;
+		int newLevel = level + 1;
+		int halfWidth = width / 2;
+		int halfHeight = height / 2;
+
+		children[LEFTBOTTOM] = master.leafpool.getObject().set(boundary.x,
+				boundary.y, halfWidth, halfHeight, newLevel, this);
+		children[RIGHTBOTTOM] = master.leafpool.getObject().set(
+				boundary.x + halfWidth, boundary.y, halfWidth, halfHeight,
+				newLevel, this);
+		children[RIGHTTOP] = master.leafpool.getObject().set(
+				boundary.x + halfWidth, boundary.y + halfHeight, halfWidth,
+				halfHeight, newLevel, this);
+		children[LEFTTOP] = master.leafpool.getObject().set(boundary.x,
+				boundary.y + halfHeight, halfWidth, halfHeight, newLevel, this);
+	}
+
+	void add(Entity ent) {
+		AABB r = ent.hitbox;
+		int halfwidth = boundary.width / 2;
+		int halfheight = boundary.height / 2;
+
+		int newLevel = level + 1;
+		if (r.collides(0, 0, halfheight, halfwidth))
+			children[LEFTBOTTOM].add(ent);
+		if (r.collides(halfwidth, 0, halfwidth, halfheight))
+			children[RIGHTBOTTOM].add(ent);
+		if (r.collides(halfwidth, halfheight, halfwidth, halfheight))
+			children[RIGHTTOP].add(ent);
+		if (r.collides(0, halfheight, halfwidth, halfheight))
+			children[LEFTTOP].add(ent);
+	}
+
+	public void clear() {
+		for (TreeElement el : children) {
+			el.clear();
 		}
+		master.nodepool.eat(this);
+	}
 
-		returnObjects.addAll(entities);
+	void setToNode(Leaf leaf) {
 
-		return returnObjects;
+	}
+}
+
+class Leaf extends TreeElement implements Poolable {
+
+	private final HashSet<Entity> entities = new HashSet<Entity>();
+
+	public Leaf(QuadTree master) {
+		this.master = master;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.steftmax.temol.resource.memory.Poolable#reset()
+	 */
+	@Override
+	public void reset() {
+		super.reset();
+		entities.clear();
+	}
+
+	public void split() {
+		Node node = toNode();
+		for (Entity ent : entities) {
+			node.add(ent);
+		}
+		upper.master.leafpool.eat(this);
+	}
+
+	public Node toNode() {
+		final Node node = master.nodepool.getObject();
+		node.set(boundary.x, boundary.y, boundary.width, boundary.height,
+				level, node);
+		return node;
+	}
+
+	public Leaf set(int x, int y, int width, int height, int level, Node upper) {
+		this.upper = upper;
+		boundary.setBounds(x, y, width, height);
+		this.level = level;
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.steftmax.temol.math.TreeElement#clear()
+	 */
+	@Override
+	public void clear() {
+		master.leafpool.eat(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.steftmax.temol.math.TreeElement#add(com.steftmax.temol.content.entity
+	 * .Entity, int, int)
+	 */
+	@Override
+	void add(Entity ent) {
+
+		entities.add(ent);
+		if (entities.size() > master.maxObjects
+				&& level + 1 <= master.maxLevels) {
+			split();
+		}
+	}
+}
+
+// THE POOLZ FOR DEM OBJECTZ
+
+class NodePool extends Pool<Node> {
+
+	private final QuadTree master;
+
+	public NodePool(QuadTree master) {
+		this.master = master;
+	}
+
+	@Override
+	protected Node newObject() {
+		return new Node(master);
+	}
+
+}
+
+class LeafPool extends Pool<Leaf> {
+
+	private final QuadTree master;
+
+	public LeafPool(QuadTree master) {
+		this.master = master;
+	}
+
+	@Override
+	protected Leaf newObject() {
+		return new Leaf(master);
 	}
 
 }

@@ -1,15 +1,20 @@
 package com.steftmax.temol.render.state;
 
+import java.io.IOException;
+
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
-import com.steftmax.temol.TEMoL;
+import com.steftmax.temol.audio.Music;
+import com.steftmax.temol.audio.OpenALSystem;
+import com.steftmax.temol.audio.Sound;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.graphics.sprite.TextureRegion;
+import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
 
@@ -23,17 +28,19 @@ public class MenuState extends State implements Button.Listener {
 	private final MenuResources resources = new MenuResources();
 	private Camera cam;
 	private Sprite background;
+	Music music;
+	Sound sound;
 
 	private enum Screen {
 		MENU, SETTINGS;
 	}
 
 	private Screen screen = Screen.MENU;
-	private boolean switchToPlay;
+	private boolean switchToPlay, switchToMapEditor;
 
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 80,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 80;
-
+	OpenALSystem system;
 	public MenuState(Game game) {
 		super(game);
 
@@ -45,11 +52,27 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
+		
+		system = new OpenALSystem();
+		music = new Music("music/menu.ogg");
+		system.setMusic(music);
+		music.setLooping(true);
+		try {
+			sound = new Sound(system, "sfx/handgunreload1.wav");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(new Vector2(1f,0f).dotProduct(new Vector2(1f,1f)));
+
+		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		// resources.getSpriteSheet("font/font1.png").getFrames(),
+		// new Color(.5F, .7F, .3F, 1F));
 
 		background = new Sprite(resources.getTexture("gfx/menu.png"), 0, 0);
 
 		final Texture sheet = resources.getTexture("gfx/sheet_buttons.png");
-		final int width = 64, height = 16;
+		final int width = 256, height = 64;
 
 		play = new Button(this, mi, PLAYBUTTON_X, PLAYBUTTON_Y,
 				new TextureRegion(sheet, 0, 2 * height, width, height),
@@ -61,9 +84,13 @@ public class MenuState extends State implements Button.Listener {
 				new TextureRegion(sheet, width, height, width, height),
 				new TextureRegion(sheet, width, 0, width, height));
 
+		play.setDimensions(64, 16);
+		settings.setDimensions(64, 16);
+		
 		Display.setVSyncEnabled(true);
 	}
 
+	long time;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -72,11 +99,11 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void update(long delta) {
 		if (switchToPlay) {
-			deleteResources();
-			game.changeState(new GameState(game,
-					((TEMoL) game).createLevel()));
+			game.changeState(this, GameState.class);
 		}
-		
+		if (switchToMapEditor) {
+			game.changeState(this, MapEditorState.class);
+		}
 	}
 
 	/*
@@ -106,7 +133,6 @@ public class MenuState extends State implements Button.Listener {
 		batch.end();
 		cam.endFocus();
 
-		Display.update();
 	}
 
 	/*
@@ -117,31 +143,13 @@ public class MenuState extends State implements Button.Listener {
 	@Override
 	public void deleteResources() {
 		resources.unload();
-		game.getMouseInput().clear();
-
+		system.dispose();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onPress
-	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
-	 */
+	
 	@Override
-	public void onPress(Button b) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.steftmax.larrys_epic_misadventures.render.state.Button.Listener#onRelease
-	 * (com.steftmax.larrys_epic_misadventures.render.state.Button)
-	 */
+	public void onPress(Button b) {}
 	@Override
-	public void onRelease(Button b) {
-	}
+	public void onRelease(Button b) {}
 
 	/*
 	 * (non-Javadoc)
@@ -158,7 +166,7 @@ public class MenuState extends State implements Button.Listener {
 		}
 
 		if (b == settings) {
-			screen = Screen.SETTINGS;
+			switchToMapEditor = true;
 		}
 
 	}

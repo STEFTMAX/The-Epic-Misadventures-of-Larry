@@ -1,5 +1,6 @@
 package com.steftmax.temol.resource;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.steftmax.temol.graphics.sprite.SpriteSheet;
@@ -12,7 +13,7 @@ import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
  * @author pieter3457
  *
  */
-public abstract class ResourceManager{
+public abstract class ResourceManager {
 
 	HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	HashMap<String, SpriteSheet> sheets = new HashMap<String, SpriteSheet>();
@@ -46,26 +47,39 @@ public abstract class ResourceManager{
 		sheets.put(path, s);
 	}
 
+	public void loadSpriteSheet(String path) {
+
+		try {
+			SpriteSheet s = null;
+			s = new SpriteSheet(path);
+			sheets.put(path, s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public Animation getAnimation(String path) {
 		return animations.get(path);
 	}
 
 	public void loadAnimation(String path, int rows, int collumns,
 			PlaySequence sequence, int fps, int skipLastFrames) {
-		
+
 		final SpriteSheet sheet = new SpriteSheet(path, rows, collumns);
-		
+
 		final TextureRegion[] sprites = sheet.getFrames();
-		
-		final TextureRegion[] frames = new TextureRegion[sprites.length - skipLastFrames];
-		
-		for (int i = 0; i< frames.length ; i++) {
+
+		final TextureRegion[] frames = new TextureRegion[sprites.length
+				- skipLastFrames];
+
+		for (int i = 0; i < frames.length; i++) {
 			frames[i] = sprites[i];
 		}
-		
+
 		animations.put(path, new Animation(frames, sequence, fps));
 	}
-	
+
 	public void unload() {
 		// Textures
 		for (Texture t : textures.values()) {
@@ -84,7 +98,7 @@ public abstract class ResourceManager{
 			a.dispose();
 		}
 		animations.clear();
-		
+
 		System.gc();
 	}
 

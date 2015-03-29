@@ -1,6 +1,14 @@
 package com.steftmax.temol.graphics.sprite;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.BitSet;
+
+import javax.imageio.ImageIO;
+
 import com.steftmax.temol.resource.Disposable;
+import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
  * This class loads SpriteSheets into Animations or Texture arrays.
@@ -10,12 +18,83 @@ import com.steftmax.temol.resource.Disposable;
  */
 public final class SpriteSheet implements Disposable {
 
-	private int rows, collumns;
 	private TextureRegion[] regions;
 
+	/**
+	 * Creates a spritesheet and autosplits it based on bordercolor defined in
+	 * the first pixel.
+	 * 
+	 * @param path
+	 *            The path to load the sheet from.
+	 * @throws IOException
+	 */
+	public SpriteSheet(String path) throws IOException {
+		BufferedImage sheet = ImageIO.read(ResourceLoader.load(path));
+		Texture sheetTexture = new Texture(sheet);
+
+		final int width = sheet.getWidth();
+		final int height = sheet.getHeight();
+
+		int[] pixels = new int[width * height];
+
+		sheet.getRGB(0, 0, width, height, pixels, 0, width);
+
+		int pixel0 = pixels[0];
+
+		BitSet edgeSet = new BitSet(width * height);
+		BitSet alreadyContained = (BitSet) edgeSet.clone();
+
+		for (int i = 0; i < pixels.length; i++) {
+			edgeSet.set(i, pixels[i] == pixel0);
+		}
+
+		int index;
+		ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				
+				index = y * width + x;
+				
+				if (!alreadyContained.get(index) && !edgeSet.get(index)) {
+					int xlimit = width;
+					int ylimit = height;
+
+					limitSetting: for (int Y = y; Y < ylimit; Y++) {
+						for (int X = x; X < xlimit; X++) {
+							index = Y * width + X;
+							if (edgeSet.get(index)) {
+								if (X > x) {
+									xlimit = X;
+								} else {
+									ylimit = Y;
+									break limitSetting;
+								}
+							} else {
+
+								alreadyContained.set(index);
+							}
+						}
+					}
+					xlimit -= x;
+					ylimit -= y;
+//					System.out.println("x: " + x);
+//					System.out.println("y: " + y);
+//					System.out.println("xlimit: " + xlimit);
+//					System.out.println("ylimit: " + ylimit);
+
+					regions.add(new TextureRegion(sheetTexture, x, y, xlimit,
+							ylimit));
+				}
+			}
+		}
+		pixels = null;
+
+		System.out.println("Amount of regions: " + regions.size());
+		this.regions = regions.toArray(new TextureRegion[regions.size()]);
+	}
+
 	public SpriteSheet(String path, int rows, int collumns) {
-		this.rows = rows;
-		this.collumns = collumns;
 		final Texture spriteSheet = new Texture(path);
 
 		spriteSheet.load();

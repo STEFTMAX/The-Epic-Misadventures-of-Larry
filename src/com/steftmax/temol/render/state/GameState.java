@@ -8,12 +8,22 @@ import com.steftmax.temol.Game;
 import com.steftmax.temol.content.Level;
 import com.steftmax.temol.content.entity.Entity;
 import com.steftmax.temol.content.entity.Larry;
+import com.steftmax.temol.content.entity.QuadCopter;
+import com.steftmax.temol.content.map.old.MapData;
+import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.ChaseCamera;
+import com.steftmax.temol.graphics.FrameBuffer;
+import com.steftmax.temol.graphics.ShaderProgram;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
+import com.steftmax.temol.math.QuadTree;
+import com.steftmax.temol.physics.PhysicsWorld;
 import com.steftmax.temol.render.input.MouseInput;
+import com.steftmax.temol.resource.GameResources;
 import com.steftmax.temol.resource.Settings;
+import com.steftmax.temol.resource.TextFile;
 
 /**
  * @author pieter3457
@@ -23,28 +33,37 @@ public class GameState extends State {
 
 	public final ChaseCamera camera;
 	public final Level lvl;
-	// public QuadTree qt = new QuadTree(4, 1024, 1024, 5);
+	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
+	private GameResources resources = new GameResources();
+
+	int lightSize = 256;
+
+	FrameBuffer occludersFBO = new FrameBuffer(lightSize, lightSize);
+	FrameBuffer shadowMapFBO = new FrameBuffer(lightSize, 1);
+	TextureRegion occluders = new TextureRegion(occludersFBO.getTexture());
+
+	ShaderProgram defaultShader;
 
 	// private final List<Entity> returnObjects = new ArrayList<Entity>();
 
-	public GameState(Game game, Level lvl) {
+	public GameState(Game game) {
 		super(game);
+		defaultShader = new ShaderProgram(null, new TextFile(
+				"/shaders/fragment").fileContents);
 		final MouseInput mi = game.getMouseInput();
 
 		mi.center();
 		mi.grab();
 
-		this.lvl = lvl;
+		this.lvl = createLevel();
 
 		this.camera = new ChaseCamera(mi, Settings.getWidth(),
 				Settings.getHeight(), 5f, 2f, 0.001f);
 		camera.lock(((Larry) lvl.player).getLockingPosition());
 
 		aim = new Sprite(lvl.manager.getTexture("/gfx/weapons/crosshair_2.png"));
-		aim.setScale(2f);
-		aim.setContainmentTest(false);
-		//light.set(Settings.getWidth() / 2, Settings.getHeight() / 2);
+		// light.set(Settings.getWidth() / 2, Settings.getHeight() / 2);
 
 		Display.setVSyncEnabled(false);
 
@@ -59,27 +78,29 @@ public class GameState extends State {
 	public void update(long delta) {
 		// System.out.println(game.getMouseInput().position.x);
 		// System.out.println(game.getMouseInput().position.y);
-		aim.setScale(camera.getScale() / 1.5f);
+		aim.setScale(camera.getScale());
 		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
 				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
 
+		// pw.update(delta);
 		Set<Entity> set = lvl.getLevelObjects();
 
 		for (Entity ent : set) {
-
+			qt.add(ent);
 			ent.update(delta);
 
 		}
+		qt.clear();
 	}
 
 	/**
 	 * 
 	 */
 	public void draw(SpriteBatch batch) {
+		defaultShader.bind();
 
-		final AABB viewingarea = camera.getViewingArea();
 		camera.beginFocus();
-		batch.begin(viewingarea);
+		batch.begin();
 		lvl.map.draw(batch);
 
 		for (Entity ent : lvl.getLevelObjects()) {
@@ -93,21 +114,7 @@ public class GameState extends State {
 		batch.draw(aim);
 
 		batch.end();
-		// glBegin(GL_QUADS);
-		// // glVertex2i(viewingarea.x, viewingarea.y);
-		// // glVertex2i(viewingarea.x + viewingarea.width, viewingarea.y);
-		// // glVertex2i(viewingarea.x + viewingarea.width, viewingarea.y
-		// // + viewingarea.height);
-		// // glVertex2i(viewingarea.x, viewingarea.y + viewingarea.height);
-		//
-		// glColor4f(0, 0, 0, .8f);
-		// glVertex2i(0, 0);
-		// glVertex2i(Settings.getWidth(), 0);
-		// glVertex2i(Settings.getWidth(), Settings.getHeight());
-		// glVertex2i(0, Settings.getHeight());
-		// glEnd();
-		// glColor3f(1, 1, 1);
-		Display.update();
+		defaultShader.unbind();
 	}
 
 	/*
@@ -117,7 +124,48 @@ public class GameState extends State {
 	 */
 	@Override
 	public void deleteResources() {
-		// TODO Auto-generated method stub
+		shadowMapFBO.dispose();
+		occluders.dispose();
+		occludersFBO.dispose();
+		defaultShader.dispose();
+		resources.unload();
+	}
 
+	public Level createLevel() {
+		resources.load();
+
+		int[][] mapStructure = {
+
+		{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 } };
+
+		MapData data = new MapData(mapStructure, 32, 32);
+		TiledMap map = new TiledMap(data, resources);
+		Level lvl = new Level(resources);
+		lvl.setMap(map);
+		Larry larry = new Larry(map, 32, 34, game.getKeyboardInput(),
+				game.getMouseInput(), resources);
+		lvl.setPlayer(larry);
+
+		return lvl;
 	}
 }

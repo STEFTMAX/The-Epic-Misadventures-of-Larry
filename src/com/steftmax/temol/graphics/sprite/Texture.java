@@ -32,7 +32,7 @@ public class Texture implements Disposable {
 	public int getID() {
 		return id;
 	}
-	
+
 	/**
 	 * @return the width of this texture
 	 */
@@ -48,6 +48,10 @@ public class Texture implements Disposable {
 	}
 
 	public Texture(String path) {
+		this(path, GL_NEAREST, GL_NEAREST);
+	}
+
+	public Texture(String path, int minfilter, int magfilter) {
 
 		final InputStream is = ResourceLoader.load(path);
 		BufferedImage img;
@@ -73,18 +77,33 @@ public class Texture implements Disposable {
 			}
 		}
 
-		initTexture(img.getWidth(), img.getHeight(), decodePNG(img, true));
+		
+		initTexture(img.getWidth(), img.getHeight(), decodeImage(img, true),
+				minfilter, magfilter);
+	}
+
+	public Texture(BufferedImage img, int minfilter, int magfilter) {
+		initTexture(img.getWidth(), img.getHeight(), decodeImage(img, true),
+				minfilter, magfilter);
 	}
 
 	/**
 	 * @param width
 	 * @param height
 	 */
-	public Texture(int width, int height) {
-		initTexture(width, height, null);
+	public Texture(int width, int height, int minfilter, int magfilter) {
+		initTexture(width, height, null, minfilter, magfilter);
 	}
 
-	private void initTexture(int width, int height, ByteBuffer data) {
+	/**
+	 * @param sheet
+	 */
+	public Texture(BufferedImage sheet) {
+		this(sheet, GL_NEAREST, GL_NEAREST);
+	}
+
+	private void initTexture(int width, int height, ByteBuffer data,
+			int minfilter, int magfilter) {
 		this.height = height;
 		this.width = width;
 
@@ -92,8 +111,8 @@ public class Texture implements Disposable {
 
 		glBindTexture(GL_TEXTURE_2D, id);
 		// Set the parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minfilter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
@@ -133,8 +152,7 @@ public class Texture implements Disposable {
 	 *            Whether or not to use alpha in this ByteBuffer
 	 * @return A ByteBuffer with all the pixels in it
 	 */
-	public static ByteBuffer decodePNG(BufferedImage texture, boolean alpha) {
-
+	public static ByteBuffer decodeImage(BufferedImage texture, boolean alpha) {
 		ByteBuffer buffer = BufferUtils.createByteBuffer(texture.getWidth()
 				* texture.getHeight() * (alpha ? 4 : 3));
 

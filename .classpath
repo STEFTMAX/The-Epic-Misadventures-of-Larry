@@ -8,5 +8,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Larry&apos;s epic misadventures/lib/natives/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jorbis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

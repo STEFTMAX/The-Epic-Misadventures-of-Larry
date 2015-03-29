@@ -8,7 +8,7 @@ import com.steftmax.temol.resource.Disposable;
  */
 public class TextureRegion implements Disposable {
 
-	public final Texture tex;
+	public final Texture texture;
 	public final int x, y, width, height;
 	public float u1, u2, v1, v2;
 	private final static float BLEED = 0.000015f;
@@ -18,17 +18,17 @@ public class TextureRegion implements Disposable {
 	}
 
 	public TextureRegion(Texture texture, int x, int y, int width, int height) {
-		this.tex = texture;
+		this.texture = texture;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 
 		// this way because texturecoordinates are y flipped
-		u1 = (x / (float) tex.width);
-		u2 = ((x + width) / (float) tex.width);
-		v1 = ((y + height) / (float) tex.height);
-		v2 = (y / (float) tex.height);
+		u1 = (x / (float) texture.width);
+		u2 = ((x + width) / (float) texture.width);
+		v1 = ((y + height) / (float) texture.height);
+		v2 = (y / (float) texture.height);
 
 		// Antibordering #2
 		bleed();
@@ -63,6 +63,6 @@ public class TextureRegion implements Disposable {
 	 */
 	@Override
 	public void dispose() {
-		tex.dispose();
+		texture.dispose();
 	}
 }
