@@ -10,14 +10,14 @@ public class SwingPlaySequence implements PlaySequence {
 	}
 
 	@Override
-	public int getFrame(AnimationState data, int framesPassed, int frames) {
+	public int getFrame(int lastFrame, int framesPassed, int frames) {
 
 		while (framesPassed > 0) {
-			data.lastFrame = getNextFrame(data.lastFrame, frames);
+			lastFrame = getNextFrame(lastFrame, frames);
 			framesPassed--;
 		}
 		
-		return data.lastFrame;
+		return lastFrame;
 
 	}
 

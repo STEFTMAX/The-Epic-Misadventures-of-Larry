@@ -1,4 +1,4 @@
-package com.steftmax.temol.graphics.sprite;
+package com.steftmax.temol.graphics;
 
 import static org.lwjgl.opengl.GL11.*;
 

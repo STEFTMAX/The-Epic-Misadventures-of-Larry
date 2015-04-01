@@ -22,7 +22,7 @@ public class Music extends Audio implements Disposable {
 
 	private ByteBuffer dataBuffer = ByteBuffer.allocateDirect(4096 * 8);
 
-	private OggInputStream stream;
+	private OggInputStream stream, empty;
 
 	private String path;
 
@@ -121,6 +121,10 @@ public class Music extends Audio implements Disposable {
 		
 		boolean active = true;
 		
+		if (empty == null) {
+			empty = new OggInputStream(path);
+		}
+		
 		int processed = alGetSourcei(sourceID, AL_BUFFERS_PROCESSED);
 		while (processed-- > 0) {
 			IntBuffer buffer = OpenALSystem.createIntBuffer(1);
@@ -137,6 +141,7 @@ public class Music extends Audio implements Disposable {
 			if (looping) {
 				active = true;
 				loop();
+				update();
 			}
 		}
 
@@ -149,7 +154,8 @@ public class Music extends Audio implements Disposable {
 	 */
 	private void loop() throws IOException {
 		stream.close();
-		stream = new OggInputStream(path);
+		stream = empty;
+		empty = null;
 	}
 
 	public void setLooping(boolean value) {

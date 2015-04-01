@@ -35,9 +35,12 @@ public abstract class Game implements Runnable {
 
 	private long avgFrameTime = 0;
 
+	
+	//TODO merge together in one input with an inputconfiguration object for controls
 	protected MouseInput mouseInput;
-
 	protected KeyboardInput keyboardInput;
+	
+	
 
 	// private int maxfps;
 

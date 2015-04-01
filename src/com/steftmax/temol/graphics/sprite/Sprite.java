@@ -1,8 +1,11 @@
 package com.steftmax.temol.graphics.sprite;
 
 import com.steftmax.temol.graphics.Color;
+import com.steftmax.temol.graphics.Drawable;
+import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.Texture;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.resource.Disposable;
 
 /**
  * TODO actually make this class useful for drawing. For example let it store
@@ -12,85 +15,67 @@ import com.steftmax.temol.resource.Disposable;
  * @author pieter3457
  *
  */
-public class Sprite implements Disposable {
+public class Sprite extends TextureRegion implements Drawable {
 
-	public Vector2 pos;
-	public int width, height;
+	public Vector2 pos = new Vector2();
 	public float scaleX = 1, scaleY = 1;
 	public boolean flipX = false, flipY = false;
 
 	public float rotation = 0f; // in radians
 	public final Vector2 origin = new Vector2();
+	boolean originCentered = true;
 
-	public TextureRegion texReg;
 	public Color color = new Color(127, 127, 127, 127);
-	
-	public void setTextureRegion(TextureRegion textureRegion) {
-		this.texReg = textureRegion;
-	}
-	
+	public float width, height;
+
 	public void setToTextureRegion(TextureRegion textureRegion) {
-		this.texReg = textureRegion;
-		this.width = textureRegion.width;
-		this.height = textureRegion.height;
+		super.setTo(textureRegion);
 	}
 
 	public Sprite(Texture tex) {
-		set(new TextureRegion(tex), new Vector2());
+		super(tex);
+		init();
 	}
 
 	public Sprite(Texture tex, float x, float y) {
-		set(new TextureRegion(tex), new Vector2(x, y));
+		super(tex);
+		pos.set(x, y);
+		init();
 	}
 
 	public Sprite(TextureRegion texReg) {
-		set(texReg, new Vector2());
+		super(texReg);
+		init();
 	}
 
 	public Sprite(TextureRegion texReg, float x, float y) {
-		set(texReg, new Vector2(x, y));
-	}
-
-	
-	public Sprite() {
-		this.pos = new Vector2();
-	}
-	
-	public Sprite(Vector2 position) {
-		this.pos = position;
-	}
-
-	public void set(TextureRegion region, Vector2 pos) {
-		this.texReg = region;
-		this.width = region.width;
-		this.height = region.height;
-		centerOrigin();
-		this.pos = pos;
-	}
-
-	public void set(TextureRegion region, float x, float y) {
-		this.texReg = region;
-		this.width = region.width;
-		this.height = region.height;
-		centerOrigin();
+		super(texReg);
 		pos.set(x, y);
+		init();
+	}
+
+	private void init() {
+		
+		this.width = regionWidth;
+		this.height = regionHeight;
+
+		centerOrigin();
+
 	}
 
 	public void centerOrigin() {
-		origin.set(width / 2, height / 2);
+		origin.set(regionWidth * scaleX * .5f, regionHeight * scaleY * .5f);
+		originCentered = true;
 	}
 
 	public void setOrigin(Vector2 v) {
 		origin.set(v);
+		originCentered = false;
 	}
 
 	public void setOrigin(float x, float y) {
 		origin.set(x, y);
-	}
-
-	public void dispose() {
-
-		texReg.dispose();
+		originCentered = false;
 	}
 
 	public void setRotation(float radians) {
@@ -107,45 +92,50 @@ public class Sprite implements Disposable {
 		this.scaleY = scaleY;
 	}
 
-	public Texture getTexture() {
-		return texReg.texture;
-	}
-
 	public int getVertexSize() {
 		return 4;
 	}
 
-	public void set(Vector2 position) {
-		this.pos.set(position);
-	}
-
-	public void lock(Vector2 position) {
+	public void setPosition(Vector2 position) {
 		this.pos = position;
 	}
 
-	public void set(float x, float y) {
+	public void setPosition(float x, float y) {
 		pos.set(x, y);
 	}
 
-	public float getScaledWidth() {
-		return width * scaleX;
+	public float getWidth() {
+		return width;
 	}
 
-	public float getScaledHeight() {
-		return height * scaleY;
+	public float getHeight() {
+		return height;
 	}
 
 	/**
-	 * @param width
-	 * @param height
+	 * Sets the dimensions of this sprite. It doesn't affect the scale.
+	 * @param width The height.
+	 * @param height The width.
 	 */
-	public void setDimensions(int width, int height) {
+	public void setDimensions(float width, float height) {
 		this.width = width;
 		this.height = height;
-
 	}
 
 	public void rotate(float radians) {
 		rotation += radians;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.steftmax.temol.graphics.Drawable#draw(com.steftmax.temol.graphics
+	 * .SpriteBatch)
+	 */
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.draw(this, pos.x, pos.y, width, height, scaleX, scaleY, flipX,
+				flipY, color, rotation, origin.x, origin.y);
 	}
 }

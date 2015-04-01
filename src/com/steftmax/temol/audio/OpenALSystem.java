@@ -1,25 +1,11 @@
 package com.steftmax.temol.audio;
 
-import static org.lwjgl.openal.AL10.AL_BUFFER;
-import static org.lwjgl.openal.AL10.AL_FALSE;
-import static org.lwjgl.openal.AL10.AL_GAIN;
-import static org.lwjgl.openal.AL10.AL_PAUSED;
-import static org.lwjgl.openal.AL10.AL_PLAYING;
-import static org.lwjgl.openal.AL10.AL_ROLLOFF_FACTOR;
-import static org.lwjgl.openal.AL10.AL_SOURCE_RELATIVE;
-import static org.lwjgl.openal.AL10.AL_SOURCE_STATE;
-import static org.lwjgl.openal.AL10.alDeleteSources;
-import static org.lwjgl.openal.AL10.alGenSources;
-import static org.lwjgl.openal.AL10.alGetSourcei;
-import static org.lwjgl.openal.AL10.alSourceStop;
-import static org.lwjgl.openal.AL10.alSourcef;
-import static org.lwjgl.openal.AL10.alSourcei;
+import static org.lwjgl.openal.AL10.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import org.lwjgl.LWJGLException;
@@ -147,7 +133,7 @@ public class OpenALSystem implements Runnable, Disposable {
 		for (Source source : sources) {
 			source.dispose();
 		}
-		currentMusic.dispose();
+		stopMusic();
 		AL.destroy();
 		stop = true;
 	}

@@ -1,19 +1,34 @@
 package com.steftmax.temol.graphics.sprite.animation;
 
 public interface PlaySequence {
-	
+
 	public static PlaySequence REPEAT = new PlaySequence() {
-		
+
 		@Override
-		public int getFrame(AnimationState data, int framesPassed, int frames) {
-			
-			data.lastFrame += framesPassed;
+		public int getFrame(int lastFrame, int framesPassed, int frames) {
 
-			data.lastFrame %= frames;
+			lastFrame += framesPassed;
 
-			return data.lastFrame;
+			lastFrame %= frames;
+
+			return lastFrame;
 		}
 	};
 
-	public int getFrame(AnimationState data, int framesPassed, int frames);
+	public static PlaySequence HOLDLAST = new PlaySequence() {
+
+		@Override
+		public int getFrame(int lastFrame, int framesPassed, int frames) {
+
+			lastFrame += framesPassed;
+
+			if (lastFrame >= frames) {
+				lastFrame = frames - 1;
+			}
+
+			return lastFrame;
+		}
+	};
+
+	public int getFrame(int lastFrame, int framesPassed, int frames);
 }

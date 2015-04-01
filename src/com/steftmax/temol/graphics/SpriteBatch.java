@@ -33,8 +33,6 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.Texture;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 
 /**
@@ -95,12 +93,7 @@ public class SpriteBatch {
 		drawing = true;
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-
-	public void draw(Sprite s) {
-		draw(s.texReg, s.pos.x, s.pos.y, s.width, s.height, s.scaleX, s.scaleY,
-				s.flipX, s.flipY, s.color, s.rotation, s.origin.x, s.origin.y);
-	}
-
+	
 	// public void draw(final TextureRegion tr, float x1, float x2, float y1,
 	// float y2, boolean flipX, boolean flipY, Color color,
 	// float rotation, float originX, float originY) {
@@ -264,12 +257,12 @@ public class SpriteBatch {
 
 		final float x1 = x;
 		final float y1 = y;
-		final float x2 = x + tr.width;
+		final float x2 = x + tr.regionWidth;
 		final float y2 = y;
-		final float x3 = x + tr.width;
-		final float y3 = y + tr.height;
+		final float x3 = x + tr.regionWidth;
+		final float y3 = y + tr.regionHeight;
 		final float x4 = x;
-		final float y4 = y + tr.height;
+		final float y4 = y + tr.regionHeight;
 
 		float red = this.color.red;
 		float green = this.color.green;

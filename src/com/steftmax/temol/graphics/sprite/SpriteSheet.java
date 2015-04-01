@@ -7,7 +7,8 @@ import java.util.BitSet;
 
 import javax.imageio.ImageIO;
 
-import com.steftmax.temol.resource.Disposable;
+import com.steftmax.temol.graphics.Texture;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.resource.loader.ResourceLoader;
 
 /**
@@ -16,7 +17,7 @@ import com.steftmax.temol.resource.loader.ResourceLoader;
  * @author pieter3457
  * 
  */
-public final class SpriteSheet implements Disposable {
+public final class SpriteSheet {
 
 	private TextureRegion[] regions;
 
@@ -133,18 +134,6 @@ public final class SpriteSheet implements Disposable {
 
 	public TextureRegion get(int index) {
 		return regions[index];
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.steftmax.larrys_epic_misadventures.resource.Disposable#dispose()
-	 */
-	@Override
-	public void dispose() {
-		for (TextureRegion r : regions) {
-			r.dispose();
-		}
 	}
 
 	public TextureRegion[] getFrames() {

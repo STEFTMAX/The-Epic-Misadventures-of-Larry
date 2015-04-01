@@ -2,8 +2,8 @@ package com.steftmax.temol.render.state;
 
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.render.input.MouseClickListener;
 import com.steftmax.temol.render.input.MouseInput;
@@ -37,7 +37,7 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 
 	public Button(Listener listener, MouseInput mi, int x, int y, TextureRegion press,
 			TextureRegion hover, TextureRegion idle) {
-		this(listener, mi, new AABB(x, y, idle.width, idle.height), press, hover, idle);
+		this(listener, mi, new AABB(x, y, idle.regionWidth, idle.regionHeight), press, hover, idle);
 	}
 
 	public Button(Listener listener, MouseInput mi, AABB boundaryBox, TextureRegion press,
@@ -119,15 +119,16 @@ public class Button implements MouseClickListener, MousePositionListener, Drawab
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
+		
 		switch (state) {
 		case HOVER:
-			batch.draw(hover);
+			hover.draw(batch);
 			break;
 		case IDLE:
-			batch.draw(idle);
+			idle.draw(batch);
 			break;
 		case PRESS:
-			batch.draw(press);
+			press.draw(batch);
 			break;
 		}
 	}

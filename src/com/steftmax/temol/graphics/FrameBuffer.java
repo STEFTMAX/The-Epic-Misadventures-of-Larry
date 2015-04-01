@@ -2,7 +2,6 @@ package com.steftmax.temol.graphics;
 
 import org.lwjgl.opengl.Display;
 
-import com.steftmax.temol.graphics.sprite.Texture;
 import com.steftmax.temol.resource.Disposable;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
@@ -15,8 +14,8 @@ import static org.lwjgl.opengl.GL11.*;
  * @author pieter3457
  *
  */
-public class FrameBuffer implements Disposable { // TODO let it implement
-													// disposable
+public class FrameBuffer implements Disposable {
+	
 	private int id;
 	private Texture texture;
 

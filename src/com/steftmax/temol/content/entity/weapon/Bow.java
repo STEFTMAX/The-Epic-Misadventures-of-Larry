@@ -2,8 +2,8 @@ package com.steftmax.temol.content.entity.weapon;
 
 import com.steftmax.temol.content.entity.Larry;
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
@@ -32,21 +32,31 @@ public class Bow extends Weapon {
 	int frameN = 0;
 	long currentTime;
 	long stepTime = 100000000;
+	private boolean isAiming;
 
 	public void update(long delta) {
-		if (mi.primaryDown()) {
+		isAiming = mi.primaryDown();
+		if (isAiming) {
 			if (frameN < FINALFRAME) {
 				currentTime += delta;
-				frameN = (int) Math.floor(currentTime / stepTime);
+				frameN = (int) Math.floor(currentTime / stepTime) + 1;
 				if (frameN > FINALFRAME) {
 					frameN = FINALFRAME;
 				}
 
 			}
 			Vector2 pos = mi.getMousePosition();
-			frame.setRotation((float) Math.atan2(pos.y
+			float rotation = (float) Math.atan2(pos.y
 					- (Settings.getHeight() / 2), pos.x
-					- (Settings.getWidth() / 2)));
+					- (Settings.getWidth() / 2));
+			if (rotation > .75f) {
+				rotation = .75f;
+			}
+			if (rotation < -.75f)
+			{
+				rotation = -.75f;
+			}
+			frame.setRotation(rotation);
 		} else {
 			currentTime = 0;
 			frameN = 0;
@@ -70,6 +80,14 @@ public class Bow extends Weapon {
 	 */
 	@Override
 	public boolean drawsFace() {
+		return mi.primaryDown();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.steftmax.temol.content.entity.weapon.Weapon#allowSprinting()
+	 */
+	@Override
+	public boolean allowSprinting() {
 		return mi.primaryDown();
 	}
 }

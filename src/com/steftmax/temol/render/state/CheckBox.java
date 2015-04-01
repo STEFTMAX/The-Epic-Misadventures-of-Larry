@@ -2,8 +2,8 @@ package com.steftmax.temol.render.state;
 
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.render.input.MouseClickListener;
 

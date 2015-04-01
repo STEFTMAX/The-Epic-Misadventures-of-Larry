@@ -17,15 +17,15 @@ public class GameResources extends ResourceManager{
 	public void load() {
 		
 		loadSpriteSheet(TileType.TILESETPATH, 16, 16);
-		
-		loadAnimation("gfx/larry_walking.png", 13, 2, PlaySequence.REPEAT, 40, 0);
-		loadAnimation("gfx/walking legs.png", 13, 2, PlaySequence.REPEAT, 40, 0);
-		loadAnimation("gfx/larry_breathing.png", 3, 1, new SwingPlaySequence(true), 2, 0);
-		loadAnimation("gfx/larry_jumping.png", 5, 5, PlaySequence.REPEAT, 40, 0);
+//		
+//		loadSpriteSheet("gfx/larry_walking.png", 13, 2);
+		loadSpriteSheet("gfx/walking legs.png", 13, 2);
+//		loadAnimation("gfx/larry_breathing.png", 3, 1, new SwingPlaySequence(true), 2, 0);
+//		loadAnimation("gfx/larry_jumping.png", 5, 5, PlaySequence.REPEAT, 40, 0);
 		loadSpriteSheet("gfx/bow top.png", 4, 4);
 		
-		
-		loadAnimation("gfx/blaze_breathing.png", 3, 1, PlaySequence.REPEAT, 2, 0);
+//		
+//		loadAnimation("gfx/blaze_breathing.png", 3, 1, PlaySequence.REPEAT, 2, 0);
 		
 		loadTexture("gfx/light.png");
 		

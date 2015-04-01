@@ -3,11 +3,10 @@ package com.steftmax.temol.resource;
 import java.io.IOException;
 import java.util.HashMap;
 
+import com.steftmax.temol.audio.Music;
+import com.steftmax.temol.audio.Sound;
+import com.steftmax.temol.graphics.Texture;
 import com.steftmax.temol.graphics.sprite.SpriteSheet;
-import com.steftmax.temol.graphics.sprite.Texture;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
-import com.steftmax.temol.graphics.sprite.animation.Animation;
-import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
 
 /**
  * @author pieter3457
@@ -17,8 +16,9 @@ public abstract class ResourceManager {
 
 	HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	HashMap<String, SpriteSheet> sheets = new HashMap<String, SpriteSheet>();
-	HashMap<String, Animation> animations = new HashMap<String, Animation>();
-
+	HashMap<String, Sound> sounds = new HashMap<String, Sound>();
+	HashMap<String, Music> musics = new HashMap<String, Music>();
+	
 	public abstract void load();
 
 	public Texture getTexture(String path) {
@@ -59,45 +59,19 @@ public abstract class ResourceManager {
 
 	}
 
-	public Animation getAnimation(String path) {
-		return animations.get(path);
-	}
-
-	public void loadAnimation(String path, int rows, int collumns,
-			PlaySequence sequence, int fps, int skipLastFrames) {
-
-		final SpriteSheet sheet = new SpriteSheet(path, rows, collumns);
-
-		final TextureRegion[] sprites = sheet.getFrames();
-
-		final TextureRegion[] frames = new TextureRegion[sprites.length
-				- skipLastFrames];
-
-		for (int i = 0; i < frames.length; i++) {
-			frames[i] = sprites[i];
-		}
-
-		animations.put(path, new Animation(frames, sequence, fps));
-	}
-
 	public void unload() {
 		// Textures
 		for (Texture t : textures.values()) {
 			t.dispose();
 		}
 		textures.clear();
+//
+//		// SpriteSheets
+//		for (SpriteSheet s : sheets.values()) {
+//			s.dispose();
+//		}
+//		sheets.clear();
 
-		// SpriteSheets
-		for (SpriteSheet s : sheets.values()) {
-			s.dispose();
-		}
-		sheets.clear();
-
-		// Animations
-		for (Animation a : animations.values()) {
-			a.dispose();
-		}
-		animations.clear();
 
 		System.gc();
 	}

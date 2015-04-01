@@ -2,7 +2,7 @@ package com.steftmax.temol.graphics.font;
 
 import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
+import com.steftmax.temol.graphics.TextureRegion;
 
 /**
  * @author pieter3457
@@ -31,8 +31,8 @@ public class BitmapFont {
 			this.glyphs[i] = glyphs[i];
 		}
 		// cuz monospace u know
-		this.glyphWidth = glyphs[0].width;
-		this.glyphHeight = glyphs[0].height;
+		this.glyphWidth = glyphs[0].regionWidth;
+		this.glyphHeight = glyphs[0].regionHeight;
 
 		this.color = color;
 	}
@@ -69,10 +69,10 @@ public class BitmapFont {
 		for (int i = 0; i < text.length(); i++) {
 			TextureRegion glyph = glyphs[letters.indexOf(Character
 					.toLowerCase(text.charAt(i)))];
-			px = x + i * glyph.width * scaleX;
+			px = x + i * glyph.regionWidth * scaleX;
 
-			batch.draw(glyph, px, px + glyph.width * scaleX, y, y
-					+ glyph.height * scaleY, false, false, false, c, 0);
+			batch.draw(glyph, px, px + glyph.regionWidth * scaleX, y, y
+					+ glyph.regionHeight * scaleY);
 		}
 	}
 }

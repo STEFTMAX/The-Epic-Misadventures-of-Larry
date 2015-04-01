@@ -1,19 +1,16 @@
 package com.steftmax.temol.render.state;
 
-import java.io.IOException;
-
 import org.lwjgl.opengl.Display;
 
 import com.steftmax.temol.Game;
 import com.steftmax.temol.audio.Music;
 import com.steftmax.temol.audio.OpenALSystem;
-import com.steftmax.temol.audio.Sound;
 import com.steftmax.temol.graphics.Camera;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.StaticCamera;
+import com.steftmax.temol.graphics.Texture;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.Texture;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
@@ -29,7 +26,6 @@ public class MenuState extends State implements Button.Listener {
 	private Camera cam;
 	private Sprite background;
 	Music music;
-	Sound sound;
 
 	private enum Screen {
 		MENU, SETTINGS;
@@ -54,15 +50,9 @@ public class MenuState extends State implements Button.Listener {
 		resources.load();
 		
 		system = new OpenALSystem();
-		music = new Music("music/menu.ogg");
+		music = new Music("sfx/music/menu.ogg");
 		system.setMusic(music);
 		music.setLooping(true);
-		try {
-			sound = new Sound(system, "sfx/handgunreload1.wav");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		System.out.println(new Vector2(1f,0f).dotProduct(new Vector2(1f,1f)));
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -119,7 +109,7 @@ public class MenuState extends State implements Button.Listener {
 		cam.beginFocus();
 		batch.begin();
 
-		batch.draw(background);
+		background.draw(batch);
 		switch (screen) {
 		case MENU:
 			play.draw(batch);

@@ -18,4 +18,6 @@ public abstract class Weapon implements Drawable, Updatable{
 	}
 	
 	public abstract boolean drawsFace();
+	
+	public abstract boolean allowSprinting();
 }

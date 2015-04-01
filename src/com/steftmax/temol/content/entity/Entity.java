@@ -18,14 +18,6 @@ public abstract class Entity extends SpritedBody implements Drawable, Updatable 
 		this.maxHP = maxHP;
 		hitbox = new AABB(0, 0, 0, 0);
 	}
-
-	protected void updateHitbox() {
-		final int width = sprite.width;
-		final int height = sprite.height;
-
-		hitbox.setBounds((int) position.x, (int) position.y - height, width, height);
-	}
-	
 	@Deprecated
 	public AABB getHitbox() {
 		return hitbox;

@@ -19,8 +19,7 @@ public class Tile implements Drawable {
 		this.type = type;
 		this.x = x;
 		this.y = y;
-		s = new Sprite(type.sprite.texReg);
-		s.set(type.sprite.texReg, x, y);
+		s = new Sprite(type.sprite, x, y);
 	}
 
 	public Rectangle getHitbox() {
@@ -36,7 +35,7 @@ public class Tile implements Drawable {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.draw(s);
+		s.draw(batch);
 	}
 
 	public boolean hasSolid() {

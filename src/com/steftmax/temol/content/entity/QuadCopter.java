@@ -1,8 +1,8 @@
 package com.steftmax.temol.content.entity;
 
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.Matrix2;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.KeyboardInput;

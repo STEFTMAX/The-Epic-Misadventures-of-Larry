@@ -15,8 +15,8 @@ import com.steftmax.temol.graphics.ChaseCamera;
 import com.steftmax.temol.graphics.FrameBuffer;
 import com.steftmax.temol.graphics.ShaderProgram;
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.QuadTree;
 import com.steftmax.temol.physics.PhysicsWorld;
@@ -36,12 +36,6 @@ public class GameState extends State {
 	public QuadTree qt = new QuadTree(4, 0, 1024, 1024, 1024, 10);
 	private Sprite aim;
 	private GameResources resources = new GameResources();
-
-	int lightSize = 256;
-
-	FrameBuffer occludersFBO = new FrameBuffer(lightSize, lightSize);
-	FrameBuffer shadowMapFBO = new FrameBuffer(lightSize, 1);
-	TextureRegion occluders = new TextureRegion(occludersFBO.getTexture());
 
 	ShaderProgram defaultShader;
 
@@ -79,8 +73,8 @@ public class GameState extends State {
 		// System.out.println(game.getMouseInput().position.x);
 		// System.out.println(game.getMouseInput().position.y);
 		aim.setScale(camera.getScale());
-		aim.set(game.getMouseInput().position.x - aim.getScaledWidth() / 2,
-				game.getMouseInput().position.y - aim.getScaledHeight() / 2);
+		aim.setPosition(game.getMouseInput().position.x - aim.origin.x,
+				game.getMouseInput().position.y - aim.origin.y);
 
 		// pw.update(delta);
 		Set<Entity> set = lvl.getLevelObjects();
@@ -106,12 +100,11 @@ public class GameState extends State {
 		for (Entity ent : lvl.getLevelObjects()) {
 			ent.draw(batch);
 		}
-		lvl.map.drawLights(batch);
 		batch.flush();
 
 		camera.endFocus();
 
-		batch.draw(aim);
+		aim.draw(batch);
 
 		batch.end();
 		defaultShader.unbind();
@@ -124,9 +117,6 @@ public class GameState extends State {
 	 */
 	@Override
 	public void deleteResources() {
-		shadowMapFBO.dispose();
-		occluders.dispose();
-		occludersFBO.dispose();
 		defaultShader.dispose();
 		resources.unload();
 	}
@@ -135,8 +125,7 @@ public class GameState extends State {
 		resources.load();
 
 		int[][] mapStructure = {
-
-		{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
 				{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },

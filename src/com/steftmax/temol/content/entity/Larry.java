@@ -1,12 +1,11 @@
 package com.steftmax.temol.content.entity;
 
-import com.steftmax.temol.content.entity.weapon.Bow;
 import com.steftmax.temol.content.entity.weapon.Weapon;
 import com.steftmax.temol.content.entity.weapon.WeaponWearer;
 import com.steftmax.temol.content.map.old.TiledMap;
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.graphics.sprite.Sprite;
-import com.steftmax.temol.graphics.sprite.animation.AnimationState;
+import com.steftmax.temol.graphics.sprite.animation.Animation;
+import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.TimeScaler;
 import com.steftmax.temol.render.input.KeyboardInput;
@@ -20,8 +19,8 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	private Vector2 lockingVector = new Vector2();
 	boolean isPixelUpFrame = false;
 
-	private AnimationState walkingAnimationState;
-
+	private Animation sprite;
+	
 	public boolean looksLeft = false;
 	private Weapon weapon;
 
@@ -31,21 +30,21 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 			MouseInput mi, ResourceManager rm) {
 		super(60, -1, 1, .5f, 10, mi, ki);
 
-		walkingAnimationState = new AnimationState(
-				rm.getAnimation("gfx/walking legs.png"));
 		// Just so there always is a texture in the drawingTexture pointer
-		sprite = new Sprite(walkingAnimationState.getCurrent());
-		sprite.set(position);
+		
+		sprite = new Animation(rm.getSpriteSheet("gfx/walking legs.png")
+				.getFrames(), PlaySequence.REPEAT, 40);
+		sprite.setPosition(position);
 		sprite.centerOrigin();
-		weapon = new Bow(rm, mi, this);
-		updateHitbox();
+		
+		//weapon = new Bow(rm, mi, this);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.flipY = looksLeft;
-		batch.draw(sprite);
-		weapon.draw(batch);
+		sprite.draw(batch);
+		//weapon.draw(batch);
 	}
 
 	@Override
@@ -54,8 +53,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
 				.isLeftDown()))) {
 
-			walkingAnimationState.stop();
-			sprite.set(walkingAnimationState.getCurrent(), position);
+			sprite.stop();
 		} else {
 			if (ki.isLeftDown()) {
 				long usingDelta = delta;
@@ -65,8 +63,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 				position.subtract(walkingSpeed,
 						TimeScaler.nanosToSecondsF(usingDelta));
 				looksLeft = true;
-				walkingAnimationState.update(usingDelta);
-				sprite.set(walkingAnimationState.getCurrent(), position);
+				sprite.update(usingDelta);
 
 			}
 
@@ -78,19 +75,19 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 				position.add(walkingSpeed,
 						TimeScaler.nanosToSecondsF(usingDelta));
 				looksLeft = false;
-				walkingAnimationState.update(usingDelta);
-				sprite.set(walkingAnimationState.getCurrent(), position);
+				sprite.update(usingDelta);
 
 			}
 		}
 
 		// TODO this should lock him at the head and be universal, to be tested
 		// updateHitbox();
-		lockingVector.set(position.x + hitbox.width / 2f, position.y + 27);
+		lockingVector.set(position.x + sprite.getWidth() / 2f, position.y + 27);
 
-		int frame = walkingAnimationState.getFrameNumber();
+		final int frame = sprite.lastFrame;
 		isPixelUpFrame = (frame > 1 && frame < 11 || frame > 13 && frame < 24);
-		weapon.update(delta);
+		sprite.setPosition(position);
+		//weapon.update(delta);
 	}
 
 	/**
@@ -126,5 +123,16 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	public Vector2 setToHead(Vector2 vector) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.steftmax.temol.content.entity.weapon.WeaponWearer#isWalking()
+	 */
+	@Override
+	public boolean isWalking() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

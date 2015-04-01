@@ -1,9 +1,10 @@
 package com.steftmax.temol.graphics.sprite.animation;
 
-import com.steftmax.temol.graphics.sprite.TextureRegion;
-import com.steftmax.temol.resource.Disposable;
+import com.steftmax.temol.graphics.TextureRegion;
+import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.render.Updatable;
 
-public class Animation implements Disposable{
+public class Animation extends Sprite implements Updatable {
 
 	// Essential animation variables
 	private TextureRegion[] frames;
@@ -11,43 +12,42 @@ public class Animation implements Disposable{
 	private final PlaySequence sequence;
 	private final int frameNanos;
 
+	// Time variables
+
+	public int lastFrame;
+	public int lastNanos;
+
 	public Animation(TextureRegion[] sprites, PlaySequence sequence, int fps) {
+		super(sprites[0]);
 		this.sequence = sequence;
 		this.frames = sprites;
 		this.frameNanos = 1000000000 / fps;
 	}
 
-	public void update(long deltaNanos, AnimationState data) {
+	@Override
+	public void update(long deltaNanos) {
 
-		data.lastNanos += deltaNanos;
+		lastNanos += deltaNanos;
 
-		int framesPassed = (int) Math.floor(data.lastNanos / frameNanos);
-		data.lastNanos -= frameNanos * framesPassed;
+		int framesPassed = (int) Math.floor(lastNanos / frameNanos);
+		lastNanos -= frameNanos * framesPassed;
 		if (framesPassed > 0) {
-			data.lastFrame = sequence.getFrame(data, framesPassed,
+			lastFrame = sequence.getFrame(lastFrame, framesPassed,
 					frames.length);
+			setTo(frames[lastFrame]);
 		}
-	}
-	public TextureRegion getCurrent(AnimationState data) {
-		return frames[data.lastFrame];
 	}
 
 	public int getFrameAmount() {
 		return frames.length;
 	}
 
-	public int getWidth(AnimationState data) {
-		return frames[data.lastFrame].width;
-	}
-
-	public int getHeight(AnimationState data) {
-		return frames[data.lastFrame].height;
-	}
-
-	@Override
-	public void dispose() {
-		for (TextureRegion s: frames) {
-			s.dispose();
-		}
+	/**
+	 * 
+	 */
+	public void stop() {
+		lastFrame = 0;
+		lastNanos = (int) System.nanoTime();
+		setTo(frames[lastFrame]);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.graphics.sprite.TextureRegion;
+import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.Updatable;
@@ -106,8 +106,8 @@ public class TiledMap implements Drawable, Updatable {
 	 * @param batch
 	 */
 	public void drawLights(SpriteBatch batch) {
-		final int width = s.width / 2;
-		final int height = s.height / 2;
+		final int width = s.regionWidth / 2;
+		final int height = s.regionHeight / 2;
 		for (Vector2 light : lightPositions) {
 //			batch.draw(s, light.x - width, light.x + width, light.y - height,
 //					light.y + height, false, false);
