@@ -54,9 +54,9 @@ public final class SpriteSheet {
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				
+
 				index = y * width + x;
-				
+
 				if (!alreadyContained.get(index) && !edgeSet.get(index)) {
 					int xlimit = width;
 					int ylimit = height;
@@ -79,10 +79,10 @@ public final class SpriteSheet {
 					}
 					xlimit -= x;
 					ylimit -= y;
-//					System.out.println("x: " + x);
-//					System.out.println("y: " + y);
-//					System.out.println("xlimit: " + xlimit);
-//					System.out.println("ylimit: " + ylimit);
+					// System.out.println("x: " + x);
+					// System.out.println("y: " + y);
+					// System.out.println("xlimit: " + xlimit);
+					// System.out.println("ylimit: " + ylimit);
 
 					regions.add(new TextureRegion(sheetTexture, x, y, xlimit,
 							ylimit));
@@ -138,5 +138,21 @@ public final class SpriteSheet {
 
 	public TextureRegion[] getFrames() {
 		return regions;
+	}
+
+	/**
+	 * @param fromIndex
+	 * @param toIndex
+	 *            To index exclusive.
+	 * @return
+	 */
+	public TextureRegion[] obtainFrames(final int fromIndex, final int toIndex) {
+
+		TextureRegion[] frames = new TextureRegion[toIndex - fromIndex];
+
+		for (int i = fromIndex; i < toIndex; i++) {
+			frames[i - fromIndex] = regions[i];
+		}
+		return frames;
 	}
 }

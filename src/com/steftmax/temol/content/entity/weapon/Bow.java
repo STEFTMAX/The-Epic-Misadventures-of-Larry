@@ -4,6 +4,9 @@ import com.steftmax.temol.content.entity.Larry;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.graphics.sprite.SpriteGroup;
+import com.steftmax.temol.graphics.sprite.animation.Animation;
+import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
 import com.steftmax.temol.math.Vector2;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
@@ -15,36 +18,37 @@ import com.steftmax.temol.resource.Settings;
  */
 public class Bow extends Weapon {
 
-	Sprite frame = new Sprite();
+	Animation animation;
 	boolean playing;
-	private TextureRegion[] frames;
-	private Larry larry;
-	private static final int XFLIPPEDOFFSET = -15, FINALFRAME = 6;
+	private SpriteGroup group;
+	private Sprite neutral;
 
-	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry) {
+	// private Larry larry;
+	// private static final int XFLIPPEDOFFSET = -15, FINALFRAME = 6;
+
+	public Bow(ResourceManager gameResources, MouseInput mi, SpriteGroup group) {
 		super(gameResources, mi);
-		this.larry = larry;
-		frames = gameResources.getSpriteSheet("gfx/bow top.png").getFrames();
-		frame.setToTextureRegion(frames[0]);
-		frame.setOrigin(13, 21);
+		this.group = group;
+
+		TextureRegion[] frames = gameResources
+				.getSpriteSheet("gfx/bow top.png").obtainFrames(1, 7);
+		neutral = new Sprite(gameResources.getSpriteSheet("gfx/bow top.png")
+				.obtainFrames(0, 1)[0]);
+
+		animation = new Animation(frames, PlaySequence.HOLDLAST, 10);
+		animation.setOrigin(13, 21);
+		group.addSprite(neutral);
 	}
 
-	int frameN = 0;
-	long currentTime;
-	long stepTime = 100000000;
 	private boolean isAiming;
 
 	public void update(long delta) {
 		isAiming = mi.primaryDown();
 		if (isAiming) {
-			if (frameN < FINALFRAME) {
-				currentTime += delta;
-				frameN = (int) Math.floor(currentTime / stepTime) + 1;
-				if (frameN > FINALFRAME) {
-					frameN = FINALFRAME;
-				}
+			if (animation.lastFrame == 0)
+				group.replaceSprite(neutral, animation);
+			animation.update(delta);
 
-			}
 			Vector2 pos = mi.getMousePosition();
 			float rotation = (float) Math.atan2(pos.y
 					- (Settings.getHeight() / 2), pos.x
@@ -52,25 +56,18 @@ public class Bow extends Weapon {
 			if (rotation > .75f) {
 				rotation = .75f;
 			}
-			if (rotation < -.75f)
-			{
+			if (rotation < -.75f) {
 				rotation = -.75f;
 			}
-			frame.setRotation(rotation);
+			animation.setRotation(rotation);
 		} else {
-			currentTime = 0;
-			frameN = 0;
-			frame.setRotation(0);
+			animation.stop();
+			group.replaceSprite(animation, neutral);
 		}
-		frame.setToTextureRegion(frames[frameN]);
-		larry.setToWeaponMountPoint(frame.pos);
-		if (larry.looksLeft)
-			frame.pos.add(XFLIPPEDOFFSET, 0);
-		frame.flipY = larry.looksLeft;
 	}
 
 	public void draw(SpriteBatch batch) {
-		batch.draw(frame);
+
 	}
 
 	/*
@@ -83,7 +80,9 @@ public class Bow extends Weapon {
 		return mi.primaryDown();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.steftmax.temol.content.entity.weapon.Weapon#allowSprinting()
 	 */
 	@Override

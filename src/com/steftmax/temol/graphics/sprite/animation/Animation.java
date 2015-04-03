@@ -47,7 +47,7 @@ public class Animation extends Sprite implements Updatable {
 	 */
 	public void stop() {
 		lastFrame = 0;
-		lastNanos = (int) System.nanoTime();
+		lastNanos = 0;
 		setTo(frames[lastFrame]);
 	}
 }
