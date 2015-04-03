@@ -37,7 +37,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 				.getFrames(), PlaySequence.REPEAT, 40);
 		sprite.addSprite(animation);
 		sprite.setPosition(position);
-		
+		sprite.setOrigin(animation.origin);
 		weapon = new Bow(rm, mi, sprite);
 	}
 
