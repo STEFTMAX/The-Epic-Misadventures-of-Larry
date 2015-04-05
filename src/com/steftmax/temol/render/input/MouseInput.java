@@ -89,7 +89,7 @@ public class MouseInput implements Updatable {
 	 * @see com.sessionstraps.game_engine.render.Renderable#render(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 
 		final int width = Settings.getWidth();
 		final int height = Settings.getHeight();

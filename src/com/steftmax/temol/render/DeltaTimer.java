@@ -11,12 +11,12 @@ public class DeltaTimer {
 		this.timeScale = timeScale;
 	}
 
-	public long getDelta() {
+	public float getDelta() {
 		thisTime = System.nanoTime();
 
 		delta = (long) ((thisTime - lastNanoTime) * timeScale);
 		lastNanoTime = thisTime;
-		return delta;
+		return delta / 1000000000f;
 	}
 
 }

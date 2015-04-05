@@ -23,7 +23,7 @@ public class MapEditorState extends State {
 	 * @see com.steftmax.temol.render.Updatable#update(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		// TODO Auto-generated method stub
 
 	}

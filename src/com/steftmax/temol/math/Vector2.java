@@ -12,9 +12,6 @@ public class Vector2 {
 		this.y = y;
 	}
 
-	/**
-	 * 
-	 */
 	public Vector2() {
 	}
 
@@ -65,11 +62,11 @@ public class Vector2 {
 		this.y *= v.y;
 	}
 
-//	public void multiply(Matrix2 m) {
-//		this.x = this.x * m.values[0] + this.y * m.values[1];
-//		this.y = this.y * m.values[2] + this.x * m.values[3];
-//	}
-	
+	// public void multiply(Matrix2 m) {
+	// this.x = this.x * m.values[0] + this.y * m.values[1];
+	// this.y = this.y * m.values[2] + this.x * m.values[3];
+	// }
+
 	public static void multiply(Matrix2 m, Vector2 v, Vector2 result) {
 
 		result.x = v.x * m.values[0] + v.y * m.values[1];
@@ -121,10 +118,11 @@ public class Vector2 {
 	}
 
 	public void normalize() {
-		final float length = toLength();
+		float length = toLength();
 		if (length != 0) {
-			x = x / length;
-			y = y / length;
+			length = 1 / length;
+			x = x * length;
+			y = y * length;
 		}
 	}
 

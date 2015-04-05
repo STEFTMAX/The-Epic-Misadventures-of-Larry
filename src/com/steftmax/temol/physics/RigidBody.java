@@ -1,7 +1,7 @@
 package com.steftmax.temol.physics;
 
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.TimeScaler;
+
 import com.steftmax.temol.render.Updatable;
 
 /**

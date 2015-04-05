@@ -51,7 +51,7 @@ public class TiledMap implements Drawable, Updatable {
 	}
 
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 
 	}
 

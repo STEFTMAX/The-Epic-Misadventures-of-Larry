@@ -58,7 +58,7 @@ public class QuadCopter extends ControllableEntity {
 			new Vector2(.24f, .1f));
 
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		
 		if (ki.isRightDown()) {
 			rightMotor.force.set(0,12);

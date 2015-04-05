@@ -1,5 +1,6 @@
 package com.steftmax.temol.content.entity;
 
+import com.steftmax.temol.content.Level;
 import com.steftmax.temol.content.entity.weapon.Bow;
 import com.steftmax.temol.content.entity.weapon.Weapon;
 import com.steftmax.temol.content.entity.weapon.WeaponWearer;
@@ -9,7 +10,6 @@ import com.steftmax.temol.graphics.sprite.SpriteGroup;
 import com.steftmax.temol.graphics.sprite.animation.Animation;
 import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.TimeScaler;
 import com.steftmax.temol.render.input.KeyboardInput;
 import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
@@ -28,7 +28,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	private Weapon weapon;
 
 	public Larry(TiledMap map, float x, float y, KeyboardInput ki,
-			MouseInput mi, ResourceManager rm) {
+			MouseInput mi, ResourceManager rm, Level level) {
 		super(60, -1, 1, .5f, 10, mi, ki);
 
 		// Just so there always is a texture in the drawingTexture pointer
@@ -37,7 +37,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 		sprite.addSprite(animation);
 		sprite.setPosition(position);
 		sprite.setOrigin(animation.origin);
-		weapon = new Bow(rm, mi, this, sprite);
+		weapon = new Bow(rm, mi, this, sprite, level);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	}
 
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 
 		if ((ki.isRightDown() && ki.isLeftDown() || (!ki.isRightDown() && !ki
 				.isLeftDown()))) {
@@ -56,24 +56,22 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 			animation.stop();
 		} else {
 			if (ki.isLeftDown()) {
-				long usingDelta = delta;
-				if (ki.isShiftDown()&& weapon.allowSprinting()) {
+				float usingDelta = delta;
+				if (ki.isShiftDown() && weapon.allowSprinting()) {
 					usingDelta *= sprintMultiplier;
 				}
-				position.subtract(walkingSpeed,
-						TimeScaler.nanosToSecondsF(usingDelta));
+				position.subtract(walkingSpeed, usingDelta);
 				looksLeft = true;
 				animation.update(usingDelta);
 
 			}
 
 			if (ki.isRightDown()) {
-				long usingDelta = delta;
-				if (ki.isShiftDown()&& weapon.allowSprinting()) {
+				float usingDelta = delta;
+				if (ki.isShiftDown() && weapon.allowSprinting()) {
 					usingDelta *= sprintMultiplier;
 				}
-				position.add(walkingSpeed,
-						TimeScaler.nanosToSecondsF(usingDelta));
+				position.add(walkingSpeed, usingDelta);
 				looksLeft = false;
 				animation.update(usingDelta);
 

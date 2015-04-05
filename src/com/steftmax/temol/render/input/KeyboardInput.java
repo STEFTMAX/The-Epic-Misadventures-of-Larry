@@ -32,7 +32,7 @@ public class KeyboardInput implements Updatable{
 	 * @see com.sessionstraps.game_engine.render.Renderable#render(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		
         while(Keyboard.next()) {
             if (Keyboard.getEventKey() < keys.length) {

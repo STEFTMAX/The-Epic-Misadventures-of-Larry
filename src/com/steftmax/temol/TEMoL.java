@@ -7,7 +7,7 @@ public class TEMoL extends Game {
 	private static final String NAME = "The epic misadventures of Larry";
 
 	public TEMoL() {
-		super(1000000000L / 20L);
+		super(1f / 20f);
 	}
 
 	public static void main(String[] args) {

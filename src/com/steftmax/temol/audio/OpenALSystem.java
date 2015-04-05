@@ -12,7 +12,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 
 import com.steftmax.temol.render.DeltaTimer;
-import com.steftmax.temol.render.TimeScaler;
+
 import com.steftmax.temol.resource.Disposable;
 
 /**
@@ -116,7 +116,7 @@ public class OpenALSystem implements Runnable, Disposable {
 				}
 			}
 			try {
-				Thread.sleep(Math.max(0, 5 - (long) TimeScaler.nanosToMilisF(dt.getDelta())));
+				Thread.sleep(Math.max(0, (long) (5f - dt.getDelta() / 1000f)));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -146,7 +146,7 @@ public class OpenALSystem implements Runnable, Disposable {
 		currentMusic = music;
 		music.play(musicSource);
 	}
-	
+
 	public synchronized void stopMusic() {
 		if (currentMusic != null) {
 			currentMusic.stop();

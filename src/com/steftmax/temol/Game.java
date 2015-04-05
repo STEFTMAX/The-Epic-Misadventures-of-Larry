@@ -28,12 +28,12 @@ public abstract class Game implements Runnable {
 	private DeltaTimer timer;
 	private float timeScale = 1f;
 
-	private long maxBetweenFrameNanos;
+	private float maxBetweenFrame;
 
 	private State currentState;
 	long renderCall = 0;
 
-	private long avgFrameTime = 0;
+	private float avgFrameTime = 0;
 
 	
 	//TODO merge together in one input with an inputconfiguration object for controls
@@ -44,11 +44,11 @@ public abstract class Game implements Runnable {
 
 	// private int maxfps;
 
-	public Game(long maxBetweenFrameNanos) {
+	public Game(float maxBetweenFrame) {
 
 		this.timer = new DeltaTimer(timeScale);
 
-		this.maxBetweenFrameNanos = maxBetweenFrameNanos;
+		this.maxBetweenFrame = maxBetweenFrame;
 
 		initDisplay(Settings.getWidth(), Settings.getHeight(), false, null,
 				null);
@@ -81,15 +81,16 @@ public abstract class Game implements Runnable {
 		while (!stop && !Display.isCloseRequested()) {
 
 			renderCall++;
-			long delta = timer.getDelta();
+			float delta = timer.getDelta();
 			avgFrameTime += (delta - avgFrameTime) / renderCall;
 
-			if (delta > maxBetweenFrameNanos)
-				delta = maxBetweenFrameNanos;
+			if (delta > maxBetweenFrame)
+				delta = maxBetweenFrame;
+			
 			keyboardInput.update(delta);
 			mouseInput.update(delta);
 
-			currentState.update((long) (delta * timeScale));
+			currentState.update(delta * timeScale);
 			currentState.draw(batch);
 			Display.update();
 		}

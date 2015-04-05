@@ -26,7 +26,7 @@ public abstract class SpritedBody extends RigidBody{
 	 * @see com.steftmax.temol.render.Updatable#update(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		
 	}
 

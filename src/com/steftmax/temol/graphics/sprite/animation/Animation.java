@@ -10,22 +10,22 @@ public class Animation extends Sprite implements Updatable {
 	private TextureRegion[] frames;
 
 	private final PlaySequence sequence;
-	private final int frameNanos;
+	private final float frameNanos;
 
 	// Time variables
 
 	public int lastFrame;
-	public int lastNanos;
+	public float lastNanos;
 
 	public Animation(TextureRegion[] sprites, PlaySequence sequence, int fps) {
 		super(sprites[0]);
 		this.sequence = sequence;
 		this.frames = sprites;
-		this.frameNanos = 1000000000 / fps;
+		this.frameNanos = 1f / fps;
 	}
 
 	@Override
-	public void update(long deltaNanos) {
+	public void update(float deltaNanos) {
 
 		lastNanos += deltaNanos;
 

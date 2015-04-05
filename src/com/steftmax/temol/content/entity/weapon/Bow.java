@@ -1,7 +1,6 @@
 package com.steftmax.temol.content.entity.weapon;
 
-import javax.sound.midi.MidiChannel;
-
+import com.steftmax.temol.content.Level;
 import com.steftmax.temol.content.entity.Larry;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.TextureRegion;
@@ -27,14 +26,19 @@ public class Bow extends Weapon {
 
 	private float rotation;
 	private Larry larry;
+	private ResourceManager rm;
+	private Level level;
 
 	// private static final int XFLIPPEDOFFSET = -15, FINALFRAME = 6;
 
 	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry,
-			SpriteGroup group) {
+			SpriteGroup group, Level level) {
+		
 		super(gameResources, mi);
+		this.level = level;
 		this.group = group;
-
+		this.rm = gameResources;
+		
 		TextureRegion[] frames = gameResources
 				.getSpriteSheet("gfx/bow top.png").obtainFrames(1, 7);
 		neutral = new Sprite(gameResources.getSpriteSheet("gfx/bow top.png")
@@ -48,7 +52,12 @@ public class Bow extends Weapon {
 
 	private boolean isAiming;
 
-	public void update(long delta) {
+	public void update(float delta) {
+		if (isAiming && !mi.primaryDown()) {
+			Arrow arrow = new Arrow(larry.position.x, larry.position.y, 1, 1,
+					rm);
+			level.addLevelEntity(arrow);;
+		}
 		isAiming = mi.primaryDown();
 		if (isAiming) {
 			if (animation.lastFrame == 0)
@@ -63,7 +72,7 @@ public class Bow extends Weapon {
 					- (Settings.getHeight() / 2), pos.x
 					- (Settings.getWidth() / 2));
 			if (larry.looksLeft) {
-				
+
 				rotation -= pi;
 				if (rotation < -pi) {
 					rotation += 2 * pi;
@@ -75,14 +84,18 @@ public class Bow extends Weapon {
 					rotation = -.75f;
 				}
 
+				// the rotation range is longer here but that doesnt matter
+				this.rotation = rotation + pi;
+
 			} else {
-				
+
 				if (rotation > .75f) {
 					rotation = .75f;
 				}
 				if (rotation < -.75f) {
 					rotation = -.75f;
 				}
+				this.rotation = rotation;
 
 			}
 

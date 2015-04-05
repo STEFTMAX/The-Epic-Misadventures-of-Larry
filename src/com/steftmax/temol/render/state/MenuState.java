@@ -87,7 +87,7 @@ public class MenuState extends State implements Button.Listener {
 	 * @see com.steftmax.larrys_epic_misadventures.update.Updatable#update(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		if (switchToPlay) {
 			game.changeState(this, GameState.class);
 		}

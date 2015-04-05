@@ -38,7 +38,7 @@ public class PhysicsWorld implements Updatable {
 	 * @see com.steftmax.temol.render.Updatable#update(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		for (RigidBody body : bodies) {
 			if (body.mass > 0) {
 				if (!body.onGround()) {

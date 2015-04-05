@@ -69,7 +69,7 @@ public class GameState extends State {
 	 * @see com.steftmax.larrys_epic_misadventures.update.Updatable#update(long)
 	 */
 	@Override
-	public void update(long delta) {
+	public void update(float delta) {
 		// System.out.println(game.getMouseInput().position.x);
 		// System.out.println(game.getMouseInput().position.y);
 		aim.setScale(camera.getScale());
@@ -152,7 +152,7 @@ public class GameState extends State {
 		Level lvl = new Level(resources);
 		lvl.setMap(map);
 		Larry larry = new Larry(map, 32, 34, game.getKeyboardInput(),
-				game.getMouseInput(), resources);
+				game.getMouseInput(), resources,lvl);
 		lvl.setPlayer(larry);
 
 		return lvl;
