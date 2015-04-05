@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.graphics.sprite.animation.Animation;
 import com.steftmax.temol.math.Vector2;
 
 /**
@@ -82,10 +81,11 @@ public class SpriteGroup implements Drawable {
 				spritePostion.x -= (sprite.width - origin.x * 2);
 				spriteOrigin.x = sprite.width - spriteOrigin.x;
 			}
+
 			if (flipX) {
 				spritePostion.y -= (sprite.height - origin.y * 2);
 				spriteOrigin.y = sprite.height - spriteOrigin.y;
-				
+
 			}
 
 			batch.draw(sprite, spritePostion.x, spritePostion.y, sprite.width,
@@ -128,8 +128,7 @@ public class SpriteGroup implements Drawable {
 	}
 
 	public void setOrigin(Vector2 origin) {
-		this.origin =origin;
-		System.out.println(origin);
+		this.origin = origin;
 	}
 
 }

@@ -23,11 +23,10 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 
 	private SpriteGroup sprite = new SpriteGroup(0, 0);
 	private Animation animation;
-	
+
 	public boolean looksLeft = false;
 	private Weapon weapon;
 
-	
 	public Larry(TiledMap map, float x, float y, KeyboardInput ki,
 			MouseInput mi, ResourceManager rm) {
 		super(60, -1, 1, .5f, 10, mi, ki);
@@ -38,7 +37,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 		sprite.addSprite(animation);
 		sprite.setPosition(position);
 		sprite.setOrigin(animation.origin);
-		weapon = new Bow(rm, mi, sprite);
+		weapon = new Bow(rm, mi, this, sprite);
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 		} else {
 			if (ki.isLeftDown()) {
 				long usingDelta = delta;
-				if (ki.isShiftDown()) {
+				if (ki.isShiftDown()&& weapon.allowSprinting()) {
 					usingDelta *= sprintMultiplier;
 				}
 				position.subtract(walkingSpeed,
@@ -70,7 +69,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 
 			if (ki.isRightDown()) {
 				long usingDelta = delta;
-				if (ki.isShiftDown()) {
+				if (ki.isShiftDown()&& weapon.allowSprinting()) {
 					usingDelta *= sprintMultiplier;
 				}
 				position.add(walkingSpeed,
@@ -83,7 +82,8 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 
 		// TODO this should lock him at the head and be universal, to be tested
 		// updateHitbox();
-		lockingVector.set(position.x + animation.getWidth() / 2f, position.y + 27);
+		lockingVector.set(position.x + animation.getWidth() / 2f,
+				position.y + 27);
 
 		final int frame = animation.lastFrame;
 		isPixelUpFrame = (frame > 1 && frame < 11 || frame > 13 && frame < 24);

@@ -1,5 +1,7 @@
 package com.steftmax.temol.content.entity.weapon;
 
+import javax.sound.midi.MidiChannel;
+
 import com.steftmax.temol.content.entity.Larry;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.TextureRegion;
@@ -23,10 +25,13 @@ public class Bow extends Weapon {
 	private SpriteGroup group;
 	private Sprite neutral;
 
-	// private Larry larry;
+	private float rotation;
+	private Larry larry;
+
 	// private static final int XFLIPPEDOFFSET = -15, FINALFRAME = 6;
 
-	public Bow(ResourceManager gameResources, MouseInput mi, SpriteGroup group) {
+	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry,
+			SpriteGroup group) {
 		super(gameResources, mi);
 		this.group = group;
 
@@ -38,6 +43,7 @@ public class Bow extends Weapon {
 		animation = new Animation(frames, PlaySequence.HOLDLAST, 10);
 		animation.setOrigin(13, 21);
 		group.addSprite(neutral);
+		this.larry = larry;
 	}
 
 	private boolean isAiming;
@@ -49,16 +55,37 @@ public class Bow extends Weapon {
 				group.replaceSprite(neutral, animation);
 			animation.update(delta);
 
-			Vector2 pos = mi.getMousePosition();
+			float pi = (float) Math.PI;
+
+			final Vector2 pos = mi.getMousePosition();
+
 			float rotation = (float) Math.atan2(pos.y
 					- (Settings.getHeight() / 2), pos.x
 					- (Settings.getWidth() / 2));
-			if (rotation > .75f) {
-				rotation = .75f;
+			if (larry.looksLeft) {
+				
+				rotation -= pi;
+				if (rotation < -pi) {
+					rotation += 2 * pi;
+				}
+				if (rotation > .75f) {
+					rotation = .75f;
+				}
+				if (rotation < -.75f) {
+					rotation = -.75f;
+				}
+
+			} else {
+				
+				if (rotation > .75f) {
+					rotation = .75f;
+				}
+				if (rotation < -.75f) {
+					rotation = -.75f;
+				}
+
 			}
-			if (rotation < -.75f) {
-				rotation = -.75f;
-			}
+
 			animation.setRotation(rotation);
 		} else {
 			animation.stop();
@@ -87,6 +114,6 @@ public class Bow extends Weapon {
 	 */
 	@Override
 	public boolean allowSprinting() {
-		return mi.primaryDown();
+		return !mi.primaryDown();
 	}
 }
