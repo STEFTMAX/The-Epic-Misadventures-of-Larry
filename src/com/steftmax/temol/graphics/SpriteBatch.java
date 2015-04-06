@@ -34,6 +34,7 @@ import org.lwjgl.BufferUtils;
 
 import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.math.AABB;
+import com.steftmax.temol.math.FastMath;
 
 /**
  * @author pieter3457
@@ -93,7 +94,7 @@ public class SpriteBatch {
 		drawing = true;
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-	
+
 	// public void draw(final TextureRegion tr, float x1, float x2, float y1,
 	// float y2, boolean flipX, boolean flipY, Color color,
 	// float rotation, float originX, float originY) {
@@ -185,8 +186,8 @@ public class SpriteBatch {
 		float y4;
 
 		if (rotation != 0) {
-			final float cos = (float) Math.cos(rotation);// TODO optimalisations
-			final float sin = (float) Math.sin(rotation);
+			final float cos = FastMath.cos(rotation);
+			final float sin = FastMath.sin(rotation);
 			x1 = cos * p1x - sin * p1y;
 			y1 = sin * p1x + cos * p1y;
 			x2 = cos * p2x - sin * p2y;

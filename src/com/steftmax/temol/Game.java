@@ -68,11 +68,6 @@ public abstract class Game implements Runnable {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("sin(50) = " + Math.sin(50));
-		System.out.println("sin(50) = " + FastMath.sin(50));
-		System.out.println("cos(50) = " + Math.cos(50));
-		System.out.println("cos(50) = " + FastMath.cos(50));
 	}
 
 	@Override
