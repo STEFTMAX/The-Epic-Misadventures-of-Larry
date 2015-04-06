@@ -94,19 +94,6 @@ public class SpriteBatch {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	// public void draw(final TextureRegion tr, float x1, float x2, float y1,
-	// float y2, boolean flipX, boolean flipY, Color color,
-	// float rotation, float originX, float originY) {
-	// draw(tr, x1, y1, x2, y1, x2, y2, x1, y2, flipX, flipY, color, rotation,
-	// originX, originY);
-	// }
-	//
-	// public void draw(final TextureRegion tr, float x1, float x2, float y1,
-	// float y2, boolean flipX, boolean flipY) {
-	// draw(tr, x1, y1, x2, y1, x2, y2, x1, y2, flipX, flipY, this.color, 0,
-	// 0, 0);
-	// }
-
 	public void draw(final TextureRegion tr, float x, float y, float width,
 			float height, float scaleX, float scaleY, boolean flipX,
 			boolean flipY, Color color, float rotation, float originX,

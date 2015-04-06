@@ -67,12 +67,19 @@ public class BitmapFont {
 
 		float px;
 		for (int i = 0; i < text.length(); i++) {
-			TextureRegion glyph = glyphs[letters.indexOf(Character
-					.toLowerCase(text.charAt(i)))];
-			px = x + i * glyph.regionWidth * scaleX;
+			int index = letters.indexOf(Character
+					.toLowerCase(text.charAt(i)));
+			if (index >= 0) {
+				TextureRegion glyph = glyphs[index];
+				px = x + i * glyph.regionWidth * scaleX;
 
-			batch.draw(glyph, px, px + glyph.regionWidth * scaleX, y, y
-					+ glyph.regionHeight * scaleY);
+				batch.draw(glyph, px, y, glyph.regionWidth * scaleX,
+						glyph.regionHeight * scaleY);
+			}
 		}
+	}
+
+	public void draw(SpriteBatch batch, String text, float x, float y) {
+		draw(batch, text, x, y, 1f, 1f);
 	}
 }

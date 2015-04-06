@@ -11,7 +11,8 @@ public class MapEditorResources extends ResourceManager{
 	 */
 	@Override
 	public void load() {
-		loadSpriteSheet(path, rows, collumns);
+
+		loadSpriteSheet("gfx/font/font1.png", 16, 16);
 	}
 
 }
