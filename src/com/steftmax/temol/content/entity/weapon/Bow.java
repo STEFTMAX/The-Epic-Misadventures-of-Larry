@@ -33,12 +33,12 @@ public class Bow extends Weapon {
 
 	public Bow(ResourceManager gameResources, MouseInput mi, Larry larry,
 			SpriteGroup group, Level level) {
-		
+
 		super(gameResources, mi);
 		this.level = level;
 		this.group = group;
 		this.rm = gameResources;
-		
+
 		TextureRegion[] frames = gameResources
 				.getSpriteSheet("gfx/bow top.png").obtainFrames(1, 7);
 		neutral = new Sprite(gameResources.getSpriteSheet("gfx/bow top.png")
@@ -53,11 +53,11 @@ public class Bow extends Weapon {
 	private boolean isAiming;
 
 	public void update(float delta) {
-		if (isAiming && !mi.primaryDown()) {
-			Arrow arrow = new Arrow(larry.position.x, larry.position.y, 1, 1,
-					rm);
-			level.addLevelEntity(arrow);;
-		}
+//		if (isAiming && !mi.primaryDown()) {
+//			Arrow arrow = new Arrow(larry.position.x, larry.position.y, 1, 1,
+//					rm);
+//			level.addLevelEntity(arrow);
+//		}
 		isAiming = mi.primaryDown();
 		if (isAiming) {
 			if (animation.lastFrame == 0)
@@ -100,8 +100,10 @@ public class Bow extends Weapon {
 			}
 
 			animation.setRotation(rotation);
+			animation.setPosition(0, larry.isPixelUpFrame() ? 1 : 0);
 		} else {
 			animation.stop();
+			neutral.setPosition(0, larry.isPixelUpFrame() ? 1 : 0);
 			group.replaceSprite(animation, neutral);
 		}
 	}

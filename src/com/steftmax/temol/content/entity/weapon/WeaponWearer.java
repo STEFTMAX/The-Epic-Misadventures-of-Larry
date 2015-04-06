@@ -7,7 +7,6 @@ import com.steftmax.temol.math.Vector2;
  *
  */
 public interface WeaponWearer {
-	public Vector2 setToWeaponMountPoint(Vector2 vector);
 	
 	public Vector2 setToHead(Vector2 vector);
 	

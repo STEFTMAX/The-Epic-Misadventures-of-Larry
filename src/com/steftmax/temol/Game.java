@@ -4,11 +4,11 @@ import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.math.FastMath;
 import com.steftmax.temol.render.DeltaTimer;
 import com.steftmax.temol.render.input.KeyboardInput;
 import com.steftmax.temol.render.input.MouseInput;
@@ -35,12 +35,10 @@ public abstract class Game implements Runnable {
 
 	private float avgFrameTime = 0;
 
-	
-	//TODO merge together in one input with an inputconfiguration object for controls
+	// TODO merge together in one input with an inputconfiguration object for
+	// controls
 	protected MouseInput mouseInput;
 	protected KeyboardInput keyboardInput;
-	
-	
 
 	// private int maxfps;
 
@@ -70,6 +68,11 @@ public abstract class Game implements Runnable {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
+
+		System.out.println("sin(50) = " + Math.sin(50));
+		System.out.println("sin(50) = " + FastMath.sin(50));
+		System.out.println("cos(50) = " + Math.cos(50));
+		System.out.println("cos(50) = " + FastMath.cos(50));
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public abstract class Game implements Runnable {
 
 			if (delta > maxBetweenFrame)
 				delta = maxBetweenFrame;
-			
+
 			keyboardInput.update(delta);
 			mouseInput.update(delta);
 
@@ -115,7 +118,8 @@ public abstract class Game implements Runnable {
 		stop = true;
 	}
 
-	public synchronized void changeState(State lastState, Class<? extends State> newState) {
+	public synchronized void changeState(State lastState,
+			Class<? extends State> newState) {
 		if (lastState != null) {
 			lastState.deleteResources();
 			mouseInput.clear();
@@ -124,7 +128,8 @@ public abstract class Game implements Runnable {
 		avgFrameTime = 0;
 		renderCall = 0;
 		try {
-			Constructor<? extends State> c = newState.getDeclaredConstructor(Game.class);
+			Constructor<? extends State> c = newState
+					.getDeclaredConstructor(Game.class);
 			currentState = c.newInstance(this);
 		} catch (Exception e) {
 			e.printStackTrace();

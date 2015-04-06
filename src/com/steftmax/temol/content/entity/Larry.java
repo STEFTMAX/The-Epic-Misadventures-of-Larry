@@ -95,20 +95,9 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	public Vector2 getLockingPosition() {
 		return lockingVector;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.steftmax.temol.content.entity.weapon.WeaponWearer#setToWeaponMountPoint
-	 * (com.steftmax.temol.math.Vector2)
-	 */
-	@Override
-	public Vector2 setToWeaponMountPoint(Vector2 vector) {
-		vector.set(position);
-		if (isPixelUpFrame)
-			vector.add(0, 1);
-		return vector;
+	
+	public boolean isPixelUpFrame() {
+		return isPixelUpFrame;
 	}
 
 	/*
