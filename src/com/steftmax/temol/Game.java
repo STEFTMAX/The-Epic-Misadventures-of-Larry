@@ -8,7 +8,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import com.steftmax.temol.graphics.SpriteBatch;
-import com.steftmax.temol.math.FastMath;
 import com.steftmax.temol.render.DeltaTimer;
 import com.steftmax.temol.render.input.KeyboardInput;
 import com.steftmax.temol.render.input.MouseInput;

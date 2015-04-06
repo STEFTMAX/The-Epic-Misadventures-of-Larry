@@ -26,6 +26,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 
 	public boolean looksLeft = false;
 	private Weapon weapon;
+	private boolean isWalking;
 
 	public Larry(TiledMap map, float x, float y, KeyboardInput ki,
 			MouseInput mi, ResourceManager rm, Level level) {
@@ -54,7 +55,9 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 				.isLeftDown()))) {
 
 			animation.stop();
+			isWalking = false;
 		} else {
+			isWalking = true;
 			if (ki.isLeftDown()) {
 				float usingDelta = delta;
 				if (ki.isShiftDown() && weapon.allowSprinting()) {
@@ -74,6 +77,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 				position.add(walkingSpeed, usingDelta);
 				looksLeft = false;
 				animation.update(usingDelta);
+
 
 			}
 		}
@@ -95,7 +99,7 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	public Vector2 getLockingPosition() {
 		return lockingVector;
 	}
-	
+
 	public boolean isPixelUpFrame() {
 		return isPixelUpFrame;
 	}
@@ -120,7 +124,6 @@ public class Larry extends ControllableEntity implements WeaponWearer {
 	 */
 	@Override
 	public boolean isWalking() {
-		// TODO Auto-generated method stub
-		return false;
+		return isWalking;
 	}
 }

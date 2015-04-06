@@ -32,7 +32,6 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 
-import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.FastMath;
 

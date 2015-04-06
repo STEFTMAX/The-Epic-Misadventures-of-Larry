@@ -1,10 +1,6 @@
 package com.steftmax.temol.math;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import com.steftmax.temol.content.entity.Entity;
 import com.steftmax.temol.resource.memory.Pool;

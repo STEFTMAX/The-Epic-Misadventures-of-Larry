@@ -53,11 +53,11 @@ public class Bow extends Weapon {
 	private boolean isAiming;
 
 	public void update(float delta) {
-//		if (isAiming && !mi.primaryDown()) {
-//			Arrow arrow = new Arrow(larry.position.x, larry.position.y, 1, 1,
-//					rm);
-//			level.addLevelEntity(arrow);
-//		}
+		// if (isAiming && !mi.primaryDown()) {
+		// Arrow arrow = new Arrow(larry.position.x, larry.position.y, 1, 1,
+		// rm);
+		// level.addLevelEntity(arrow);
+		// }
 		isAiming = mi.primaryDown();
 		if (isAiming) {
 			if (animation.lastFrame == 0)
@@ -71,6 +71,11 @@ public class Bow extends Weapon {
 			float rotation = (float) Math.atan2(pos.y
 					- (Settings.getHeight() / 2), pos.x
 					- (Settings.getWidth() / 2));
+
+			if (!larry.isWalking()) {
+				larry.looksLeft = pos.x < Settings.getWidth() / 2f;
+			}
+
 			if (larry.looksLeft) {
 
 				rotation -= pi;

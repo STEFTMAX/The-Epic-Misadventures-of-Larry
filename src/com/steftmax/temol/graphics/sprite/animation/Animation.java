@@ -50,4 +50,11 @@ public class Animation extends Sprite implements Updatable {
 		lastNanos = 0;
 		setTo(frames[lastFrame]);
 	}
+
+	/**
+	 * @return
+	 */
+	public boolean isFirstFrame() {
+		return lastFrame == 0;
+	}
 }
