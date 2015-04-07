@@ -8,10 +8,7 @@ public class Color {
 	public float red, green, blue, alpha;
 
 	public Color(float red, float green, float blue, float alpha) {
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
-		this.alpha = alpha;
+		set(red, green, blue, alpha);
 		normalize();
 	}
 
@@ -44,5 +41,11 @@ public class Color {
 				alpha = 0f;
 			}
 		}
+	}
+	public void set(float red, float green, float blue, float alpha) {
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+		this.alpha = alpha;
 	}
 }

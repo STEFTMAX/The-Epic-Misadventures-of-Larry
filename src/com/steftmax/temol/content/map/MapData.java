@@ -28,7 +28,7 @@ public class MapData {
 		this.height = height;
 		collisionMap = new BitSet(width * height);
 		collisionMap.set(0, width * height, true);
-		System.out.println(collisionMap.size());
+//		System.out.println(collisionMap.size());
 	}
 
 	/**

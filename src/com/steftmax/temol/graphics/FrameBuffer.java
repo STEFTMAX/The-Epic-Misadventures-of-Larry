@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL11.*;
  *
  */
 public class FrameBuffer implements Disposable {
-	
+
 	private int id;
 	private Texture texture;
 
@@ -32,16 +32,19 @@ public class FrameBuffer implements Disposable {
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 				GL_TEXTURE_2D, texture.getID(), 0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
+		texture.unbind();
 	}
 
 	public void begin() {
 		glViewport(0, 0, texture.width, texture.height);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, id);
+		glDisable(GL_TEXTURE_2D);
 	}
 
 	public void end() {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	/*

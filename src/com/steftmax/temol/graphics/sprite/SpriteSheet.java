@@ -91,7 +91,7 @@ public final class SpriteSheet {
 		}
 		pixels = null;
 
-		System.out.println("Amount of regions: " + regions.size());
+//		System.out.println("Amount of regions: " + regions.size());
 		this.regions = regions.toArray(new TextureRegion[regions.size()]);
 	}
 

@@ -104,7 +104,7 @@ public class SpriteBatch {
 		}
 
 		Texture t = tr.texture;
-		if (lastTexture != null || lastTexture != t) {
+		if (lastTexture != null && lastTexture != t) {
 			flush();
 		}
 
@@ -242,6 +242,18 @@ public class SpriteBatch {
 
 	public void draw(TextureRegion tr, float x, float y) {
 
+		if (!drawing) {
+			System.err.println("Must call begin before drawing!");
+			return;
+		}
+
+		Texture t = tr.texture;
+		if (lastTexture != null && lastTexture != t) {
+			flush();
+		}
+
+		lastTexture = t;
+
 		final float x1 = x;
 		final float y1 = y;
 		final float x2 = x + tr.regionWidth;
@@ -296,6 +308,18 @@ public class SpriteBatch {
 	public void draw(TextureRegion tr, float x, float y, float width,
 			float height) {
 
+		if (!drawing) {
+			System.err.println("Must call begin before drawing!");
+			return;
+		}
+
+		Texture t = tr.texture;
+		if (lastTexture != null && lastTexture != t) {
+			flush();
+		}
+
+		lastTexture = t;
+
 		final float x1 = x;
 		final float y1 = y;
 		final float x2 = x + width;
@@ -347,6 +371,78 @@ public class SpriteBatch {
 		textures[index++] = tr.v2;
 	}
 
+	public void draw(Texture texture, float x, float y) {
+
+		if (!drawing) {
+			System.err.println("Must call begin before drawing!");
+			return;
+		}
+
+		if (lastTexture != null && lastTexture != texture) {
+			flush();
+		}
+
+		lastTexture = texture;
+
+		final int width = texture.width;
+		final int height = texture.height;
+
+		final float x1 = x;
+		final float y1 = y;
+		final float x2 = x + width;
+		final float y2 = y;
+		final float x3 = x + width;
+		final float y3 = y + height;
+		final float x4 = x;
+		final float y4 = y + height;
+
+		final float u1 = 0.0f;
+		final float u2 = 1.0f;
+		final float v1 = 0.0f;
+		final float v2 = 1.0f;
+
+		float red = this.color.red;
+		float green = this.color.green;
+		float blue = this.color.blue;
+		float alpha = this.color.alpha;
+
+		vertices[index] = x1;
+		colors[index * 2] = red;
+		colors[index * 2 + 1] = green;
+		textures[index++] = u1;
+		vertices[index] = y1;
+		colors[index * 2] = blue;
+		colors[index * 2 + 1] = alpha;
+		textures[index++] = v1;
+
+		vertices[index] = x2;
+		colors[index * 2] = red;
+		colors[index * 2 + 1] = green;
+		textures[index++] = u2;
+		vertices[index] = y2;
+		colors[index * 2] = blue;
+		colors[index * 2 + 1] = alpha;
+		textures[index++] = v1;
+
+		vertices[index] = x3;
+		colors[index * 2] = red;
+		colors[index * 2 + 1] = green;
+		textures[index++] = u2;
+		vertices[index] = y3;
+		colors[index * 2] = blue;
+		colors[index * 2 + 1] = alpha;
+		textures[index++] = v2;
+
+		vertices[index] = x4;
+		colors[index * 2] = red;
+		colors[index * 2 + 1] = green;
+		textures[index++] = u1;
+		vertices[index] = y4;
+		colors[index * 2] = blue;
+		colors[index * 2 + 1] = alpha;
+		textures[index++] = v2;
+	}
+
 	public void end() {
 		flush();
 		drawing = false;
@@ -387,5 +483,9 @@ public class SpriteBatch {
 	public void translate(float x, float y) {
 		flush();
 		glTranslatef(x, y, 0);
+	}
+
+	public void setColor(float r, float g, float b, float a) {
+		color.set(r, g, b, a);
 	}
 }
