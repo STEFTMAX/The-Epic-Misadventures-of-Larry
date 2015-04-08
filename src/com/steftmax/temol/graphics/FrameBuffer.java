@@ -38,13 +38,11 @@ public class FrameBuffer implements Disposable {
 	public void begin() {
 		glViewport(0, 0, texture.width, texture.height);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, id);
-		glDisable(GL_TEXTURE_2D);
 	}
 
 	public void end() {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		glEnable(GL_TEXTURE_2D);
 	}
 
 	/*

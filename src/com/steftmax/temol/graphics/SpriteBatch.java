@@ -64,21 +64,6 @@ public class SpriteBatch {
 
 	public SpriteBatch(int size, int width, int height) {
 
-		glMatrixMode(GL_PROJECTION);
-		glOrtho(0, width, 0, height, 1, -1);
-		glMatrixMode(GL_MODELVIEW);
-
-		glEnable(GL_TEXTURE_2D);
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		glClearColor(0f, 0f, 0f, 1f);
-
-		glDisable(GL_DEPTH_TEST);
-
-		glLoadIdentity();
-
 		vertexData = BufferUtils.createFloatBuffer(size * vertexSize * 4);
 		textureData = BufferUtils.createFloatBuffer(size * textureSize * 4);
 		colorData = BufferUtils.createFloatBuffer(size * colorSize * 4);

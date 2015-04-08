@@ -29,6 +29,7 @@ public class GameResources extends ResourceManager{
 		
 		loadTexture("gfx/light.png");
 		
+		
 		TileType.init(this);
 	}
 

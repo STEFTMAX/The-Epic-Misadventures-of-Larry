@@ -1,5 +1,20 @@
 package com.steftmax.temol;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+
 import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 
@@ -64,6 +79,21 @@ public abstract class Game implements Runnable {
 			Display.setResizable(false);
 			Display.setVSyncEnabled(vSync);
 			Display.create();
+
+			glMatrixMode(GL_PROJECTION);
+			glOrtho(0, width, 0, height, 1, -1);
+			glMatrixMode(GL_MODELVIEW);
+
+			glEnable(GL_TEXTURE_2D);
+
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			glClearColor(0f, 0f, 0f, 1f);
+
+			glDisable(GL_DEPTH_TEST);
+
+			glLoadIdentity();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

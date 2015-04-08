@@ -37,6 +37,7 @@ public class MenuState extends State implements Button.Listener {
 	private final static int PLAYBUTTON_X = 240, PLAYBUTTON_Y = 80,
 			SETTINGSBUTTON_X = 340, SETTINGSBUTTON_Y = 80;
 	OpenALSystem system;
+
 	public MenuState(Game game) {
 		super(game);
 
@@ -48,12 +49,13 @@ public class MenuState extends State implements Button.Listener {
 		mi.setCamera(cam);
 
 		resources.load();
-		
+
 		system = new OpenALSystem();
 		music = new Music("sfx/music/menu.ogg");
 		system.setMusic(music);
 		music.setLooping(true);
-		System.out.println(new Vector2(1f,0f).dotProduct(new Vector2(1f,1f)));
+		System.out.println(new Vector2(1f, 0f).dotProduct(new Vector2(1f, 1f)));
+		tr = resources.regions.get("gfx/title.png");
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
@@ -76,11 +78,13 @@ public class MenuState extends State implements Button.Listener {
 
 		play.setDimensions(64, 16);
 		settings.setDimensions(64, 16);
-		
+
 		Display.setVSyncEnabled(true);
 	}
 
 	long time;
+	private TextureRegion tr;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -119,7 +123,7 @@ public class MenuState extends State implements Button.Listener {
 			break;
 
 		}
-
+		batch.draw(tr, 0, 0);
 		batch.end();
 		cam.endFocus();
 
@@ -135,11 +139,14 @@ public class MenuState extends State implements Button.Listener {
 		resources.unload();
 		system.dispose();
 	}
-	
+
 	@Override
-	public void onPress(Button b) {}
+	public void onPress(Button b) {
+	}
+
 	@Override
-	public void onRelease(Button b) {}
+	public void onRelease(Button b) {
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -10,7 +10,7 @@ public class FastMath {
 
 	public final static float PI = (float) Math.PI;
 	public final static float PI2 = PI * 2;
-	private final static int NSAMPLES = 400; //HHMMMMMMMMm
+	private final static int NSAMPLES = 100; //HHMMMMMMMMm
 	private static double STEPSIZE;
 	private final static float[] SAMPLES = new float[NSAMPLES];
 
