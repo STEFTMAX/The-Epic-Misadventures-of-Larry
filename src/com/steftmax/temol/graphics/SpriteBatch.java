@@ -383,8 +383,8 @@ public class SpriteBatch {
 
 		final float u1 = 0.0f;
 		final float u2 = 1.0f;
-		final float v1 = 0.0f;
-		final float v2 = 1.0f;
+		final float v2 = 0.0f;
+		final float v1 = 1.0f;
 
 		float red = this.color.red;
 		float green = this.color.green;
