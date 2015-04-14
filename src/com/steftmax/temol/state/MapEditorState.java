@@ -1,4 +1,4 @@
-package com.steftmax.temol.render.state;
+package com.steftmax.temol.state;
 
 import org.lwjgl.opengl.Display;
 
@@ -6,9 +6,9 @@ import com.steftmax.temol.Game;
 import com.steftmax.temol.graphics.Color;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.font.BitmapFont;
-import com.steftmax.temol.render.input.KeyboardCharacterListener;
-import com.steftmax.temol.render.input.KeyboardInput;
-import com.steftmax.temol.render.input.MouseInput;
+import com.steftmax.temol.input.KeyboardCharacterListener;
+import com.steftmax.temol.input.KeyboardInput;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.resource.MapEditorResources;
 import com.steftmax.temol.resource.ResourceManager;
 

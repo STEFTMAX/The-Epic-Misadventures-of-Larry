@@ -1,13 +1,13 @@
-package com.steftmax.temol.render.state;
+package com.steftmax.temol.state;
 
 import com.steftmax.temol.graphics.Drawable;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.input.MouseClickListener;
+import com.steftmax.temol.input.MouseInput;
+import com.steftmax.temol.input.MousePositionListener;
 import com.steftmax.temol.math.AABB;
-import com.steftmax.temol.render.input.MouseClickListener;
-import com.steftmax.temol.render.input.MouseInput;
-import com.steftmax.temol.render.input.MousePositionListener;
 
 /**
  * @author pieter3457

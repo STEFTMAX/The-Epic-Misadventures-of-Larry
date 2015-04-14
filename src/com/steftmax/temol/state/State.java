@@ -1,4 +1,4 @@
-package com.steftmax.temol.render.state;
+package com.steftmax.temol.state;
 
 import com.steftmax.temol.Game;
 import com.steftmax.temol.graphics.Drawable;

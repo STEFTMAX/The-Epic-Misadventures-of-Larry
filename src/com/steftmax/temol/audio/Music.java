@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import com.steftmax.temol.resource.Disposable;
-import com.steftmax.temol.resource.loader.ResourceLoader;
+import com.steftmax.temol.resource.ResourceLoader;
 
 /**
  * @author pieter3457

@@ -4,8 +4,8 @@
  */
 package com.steftmax.temol.content.entity;
 
-import com.steftmax.temol.render.input.KeyboardInput;
-import com.steftmax.temol.render.input.MouseInput;
+import com.steftmax.temol.input.KeyboardInput;
+import com.steftmax.temol.input.MouseInput;
 
 public abstract class ControllableEntity extends Entity {
 

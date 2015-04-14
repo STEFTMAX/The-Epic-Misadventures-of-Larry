@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 
-import com.steftmax.temol.resource.loader.ResourceLoader;
+import com.steftmax.temol.resource.ResourceLoader;
 
 /**
  * @author pieter3457

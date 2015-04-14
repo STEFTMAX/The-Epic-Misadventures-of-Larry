@@ -3,11 +3,12 @@ package com.steftmax.temol.audio;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
 import static org.lwjgl.openal.AL10.*;
 
 import com.jcraft.jogg.*;
 import com.jcraft.jorbis.*;
-import com.steftmax.temol.resource.loader.ResourceLoader;
+import com.steftmax.temol.resource.ResourceLoader;
 
 
 /**

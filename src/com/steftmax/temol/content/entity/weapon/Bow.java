@@ -8,8 +8,8 @@ import com.steftmax.temol.graphics.sprite.Sprite;
 import com.steftmax.temol.graphics.sprite.SpriteGroup;
 import com.steftmax.temol.graphics.sprite.animation.Animation;
 import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
 import com.steftmax.temol.resource.Settings;
 

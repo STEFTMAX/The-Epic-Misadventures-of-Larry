@@ -1,4 +1,4 @@
-package com.steftmax.temol.render.state;
+package com.steftmax.temol.state;
 
 import org.lwjgl.opengl.Display;
 
@@ -11,8 +11,8 @@ import com.steftmax.temol.graphics.StaticCamera;
 import com.steftmax.temol.graphics.Texture;
 import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.MenuResources;
 
 /**
@@ -54,8 +54,8 @@ public class MenuState extends State implements Button.Listener {
 		music = new Music("sfx/music/menu.ogg");
 		system.setMusic(music);
 		music.setLooping(true);
-		System.out.println(new Vector2(1f, 0f).dotProduct(new Vector2(1f, 1f)));
-		tr = resources.regions.get("gfx/title.png");
+		System.out.println(resources.atlasses.size());
+		tr = resources.atlasses.iterator().next().getTexture();
 
 		// font = new BitmapFont("1234567890.,!?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		// resources.getSpriteSheet("font/font1.png").getFrames(),
@@ -83,7 +83,7 @@ public class MenuState extends State implements Button.Listener {
 	}
 
 	long time;
-	private TextureRegion tr;
+	private Texture tr;
 
 	/*
 	 * (non-Javadoc)

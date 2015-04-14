@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.steftmax.temol.resource.loader.ResourceLoader;
-
 /**
  * This class represents a TextFile. It loads automatically in the constructor
  * and the String in the TextFile can be obtained using getContents();

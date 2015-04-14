@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.steftmax.temol.graphics.Texture;
 import com.steftmax.temol.graphics.TextureRegion;
-import com.steftmax.temol.resource.loader.ResourceLoader;
+import com.steftmax.temol.resource.ResourceLoader;
 
 /**
  * This class loads SpriteSheets into Animations or Texture arrays.

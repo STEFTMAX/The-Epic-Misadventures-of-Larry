@@ -1,4 +1,4 @@
-package com.steftmax.temol.render.state;
+package com.steftmax.temol.state;
 
 import java.util.Set;
 
@@ -17,10 +17,10 @@ import com.steftmax.temol.graphics.ShaderProgram;
 import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.TextureRegion;
 import com.steftmax.temol.graphics.sprite.Sprite;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.QuadTree;
 import com.steftmax.temol.physics.PhysicsWorld;
-import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.GameResources;
 import com.steftmax.temol.resource.Settings;
 import com.steftmax.temol.resource.TextFile;

@@ -1,4 +1,4 @@
-package com.steftmax.temol.resource.loader;
+package com.steftmax.temol.resource;
 
 import java.io.File;
 import java.io.InputStream;

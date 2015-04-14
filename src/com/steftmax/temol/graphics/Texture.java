@@ -15,7 +15,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
 
 import com.steftmax.temol.resource.Disposable;
-import com.steftmax.temol.resource.loader.ResourceLoader;
+import com.steftmax.temol.resource.ResourceLoader;
 
 /**
  * 

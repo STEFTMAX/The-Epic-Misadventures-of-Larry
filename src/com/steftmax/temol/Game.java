@@ -23,11 +23,11 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import com.steftmax.temol.graphics.SpriteBatch;
+import com.steftmax.temol.input.KeyboardInput;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.render.DeltaTimer;
-import com.steftmax.temol.render.input.KeyboardInput;
-import com.steftmax.temol.render.input.MouseInput;
-import com.steftmax.temol.render.state.State;
 import com.steftmax.temol.resource.Settings;
+import com.steftmax.temol.state.State;
 
 /**
  * The class that should be overridden by any game using this engine.

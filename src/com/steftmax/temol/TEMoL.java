@@ -1,6 +1,6 @@
 package com.steftmax.temol;
 
-import com.steftmax.temol.render.state.MenuState;
+import com.steftmax.temol.state.MenuState;
 
 public class TEMoL extends Game {
 

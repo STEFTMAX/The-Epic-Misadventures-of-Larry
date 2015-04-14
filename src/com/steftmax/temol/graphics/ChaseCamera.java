@@ -2,10 +2,10 @@ package com.steftmax.temol.graphics;
 
 import org.lwjgl.opengl.GL11;
 
+import com.steftmax.temol.input.MouseInput;
+import com.steftmax.temol.input.MouseScrollListener;
 import com.steftmax.temol.math.AABB;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.input.MouseInput;
-import com.steftmax.temol.render.input.MouseScrollListener;
 import com.steftmax.temol.resource.Settings;
 
 public class ChaseCamera implements Camera, MouseScrollListener {

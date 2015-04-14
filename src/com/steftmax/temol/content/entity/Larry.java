@@ -9,9 +9,9 @@ import com.steftmax.temol.graphics.SpriteBatch;
 import com.steftmax.temol.graphics.sprite.SpriteGroup;
 import com.steftmax.temol.graphics.sprite.animation.Animation;
 import com.steftmax.temol.graphics.sprite.animation.PlaySequence;
+import com.steftmax.temol.input.KeyboardInput;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.math.Vector2;
-import com.steftmax.temol.render.input.KeyboardInput;
-import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
 
 public class Larry extends ControllableEntity implements WeaponWearer {

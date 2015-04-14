@@ -12,6 +12,7 @@ public class MenuResources extends ResourceManager{
 		loadSpriteSheet("gfx/font/font1.png", 16, 16);
 		
 		loadToTextureAtlas("gfx/title.png");
+		loadToTextureAtlas("gfx/light.png");
 	}
 
 

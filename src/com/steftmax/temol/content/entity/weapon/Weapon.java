@@ -1,8 +1,8 @@
 package com.steftmax.temol.content.entity.weapon;
 
 import com.steftmax.temol.graphics.Drawable;
+import com.steftmax.temol.input.MouseInput;
 import com.steftmax.temol.render.Updatable;
-import com.steftmax.temol.render.input.MouseInput;
 import com.steftmax.temol.resource.ResourceManager;
 
 /**

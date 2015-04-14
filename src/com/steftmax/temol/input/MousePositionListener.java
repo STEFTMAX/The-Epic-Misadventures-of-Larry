@@ -1,4 +1,4 @@
-package com.steftmax.temol.render.input;
+package com.steftmax.temol.input;
 
 /**
  * @author pieter3457
